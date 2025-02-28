@@ -2,6 +2,8 @@
 const {
   Model
 } = require('sequelize');
+const bcrypt = require("bcryptjs");
+
 module.exports = (sequelize, DataTypes) => {
   const Users = sequelize.define("Users", {
     userId: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -17,5 +19,11 @@ module.exports = (sequelize, DataTypes) => {
     Users.belongsToMany(models.Roles, { through: models.UserRoles, foreignKey: "userId" });
   };
 
+  // Hash password before saving user
+  Users.beforeCreate(async (user) => {
+    user.password = await bcrypt.hash(user.password, 10);
+  });
+
   return Users;
 };
+
