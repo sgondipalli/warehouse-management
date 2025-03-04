@@ -1,0 +1,313 @@
+.homePage {
+    text-align: center;
+    background-color:rgb(88, 159, 216) ;
+}
+
+h1 {
+    color: #333;
+    font-size: 2rem;
+}
+
+/* Hero Container */
+.heroContainer {
+    position: relative;
+    height: 83.5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* Ensure content stays within the container */
+}
+
+.heroImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Ensures the image fills the container without distortion */
+}
+
+.heroText {
+    position: absolute;
+    /* Position the text on top of the image */
+    color: white;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    padding: 1rem;
+    z-index: 1;
+    /* Ensure the text appears above the image */
+}
+
+.heroText h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.heroText p {
+    font-size: 1.2rem;
+}
+
+/* Running Update */
+.runningUpdate {
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: #fffae6;
+    color: #ff9800;
+    padding: 0.2rem 0;
+    border-bottom: 1px solid #ffd54f;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.runningUpdate p {
+    display: inline-block;
+    animation: scroll 10s linear infinite;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Search Section Container */
+.searchSectionContainer {
+    margin-top: 5px;
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+}
+
+
+/* Features Container */
+.featuresContainer {
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: rgb(245, 162, 53) ;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 1200px;
+    text-align: center;
+}
+
+.featuresHeading {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.featuresSubHeading {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+.featuresGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.featureItems {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.featureItems h3 {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-bottom: 0.5rem;
+}
+
+.featureItems p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.featureItems:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Feature Section */
+.featureSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.featureSection h2 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.featureSection p {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.featureSection img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Alternating Backgrounds */
+.featureEven {
+    background-color: #f7f9fc;
+}
+
+.featureOdd {
+    background-color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .featureSection {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .featureSection img {
+        margin-bottom: 1rem;
+    }
+}
+
+
+/* Features Scrollable Container */
+.featuresScrollableContainer {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    /* Enables scroll snapping vertically */
+    height: 100vh;
+    /* Full viewport height */
+    background-color: #f0f8ff;
+    /* Light blue background */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    /* Optional shadow for elevation */
+    padding: 1rem;
+    /* Space around the container */
+    border-radius: 10px;
+    margin-top: 5px;
+}
+
+.featureItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    scroll-snap-align: start;
+    /* Snaps each feature into view */
+    height: 100vh;
+    /* Each feature takes up the full viewport height */
+    
+}
+
+/* Image Section */
+.featureImage {
+    flex: 1;
+    /* Takes up half the width */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin-left: 10px;
+    /* Full height */
+}
+
+.image {
+    width: 100%;
+    height: 90%;
+    object-fit: cover;
+    border-radius: 10px;
+
+}
+
+/* Content Section */
+.featureContent {
+    flex: 1;
+    /* Takes up half the width */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    padding: 2rem;
+}
+
+.featureContent h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.featureContent p {
+    font-size: 1.2rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .featureItem {
+        flex-direction: column;
+    }
+
+    .featureImage {
+        flex: none;
+        width: 100%;
+        height: 50%;
+    }
+
+    .featureContent {
+        flex: none;
+        width: 100%;
+        height: 50%;
+        text-align: center;
+    }
+}
+
+
+/* Dividing Line Between Sections */
+.divider {
+    width: 90%;
+    /* Adjust width as needed */
+    height: 4px;
+    /* Thickness of the divider */
+    margin: 2rem auto;
+    /* Space around the divider */
+    background: linear-gradient(to right, #ff9800, #f44336);
+    /* Gradient effect */
+    border-radius: 2px;
+    /* Rounded edges */
+}
+
+/* Vertical Divider Between Image and Content */
+.verticalDivider {
+    width: 4px;
+    /* Thickness of the line */
+    height: 80%;
+    /* Adjust height as needed */
+    background: linear-gradient(to bottom, #ff9800, #f44336);
+    /* Gradient effect */
+    border-radius: 2px;
+    /* Rounded edges */
+    margin: 0 1rem;
+    /* Space around the divider */
+}
