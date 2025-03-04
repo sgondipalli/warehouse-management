@@ -7,7 +7,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { setAuthState } = useAuth(); // ✅ Update this to setAuthState
+  const { setAuthState } = useAuth(); // Update this to setAuthState
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -34,7 +34,7 @@ const Login = () => {
         throw new Error(data.message || "Invalid credentials");
       }
 
-      // ✅ Store token and user info in context and local storage
+      // Store token and user info in context and local storage
       setAuthState({ 
         isAuthenticated: true, 
         user: data.user, 
@@ -43,7 +43,7 @@ const Login = () => {
 
       localStorage.setItem("token", data.token); // Store token for persistence
 
-      // ✅ Redirect to dashboard
+      // Redirect to dashboard
       navigate("/dashboard");
     } catch (err) {
       setError(err.message);
