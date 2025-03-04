@@ -1,12 +1,10 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 const bcrypt = require("bcryptjs");
 
 module.exports = (sequelize, DataTypes) => {
   const Users = sequelize.define("Users", {
-    userId: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },  // Ensure ID consistency
     username: { type: DataTypes.STRING, unique: true, allowNull: false },
     email: { type: DataTypes.STRING, unique: true, allowNull: false },
     password: { type: DataTypes.STRING, allowNull: false },
@@ -16,9 +14,12 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Users.associate = (models) => {
-    Users.belongsToMany(models.Roles, { through: models.UserRoles, foreignKey: "userId" });
+    Users.belongsToMany(models.Roles, { 
+      through: models.UserRoles, 
+      foreignKey: "userId"  // Fix FK reference in association
+    });
   };
-
+  
   // Hash password before saving user
   Users.beforeCreate(async (user) => {
     user.password = await bcrypt.hash(user.password, 10);
@@ -26,4 +27,3 @@ module.exports = (sequelize, DataTypes) => {
 
   return Users;
 };
-
