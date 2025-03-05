@@ -20,7 +20,8 @@ const Login = () => {
     }
 
     try {
-      await login(email, password, navigate); //  Pass `navigate`
+      await login(email, password);
+      navigate("/dashboard"); // Redirect after successful login
     } catch (err) {
       setError(err.message);
     }
@@ -28,25 +29,36 @@ const Login = () => {
 
   return (
     <div className={styles.loginContainer}>
-      <h1>Login</h1>
-      {error && <p className={styles.error}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
+      <div className={styles.loginBox}>
+        <h1>Login</h1>
+        {error && <p className={styles.error}>{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            className={styles.inputField}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            required
+          />
+          <input
+            type="password"
+            className={styles.inputField}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            required
+          />
+          <button type="submit" className={styles.submitButton}>
+            Login
+          </button>
+        </form>
+        <div className={styles.linkContainer}>
+          <a href="/forgot-password" className={styles.link}>
+            Forgot Password?
+          </a>
+        </div>
+      </div>
     </div>
   );
 };
