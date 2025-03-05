@@ -8,7 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { login } = useAuth();
-  const navigate = useNavigate(); // ✅ Initialize navigation
+  const navigate = useNavigate(); // Initialize navigation
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +20,7 @@ const Login = () => {
     }
 
     try {
-      await login(email, password, navigate); // ✅ Pass `navigate`
+      await login(email, password, navigate); //  Pass `navigate`
     } catch (err) {
       setError(err.message);
     }

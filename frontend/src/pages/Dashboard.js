@@ -2,7 +2,7 @@ import React from "react";
 import { useAuth } from "../context/AuthContext";
 
 const Dashboard = () => {
-  const { authState } = useAuth(); // ✅ Using Context API instead of Redux
+  const { authState } = useAuth(); // Using Context API instead of Redux
 
   return (
     <div>

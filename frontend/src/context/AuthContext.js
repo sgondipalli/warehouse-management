@@ -10,14 +10,14 @@ export const AuthProvider = ({ children }) => {
     token: localStorage.getItem("token") || null,
   });
 
-  // ✅ Logout function
+  // Logout function
   const logout = useCallback(() => {
-    console.log("🔴 Logging out...");
+    console.log("Logging out...");
     localStorage.removeItem("token");
     setAuthState({ isAuthenticated: false, user: null, roles: [], token: null });
   }, []);
 
-  // ✅ Fetch user details from backend (Includes `logout` dependency)
+  // Fetch user details from backend (Includes `logout` dependency)
   const fetchUser = useCallback(
     async (token) => {
       try {
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
         });
 
         if (!response.ok) {
-          logout(); // 🔹 Call logout on failure
+          logout(); // Call logout on failure
           return;
         }
 
@@ -43,18 +43,18 @@ export const AuthProvider = ({ children }) => {
         logout();
       }
     },
-    [logout] // 🔹 Now `logout` is included as a dependency
+    [logout] // Now `logout` is included as a dependency
   );
 
-  // ✅ Load user on page refresh
+  // Load user on page refresh
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       fetchUser(token);
     }
-  }, [fetchUser]); // ✅ No more warnings 🚀
+  }, [fetchUser]); // No more warnings 🚀
 
-  // ✅ Login function
+  // Login function
   const login = async (email, password, navigate) => {
     try {
       const response = await fetch("http://localhost:5001/auth/login", {
@@ -66,25 +66,25 @@ export const AuthProvider = ({ children }) => {
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || "Login failed");
   
-      console.log("✅ Login Successful. User:", data.user);
+      console.log(" Login Successful. User:", data.user);
   
-      // ✅ Store token in localStorage
+      // Store token in localStorage
       localStorage.setItem("token", data.token);
   
-      // ✅ Update Auth State
+      // Update Auth State
       setAuthState({
         isAuthenticated: true,
         user: data.user,
-        roles: Array.isArray(data.roles) ? data.roles : [], // ✅ Ensure roles is an array
+        roles: Array.isArray(data.roles) ? data.roles : [], // Ensure roles is an array
         token: data.token,
       });
   
-      // ✅ Redirect after login
+      // Redirect after login
       navigate("/dashboard");  // Change this to your required route
   
       return data;
     } catch (error) {
-      console.error("❌ Login Error:", error.message);
+      console.error(" Login Error:", error.message);
       throw error;
     }
   };

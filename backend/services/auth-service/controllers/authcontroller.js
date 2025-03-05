@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const { Users, Roles, UserRoles } = require("../../../common/db/models");
 require("dotenv").config();
 
-// ✅ **Register a New User**
+// **Register a New User**
 exports.register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -21,7 +21,7 @@ exports.register = async (req, res) => {
   }
 };
 
-// ✅ **Login & Authenticate User**
+// **Login & Authenticate User**
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -36,7 +36,7 @@ exports.login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json({ message: "Invalid credentials" });
 
-    // ✅ Generate JWT Token
+    // Generate JWT Token
     const token = jwt.sign(
       { userId: user.id, roles: user.Roles.map(role => role.roleName) },
       process.env.JWT_SECRET,
@@ -53,7 +53,7 @@ exports.login = async (req, res) => {
   }
 };
 
-// ✅ **Get User Details After Authentication**
+// **Get User Details After Authentication**
 exports.getUserDetails = async (req, res) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
@@ -77,7 +77,7 @@ exports.getUserDetails = async (req, res) => {
   }
 };
 
-// ✅ **Logout User**
+// **Logout User**
 exports.logout = async (req, res) => {
   try {
     res.status(200).json({ message: "Logged out successfully" });
