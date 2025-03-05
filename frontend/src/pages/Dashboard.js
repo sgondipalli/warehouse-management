@@ -1,19 +1,13 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
+import { useAuth } from "../context/AuthContext";
 
 const Dashboard = () => {
-  const { user, roles } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    console.log("User:", user);
-    console.log("Roles:", roles);
-  }, [user, roles]);
+  const { authState } = useAuth(); // Using Context API instead of Redux
 
   return (
     <div>
-      <h2>Dashboard</h2>
-      <p>Welcome, {user?.username || "User"}!</p>
-      <p>Your Roles: {roles?.join(", ") || "No roles assigned"}</p>
+      <h1>Welcome, {authState.user ? authState.user.username : "Guest"}!</h1>
+      <p>Role: {authState.roles.join(", ") || "No roles assigned"}</p>
     </div>
   );
 };
