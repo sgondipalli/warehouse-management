@@ -7,8 +7,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { setAuthState } = useAuth(); // Update this to setAuthState
-  const navigate = useNavigate();
+  const { login } = useAuth();
+  const navigate = useNavigate(); // ✅ Initialize navigation
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,31 +20,7 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5001/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Invalid credentials");
-      }
-
-      // Store token and user info in context and local storage
-      setAuthState({ 
-        isAuthenticated: true, 
-        user: data.user, 
-        token: data.token 
-      });
-
-      localStorage.setItem("token", data.token); // Store token for persistence
-
-      // Redirect to dashboard
-      navigate("/dashboard");
+      await login(email, password, navigate); // ✅ Pass `navigate`
     } catch (err) {
       setError(err.message);
     }

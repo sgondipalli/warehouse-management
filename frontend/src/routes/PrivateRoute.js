@@ -9,11 +9,6 @@ const PrivateRoute = ({ children, allowedRoles }) => {
     return <Navigate to="/login" />;
   }
 
-  // Ensure roles exist before checking includes()
-  if (allowedRoles && !authState.roles?.length) {
-    return <Navigate to="/unauthorized" />;
-  }
-
   if (allowedRoles && !allowedRoles.some(role => authState.roles.includes(role))) {
     return <Navigate to="/unauthorized" />;
   }
