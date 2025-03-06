@@ -1,7 +1,18 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const passport = require("passport");
+const OpenIDConnectStrategy = require("passport-openidconnect").Strategy;
+const OktaJwtVerifier = require("@okta/jwt-verifier");
 const { Users, Roles, UserRoles } = require("../../../common/db/models");
 require("dotenv").config();
+
+// Initialize Okta JWT Verifier
+const oktaJwtVerifier = new OktaJwtVerifier({
+  issuer: "https://dev-69702302.okta.com/oauth2/default",
+  clientId: process.env.OKTA_CLIENT_ID,
+  assertClaims: { aud: "api://default" },
+});
+
 
 // **Register a New User**
 exports.register = async (req, res) => {
@@ -70,6 +81,75 @@ exports.getUserDetails = async (req, res) => {
     res.json({
       user: { id: user.id, username: user.username, email: user.email },
       roles: user.Roles.map(role => role.roleName),
+    });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(401).json({ message: "Unauthorized" });
+  }
+};
+
+// **Login with Okta**
+exports.loginWithOkta = async (req, res) => {
+  try {
+    const { token } = req.body;
+    if (!token) return res.status(400).json({ message: "Token is required" });
+
+    // Verify Okta Token
+    const jwtClaims = await oktaJwtVerifier.verifyAccessToken(token, "api://default");
+
+    // Extract User Information from Okta JWT
+    const { sub, email, name } = jwtClaims.claims;
+
+    // Check if the user exists in DB, if not create a new record
+    let user = await Users.findOne({ where: { email } });
+
+    if (!user) {
+      user = await Users.create({ username: name, email, password: null });
+    }
+
+    // Generate Internal JWT Token (to maintain session)
+    const internalToken = jwt.sign(
+      { userId: user.id, roles: [] }, // Add role handling here if needed
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.json({
+      token: internalToken,
+      user: { id: user.id, username: user.username, email: user.email },
+      roles: [], // Fetch user roles if required
+    });
+  } catch (error) {
+    console.error("Error verifying Okta token:", error);
+    res.status(401).json({ message: "Invalid Okta token" });
+  }
+};
+
+// **Get User Details (Supports Okta & Email/Password)**
+exports.getUserDetails = async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) return res.status(401).json({ message: "Unauthorized" });
+
+    let user;
+    try {
+      // Try verifying as internal JWT (Email/Password Login)
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      user = await Users.findOne({
+        where: { id: decoded.userId },
+        include: [{ model: Roles, attributes: ["roleName"], through: { attributes: [] } }],
+      });
+    } catch {
+      // If JWT verification fails, check if it's an Okta token
+      const jwtClaims = await oktaJwtVerifier.verifyAccessToken(token, "api://default");
+      user = await Users.findOne({ where: { email: jwtClaims.claims.email } });
+    }
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.json({
+      user: { id: user.id, username: user.username, email: user.email },
+      roles: user.Roles ? user.Roles.map(role => role.roleName) : [],
     });
   } catch (error) {
     console.error("Error fetching user:", error);

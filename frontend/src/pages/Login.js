@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../styles/LoginForm.module.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { login } = useAuth();
-  const navigate = useNavigate(); // Initialize navigation
+  const { login, loginWithOkta } = useAuth(); // Okta login function added
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,9 +20,7 @@ const Login = () => {
     }
 
     try {
-      await login(email, password);
-      console.log("Navigating to dashboard...");
-      navigate("/dashboard" );// Redirect after successful login
+      await login(email, password, navigate);
     } catch (err) {
       setError(err.message);
     }
@@ -54,10 +52,16 @@ const Login = () => {
             Login
           </button>
         </form>
+
+        {/* Okta Login Button */}
+        <button className={styles.oktaButton} onClick={loginWithOkta}>
+          Login with Okta
+        </button>
+
         <div className={styles.linkContainer}>
-          <a href="/forgot-password" className={styles.link}>
+          <Link to="/forgot-password" className={styles.link}>
             Forgot Password?
-          </a>
+          </Link>
         </div>
       </div>
     </div>
