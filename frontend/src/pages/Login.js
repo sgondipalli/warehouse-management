@@ -21,7 +21,8 @@ const Login = () => {
 
     try {
       await login(email, password);
-      navigate("/dashboard"); // Redirect after successful login
+      console.log("Navigating to dashboard...");
+      navigate("/dashboard" );// Redirect after successful login
     } catch (err) {
       setError(err.message);
     }

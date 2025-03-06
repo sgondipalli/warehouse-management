@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   const logout = useCallback(() => {
     console.log("Logging out...");
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setAuthState({ isAuthenticated: false, user: null, roles: [], token: null });
   }, []);
 
@@ -49,10 +50,10 @@ export const AuthProvider = ({ children }) => {
   // Load user on page refresh
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
+    if (token && !authState.isAuthenticated) { // Avoid redundant calls
       fetchUser(token);
     }
-  }, [fetchUser]); // No more warnings 🚀
+  }, [authState.isAuthenticated, fetchUser]); // No more warnings 🚀
 
   // Login function
   const login = async (email, password, navigate) => {
@@ -78,9 +79,6 @@ export const AuthProvider = ({ children }) => {
         roles: Array.isArray(data.roles) ? data.roles : [], // Ensure roles is an array
         token: data.token,
       });
-  
-      // Redirect after login
-      navigate("/dashboard");  // Change this to your required route
   
       return data;
     } catch (error) {
