@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
     if (token && !authState.isAuthenticated) { // Avoid redundant calls
       fetchUser(token);
     }
-  }, [authState.isAuthenticated, fetchUser]); // No more warnings 🚀
+  }, [authState.isAuthenticated, fetchUser]); // No more warnings 
 
   // Login function
   const login = async (email, password, navigate) => {
