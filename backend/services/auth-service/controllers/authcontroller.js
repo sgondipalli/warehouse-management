@@ -14,6 +14,42 @@ const oktaJwtVerifier = new OktaJwtVerifier({
 });
 
 
+// ** Fetch all users with their assigned roles **
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await Users.findAll({
+      attributes: ["id", "username", "email", "firstName", "lastName", "isActive", "createdAt"],
+      include: [
+        {
+          model: Roles,
+          as: "Roles", 
+          through: { model: UserRoles, attributes: [] }, // Exclude UserRoles table from response
+          attributes: ["roleName"], // Fetch only assigned roles
+        },
+      ],
+    });
+
+    // Format response to structure roles correctly
+    const formattedUsers = users.map(user => ({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      isActive: user.isActive,
+      createdAt: user.createdAt,
+      role: user.Roles.length > 0 ? user.Roles[0].roleName : "No Role Assigned", // Extract **only assigned** roles
+    }));
+
+    res.status(200).json(formattedUsers);
+  } catch (error) {
+    console.error("Error fetching users with roles:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+
+
 // **Register a New User**
 exports.register = async (req, res) => {
   try {

@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const authRoutes = require("../auth-service/routes/authroutes");
+const userRoutes = require("../auth-service/routes/userRoutes");
 const sessionMiddleware = require("../../config/redisConfig");
 
 const app = express();
@@ -23,6 +24,7 @@ app.use(bodyParser.json());
 app.use(sessionMiddleware); // Apply Redis-based session handling
 
 app.use("/auth", authRoutes);
+app.use("/auth", userRoutes);
 
 const PORT = 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
