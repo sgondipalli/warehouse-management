@@ -60,26 +60,21 @@ const ManageUsers = () => {
       });
   
       // Ensure the response contains the user object
-      if (response.data && response.data.userId) {
-        const createdUser = {
-          id: response.data.userId,
-          username: newUser.username,
-          email: newUser.email,
-          role: newUser.role, // Ensure role is assigned correctly
-        };
+      if (response.data && response.data.user) {
+        const createdUser = response.data.user; // Get user object from response
   
         setUsers([...users, createdUser]); // Add new user to state
         setNewUser({ username: "", email: "", password: "", role: "" }); // Clear form fields
         setError(""); // Clear previous errors if any
   
-        // ✅ Show success message
+        // Show success message
         alert("User registered successfully!");
       } else {
         setError("User created, but no user data returned.");
       }
     } catch (err) {
       if (err.response && err.response.status === 400 && err.response.data.message === "User already exists") {
-        setError("User already exists."); // ✅ Show a user-friendly message
+        setError("User already exists."); // Show a user-friendly message
       } else {
         setError("Error creating user. Please try again.");
       }
