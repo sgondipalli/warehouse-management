@@ -1,0 +1,39 @@
+.navbarContainer {
+    width: 100vw; /* Ensure full width of the viewport */
+    height: 60px;
+    background-color: #2f3e6d;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0; /* Ensure it does not exceed */
+    z-index: 1000;
+    box-sizing: border-box; /* Ensure it includes padding in width calculation */
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+}
+
+.user {
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+.logoutButton {
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.logoutButton:hover {
+    background-color: darkred;
+}

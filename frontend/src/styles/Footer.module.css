@@ -1,0 +1,38 @@
+.footer {
+    background-color: #1f3a93;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    width: 100%;
+    margin-top: auto;
+    position: relative;  /* Change from fixed to relative */
+    bottom: 0;
+}
+
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section {
+    text-align: left;
+}
+
+.section h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.section p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.section i {
+    margin-right: 8px;
+    color: #ff9800;
+}

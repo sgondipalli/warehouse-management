@@ -11,6 +11,8 @@ const ManageUsers = () => {
   const [error, setError] = useState("");
   const [editingUser, setEditingUser] = useState(null);
   const [newUser, setNewUser] = useState({ username: "", email: "", password: "", role: "" });
+  const [searchTerm, setSearchTerm] = useState(""); 
+  const [filterRole, setFilterRole] = useState("");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -80,6 +82,12 @@ const ManageUsers = () => {
       }
     }
   };
+
+  // ** Filtered Users Based on Search & Role Selection **
+  const filteredUsers = users.filter((user) =>
+    (user.username.toLowerCase().includes(searchTerm.toLowerCase()) || user.email.toLowerCase().includes(searchTerm.toLowerCase())) &&
+    (filterRole ? user.role === filterRole : true)
+  );
   
   
 
@@ -125,6 +133,25 @@ const ManageUsers = () => {
         </button>
       </div>
 
+      {/* 🔹 Search & Filter */}
+      <div className={styles.filterContainer}>
+        <input
+          type="text"
+          placeholder="Search by username or email"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <select value={filterRole} onChange={(e) => setFilterRole(e.target.value)}>
+          <option value="">All Roles</option>
+          <option value="Super Admin">Super Admin</option>
+          <option value="Warehouse Manager">Warehouse Manager</option>
+          <option value="Warehouse Worker">Warehouse Worker</option>
+          <option value="Auditor/Compliance Officer">Auditor</option>
+          <option value="Delivery Agent">Delivery Agent</option>
+        </select>
+      </div>
+
+
       {/* User Table */}
       <table>
         <thead>
@@ -137,7 +164,7 @@ const ManageUsers = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map(user => (
+          {filteredUsers.map(user => (
             <tr key={user.id}>
               <td>{user.id}</td>
               <td>{user.username}</td>
