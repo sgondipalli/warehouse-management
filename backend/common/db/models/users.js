@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     password: { type: DataTypes.STRING, allowNull: false },
     firstName: { type: DataTypes.STRING, allowNull: true },
     lastName: { type: DataTypes.STRING, allowNull: true },
-    isActive: { type: DataTypes.BOOLEAN, defaultValue: true }
+    isActive: { type: DataTypes.BOOLEAN, defaultValue: true },
+    isDeleted: { type: DataTypes.BOOLEAN, defaultValue: false }, // soft delete implementation
   });
 
   Users.associate = (models) => {

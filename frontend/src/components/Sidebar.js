@@ -17,7 +17,7 @@ const Sidebar = () => {
   return (
     <div className={styles.sidebarContainer}>
       <h2 className={styles.title}>Welcome</h2>
-      <p className={styles.userName}>{user?.username || "Guest"}</p>
+      <p className={styles.userName}>{user?.lastName || "Guest"}</p>
 
       <ul className={styles.menuList}>
         {/* Edit Profile */}
@@ -31,11 +31,18 @@ const Sidebar = () => {
 
         {/* Super Admin Access */}
         {isSuperAdmin && (
-          <li>
-            <Link to="/manage-users" className={styles.sidebarLink}>
-              <i className="fa-solid fa-users-gear"></i> Manage Users
-            </Link>
-          </li>
+          <>
+            <li>
+              <Link to="/create-user" className={styles.sidebarLink}>
+                <i className="fa-solid fa-user-plus"></i> Create User
+              </Link>
+            </li>
+            <li>
+              <Link to="/manage-users" className={styles.sidebarLink}>
+                <i className="fa-solid fa-users-gear"></i> Manage Users
+              </Link>
+            </li>
+          </>
         )}
 
         {/* Warehouse Manager Access */}

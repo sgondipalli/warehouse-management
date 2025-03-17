@@ -10,7 +10,9 @@ import Dashboard from "./pages/Dashboard";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import UnauthorizedPage from "./pages/Unauthorized";  // New Unauthorized Page
-import ManageUsers from "./pages/ManageUsers";  // New User Management Page
+import ManageUserService from "./components/ManageUserService";
+import CreateUserService from "./components/CreateUserService";
+import EditProfile from "./components/Editprofile";
 
 const OktaCallback = () => {
   const { handleOktaCallback } = useAuth();
@@ -41,6 +43,7 @@ const AppLayout = () => {
             <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route path="/unauthorized" element={<UnauthorizedPage />} /> {/* Unauthorized Page */}
             <Route path="/auth/callback" element={<OktaCallback />} /> {/* Okta Authentication Callback */}
+            <Route path="/dashboard" element={<Dashboard />} />
 
             {/* Protected Routes */}
             <Route
@@ -57,10 +60,28 @@ const AppLayout = () => {
               path="/manage-users"
               element={
                 <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager"]}>
-                  <ManageUsers />
+                  <ManageUserService />
                 </PrivateRoute>
               }
             />
+            <Route
+              path="/create-user"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager"]}>
+                  <CreateUserService />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/edit-profile"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager", "Warehouse Worker", "Auditor/Compliance Officer", "Delivery Agent"]}>
+                  <EditProfile />
+                </PrivateRoute>
+              }
+            />
+
+
           </Routes>
         </div>
       </div>

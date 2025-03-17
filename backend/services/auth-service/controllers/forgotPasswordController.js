@@ -1,6 +1,7 @@
 const { Users } = require("../../../common/db/models");
 const sendEmail = require("../utils/emailSender");
 const jwt = require("jsonwebtoken");
+const logger = require('../../../common/utils/logger');
 require("dotenv").config();
 
 const forgotPassword = async (req, res) => {
@@ -11,12 +12,14 @@ const forgotPassword = async (req, res) => {
     const user = await Users.findOne({ where: { email } });
 
     if (!user) {
+      logger.warn("Password reset attempted for non-existent user", { email });
       return res.status(404).json({ message: "No account found with this email." });
     }
 
     // **For Okta Users → Redirect to Okta Reset Page**
     if (user.authProvider === "okta") {
       const oktaResetLink = `https://${process.env.OKTA_DOMAIN}/signin/reset-password`;
+      logger.info("Redirecting Okta user to Okta reset page", { userId: user.id, email });
       return res.json({ message: "Redirecting to Okta password reset", redirectTo: oktaResetLink });
     }
 
@@ -44,11 +47,13 @@ const forgotPassword = async (req, res) => {
     });
 
     if (!emailSent) {
+      logger.error("Password reset email failed to send", { userId: user.id, email });
       return res.status(500).json({ message: "Failed to send the email. Please try again." });
     }
-
+    logger.info("Password reset email sent successfully", { userId: user.id, email });
     res.status(200).json({ message: "Password reset email sent successfully." });
   } catch (err) {
+    logger.error("Error processing forgot password request", { error: err.message, email });
     console.error("Error in forgotPassword:", err);
     res.status(500).json({ message: "An error occurred while processing your request." });
   }

@@ -20,9 +20,11 @@ export const AuthProvider = ({ children }) => {
     token: localStorage.getItem("token") || null,
   });
 
-  /** 🔹 Logout Function for BOTH Email/Password & Okta */
+  const [loading, setLoading] = useState(true);
+  /** Logout Function for BOTH Email/Password & Okta */
   const logout = useCallback(async () => {
     console.log("Logging out...");
+    console.log("Token in localStorage before logout:", localStorage.getItem("token"));
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
@@ -36,27 +38,39 @@ export const AuthProvider = ({ children }) => {
     window.location.href = "/login";
   }, []);
 
-  /** 🔹 Fetch user details from backend (For Email/Password Authentication) */
+  /** Fetch user details from backend (For Email/Password Authentication) */
   const fetchUser = useCallback(
     async (token) => {
       try {
+        console.log("Fetching user with token:", token);
+
         const response = await fetch("http://localhost:5001/auth/me", {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         });
 
         if (!response.ok) {
+          console.log("Token is invalid or expired. Logging out...");
           logout();
           return;
         }
 
         const data = await response.json();
+        console.log("User data received:", data);
         setAuthState({
           isAuthenticated: true,
-          user: data.user,
+          user: {
+            id: data.user.id,
+            username: data.user.username,
+            email: data.user.email,
+            firstName: data.user.firstName, 
+            lastName: data.user.lastName,    
+          },
           roles: Array.isArray(data.roles) ? data.roles : [],
           token,
         });
+        
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching user:", error);
         logout();
@@ -123,37 +137,51 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  /** 🔹 Restore Session on Refresh */
-  useEffect(() => {
-    const restoreSession = async () => {
-      const token = localStorage.getItem("token");
+  /** Restore Session on Refresh */
+  const restoreSession = async () => {
+    const token = localStorage.getItem("token");
+    console.log("Restoring session with token:", token);
 
-      if (token && !authState.isAuthenticated) {
-        try {
-          const sessionExists = await oktaAuth.session.exists();
-          if (sessionExists) {
-            const userInfo = await oktaAuth.getUser();
-            setAuthState({
-              isAuthenticated: true,
-              user: userInfo,
-              roles: [], // Fetch roles if needed
-              token,
-            });
-          } else {
-            fetchUser(token);
-          }
-        } catch (error) {
-          console.error("Session Restore Error:", error);
-          logout();
-        }
+    if (token) {
+      try {
+        console.log("Checking backend session first...");
+        await fetchUser(token);
+        return;
+      } catch (error) {
+        console.log("Backend session failed. Checking Okta session...");
       }
-    };
 
+      try {
+        const sessionExists = await oktaAuth.session.exists();
+        if (sessionExists) {
+          const userInfo = await oktaAuth.getUser();
+          console.log("User authenticated via Okta session:", userInfo);
+
+          setAuthState({
+            isAuthenticated: true,
+            user: userInfo,
+            roles: [],
+            token,
+          });
+        }
+      } catch (error) {
+        console.error("Okta session restore failed:", error);
+      }
+    }
+
+    setLoading(false); // Ensure loading state updates if session is not restored
+  };
+
+  useEffect(() => {
     restoreSession();
-  }, [authState.isAuthenticated, fetchUser, logout]);
+  }, []);
+
+  useEffect(() => {
+    console.log("Auth state updated:", authState);
+  }, [authState]);
 
   return (
-    <AuthContext.Provider value={{ authState, login, loginWithOkta, logout, handleOktaCallback }}>
+    <AuthContext.Provider value={{ authState, login, loginWithOkta, logout, handleOktaCallback, loading }}>
       {children}
     </AuthContext.Provider>
   );

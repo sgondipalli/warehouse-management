@@ -1,0 +1,167 @@
+.manageUserContainer {
+    background: #fdfdfd;
+    padding: 80px;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 95%;
+    margin-left: 30px;
+    margin-top: 80px;
+
+
+}
+
+.manageUserContainer h3 {
+    font-size: 30px;
+    font-weight: bold;
+    color: #1f3a93;
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.filterContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+.searchInput {
+    flex-grow: 1;
+    max-width: 300px;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+}
+
+.roleFilter {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    background: white;
+    cursor: pointer;
+}
+
+.tableContainer {
+    overflow-x: auto;
+    max-height: 700px;
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+/* Sticky Header */
+thead {
+    position: sticky;
+    top: 0;
+    background: #007bff;
+    color: white;
+    z-index: 1000;
+}
+
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+    padding: 12px;
+    text-align: left;
+}
+
+td {
+    color: #333;
+}
+
+tr:nth-child(even) {
+    background: #f2f2f2;
+}
+
+tr:hover {
+    background: #e8f0fe;
+}
+
+button {
+    padding: 8px 12px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.pagination {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.paginationButton {
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    background: #007bff;
+    color: white;
+    transition: background 0.3s;
+}
+
+.paginationButton:hover {
+    background: #0056b3;
+}
+
+.activePage {
+    /* background: #0056b3 !important; */
+    font-weight: bold;
+}
+
+
+.updateButton {
+    background: #28a745;
+    color: white;
+    transition: background 0.3s;
+}
+
+.updateButton:hover {
+    background: #218838;
+}
+
+.deleteButton {
+    background: #dc3545;
+    color: white;
+    transition: background 0.3s;
+}
+
+.deleteButton:hover {
+    background: #b22222;
+}
+
+@media (max-width: 768px) {
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+}

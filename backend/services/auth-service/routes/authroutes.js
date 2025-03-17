@@ -20,6 +20,7 @@ router.get("/users", authMiddleware, authController.getAllUsers);
 router.post("/logout", authMiddleware, authController.logout);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
+router.put('/edit-profile', authMiddleware, authController.editUserProfile);
 
 
 module.exports = router;

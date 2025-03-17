@@ -24,11 +24,11 @@
 
 .container {
     flex-grow: 1;
-    padding: 30px 10px; /* Adjusted padding */
-    margin-left: 50px; /* Space for sidebar */
+    padding: 30px 10px; 
+    margin-left: 50px; 
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 60px); /* Adjust height to fit screen */
+    min-height: calc(100vh - 60px); 
 }
 
 /* Ensure content does not get cut off */
@@ -83,3 +83,4 @@
     width: 100%;
     margin-top: auto;
 }
+

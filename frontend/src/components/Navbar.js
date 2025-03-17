@@ -23,6 +23,9 @@ const Navbar = () => {
         <Link to="/">Track-Trace</Link>
       </h1>
       <div className={styles.links}>
+        <Link to="/" className={styles.navButton}>
+          <i className="bi bi-house-door" /> Home
+        </Link>
         <Link to="/about-us">
           <i className="bi bi-info-circle" /> About Us
         </Link>

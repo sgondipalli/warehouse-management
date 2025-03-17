@@ -29,7 +29,7 @@ const Dashboard = () => {
         {/* Main Content */}
         <div className={styles.container}>
           <div className={styles.content}>
-            <h1>Welcome, {user ? user.username : "Guest"}!</h1>
+            <h1>Welcome, {user ? user.lastName : "Guest"}!</h1>
             <p>Role: {Array.isArray(roles) && roles.length > 0 ? roles.join(", ") : "No roles assigned"}</p>
 
             {/* Role-based Content in a 4x4 Grid */}
@@ -63,10 +63,21 @@ const Dashboard = () => {
               )}
 
               {(isSuperAdmin || isManager) && (
-                <Link to="/serialization" className={styles.gridItem}>
-                  <i className="fa-solid fa-barcode"></i>
-                  <span>Serialization & Tracking</span>
-                </Link>
+                <>
+                  <Link to="/serialization" className={styles.gridItem}>
+                    <i className="fa-solid fa-barcode"></i>
+                    <span>Serialization & Tracking</span>
+                  </Link>
+                  <Link to="/create-user" className={styles.gridItem}>
+                    <i className="fa-solid fa-user-plus"></i>
+                    <span>Create User</span>
+                  </Link>
+                  <Link to="/manage-users" className={styles.gridItem}>
+                    <i className="fa-solid fa-users-gear"></i>
+                    <span>Manage Users</span>
+                  </Link>
+                </>
+
               )}
             </div>
           </div>
@@ -74,7 +85,7 @@ const Dashboard = () => {
       </div>
 
       {/* Footer is placed outside of contentWrapper */}
-      
+
     </div>
   );
 };

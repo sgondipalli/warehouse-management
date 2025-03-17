@@ -1,0 +1,135 @@
+/* Center the form in the dashboard */
+.createUserContainer {
+    max-width: 800px;
+    margin: 100px auto;
+    padding: 60px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+/* Title Styling */
+.createUserContainer h3 {
+    font-size: 30px;
+    font-weight: bold;
+    color: #1f3a93;
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+/* Form Layout (Two Columns) */
+.createUserForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    width: 100%;
+    align-items: center;
+}
+
+/* Make Full-Width Fields for Certain Inputs */
+.full-width {
+    grid-column: span 2;
+}
+
+/* Form Group Styling */
+.formGroup {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    width: 100%;
+}
+
+/* Label Styling */
+.formGroup label {
+    min-width: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    text-align: right;
+    line-height: 35px;
+    margin-bottom: 10px;
+}
+
+/* Required Asterisk */
+.formGroup label::after {
+    content: " *";
+    color: red;
+    font-weight: bold;
+}
+
+.formGroup input {
+    height: 20px;
+    flex: 0 0 500px;
+
+}
+
+/* Input Fields Styling */
+.createUserForm input,
+.createUserForm select {
+    flex-grow: 1;
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 18px;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+}
+
+/* Increase Font Size for Better Visibility */
+.createUserForm input,
+.createUserForm select {
+    font-size: 18px;
+}
+
+/* Focus Effect */
+.createUserForm input:focus,
+.createUserForm select:focus {
+    border-color: #1f3a93;
+    box-shadow: 0 0 5px rgba(31, 58, 147, 0.3);
+}
+
+/* Error Message */
+.createUserError {
+    color: red;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+/* Submit Button */
+.createButton {
+    width: 100%;
+    background: #214ee1;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    grid-column: span 2;
+    margin-top: 20px;
+}
+
+.createButton:hover {
+    background: #d6ecd1;
+}
+
+/* Responsive Design for Small Screens */
+@media (max-width: 768px) {
+    .createUserForm {
+        grid-template-columns: 1fr;
+    }
+
+    .formGroup {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .formGroup label {
+        text-align: left;
+        min-width: 100%;
+    }
+}
