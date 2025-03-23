@@ -12,7 +12,10 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import UnauthorizedPage from "./pages/Unauthorized";  // New Unauthorized Page
 import ManageUserService from "./components/ManageUserService";
 import CreateUserService from "./components/CreateUserService";
+import CreateTradeItem from "./components/CreateTradeItemService";
 import EditProfile from "./components/Editprofile";
+import ManageTradeItems from "./components/ManageTradeItems";
+import EditTradeItemService from "./components/EditTradeItemService";
 
 const OktaCallback = () => {
   const { handleOktaCallback } = useAuth();
@@ -72,6 +75,33 @@ const AppLayout = () => {
                 </PrivateRoute>
               }
             />
+            <Route
+              path="/create-trade-item"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager"]}>
+                  <CreateTradeItem />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/manage-trade-items"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager"]}>
+                  <ManageTradeItems />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/edit-trade-item/:id"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager"]}>
+                  <EditTradeItemService />
+                </PrivateRoute>
+              }
+            />
+
+
             <Route
               path="/edit-profile"
               element={

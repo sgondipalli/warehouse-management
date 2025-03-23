@@ -42,6 +42,17 @@ const Sidebar = () => {
                 <i className="fa-solid fa-users-gear"></i> Manage Users
               </Link>
             </li>
+            <li>
+              <Link to="/create-trade-item" className={styles.sidebarLink}>
+                <i className="fa fa-barcode"></i> Create Trade Item
+              </Link>
+            </li>
+            <li>
+              <Link to="/manage-trade-items" className={styles.gridItem}>
+                <i className="fa-solid fa-warehouse"></i>
+                <span>Manage Trade Items</span>
+              </Link>
+            </li>
           </>
         )}
 
@@ -56,6 +67,17 @@ const Sidebar = () => {
             <li>
               <Link to="/manage-inventory" className={styles.sidebarLink}>
                 <i className="fa-solid fa-boxes-stacked"></i> Manage Inventory
+              </Link>
+            </li>
+            <li>
+              <Link to="/create-trade-item" className={styles.sidebarLink}>
+                <i className="fa fa-barcode"></i> Create Trade Item
+              </Link>
+            </li>
+            <li>
+              <Link to="/manage-trade-items" className={styles.gridItem}>
+                <i className="fa-solid fa-warehouse"></i>
+                <span>Manage Trade Items</span>
               </Link>
             </li>
           </>

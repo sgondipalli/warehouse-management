@@ -76,6 +76,15 @@ const Dashboard = () => {
                     <i className="fa-solid fa-users-gear"></i>
                     <span>Manage Users</span>
                   </Link>
+                  <Link to="/create-trade-item" className={styles.gridItem}>
+                    <i className="fa-solid fa-boxes-packing"></i>
+                    <span>Create Trade Item</span>
+                  </Link>
+                  <Link to="/manage-trade-items" className={styles.gridItem}>
+                    <i className="fa-solid fa-warehouse"></i>
+                    <span>Manage Trade Items</span>
+                  </Link>
+
                 </>
 
               )}

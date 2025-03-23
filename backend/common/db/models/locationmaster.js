@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
 
   LocationMaster.associate = (models) => {
     LocationMaster.belongsTo(models.AddressTable, { foreignKey: "AddressID" });
-    LocationMaster.hasMany(models.TradeItem, { foreignKey: "LocationID" });
+    // LocationMaster.hasMany(models.TradeItem, { foreignKey: "LocationID" });
     LocationMaster.hasMany(models.Transactions, { foreignKey: "LocationID" });
     LocationMaster.hasMany(models.Events, { foreignKey: "LocationID" });
     LocationMaster.hasMany(models.StorageBin, { foreignKey: "LocationID" });
