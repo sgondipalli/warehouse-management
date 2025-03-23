@@ -2,3 +2,18 @@
 {"count":9,"level":"info","message":"Fetched all users successfully","timestamp":"2025-03-17 11:38:45"}
 {"count":9,"level":"info","message":"Fetched all users successfully","timestamp":"2025-03-17 11:38:45"}
 {"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-03-17 13:19:28","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-03-17 14:44:55","userId":1}
+{"count":9,"level":"info","message":"Fetched all users successfully","timestamp":"2025-03-17 14:45:00"}
+{"count":9,"level":"info","message":"Fetched all users successfully","timestamp":"2025-03-17 14:45:00"}
+{"level":"info","message":"User soft-deleted successfully","timestamp":"2025-03-17 14:45:10","userId":15}
+{"level":"info","message":"User restored successfully","timestamp":"2025-03-17 14:45:17","userId":15}
+{"count":9,"level":"info","message":"Fetched all users successfully","timestamp":"2025-03-17 14:45:47"}
+{"count":9,"level":"info","message":"Fetched all users successfully","timestamp":"2025-03-17 14:45:47"}
+{"level":"info","message":"User soft-deleted successfully","timestamp":"2025-03-17 14:45:49","userId":15}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-03-22 18:50:43","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-03-22 19:08:30","userId":1}
+{"count":8,"level":"info","message":"Fetched all users successfully","timestamp":"2025-03-22 19:14:39"}
+{"count":8,"level":"info","message":"Fetched all users successfully","timestamp":"2025-03-22 19:14:39"}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-03-23 12:28:44","userId":1}
+{"count":8,"level":"info","message":"Fetched all users successfully","timestamp":"2025-03-23 12:29:59"}
+{"count":8,"level":"info","message":"Fetched all users successfully","timestamp":"2025-03-23 12:29:59"}

@@ -1,0 +1,74 @@
+.formContainer {
+    max-width: 800px;
+    margin: 80px auto;
+    padding: 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+}
+
+.formTitle {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.createForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    margin-top: 10px;
+    font-weight: 600;
+    color: #34495e;
+}
+
+.input,
+.select,
+.textarea {
+    padding: 10px;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.submitButton {
+    padding: 12px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submitButton:hover {
+    background-color: #0056b3;
+}
+
+.errorMessage {
+    color: #e74c3c;
+    font-weight: 500;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.successMessage {
+    color: #27ae60;
+    font-weight: 500;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
