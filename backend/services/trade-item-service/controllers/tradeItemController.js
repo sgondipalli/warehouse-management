@@ -1,9 +1,10 @@
 const { TradeItem } = require("../../../common/db/models");
 const { generateGTIN14, isValidGTIN14 } = require("../utils/gtinService");
+const logger = require("../../../common/utils/logger");
 const {
   publishTradeItemCreated,
   publishTradeItemUpdated,
-  publishTradeItemDeleted
+  publishTradeItemDeleted,
 } = require("../kafka/tradeItemProducer");
 
 // Create Trade Item
@@ -28,11 +29,13 @@ exports.createTradeItem = async (req, res) => {
     }
 
     if (!isValidGTIN14(generatedGTIN)) {
+      logger.warn("Invalid GTIN-14 format.", { generatedGTIN });
       return res.status(400).json({ message: "Invalid GTIN-14 format." });
     }
 
     const existingTradeItem = await TradeItem.findOne({ where: { GTIN: generatedGTIN } });
     if (existingTradeItem) {
+      logger.info("GTIN already exists", { generatedGTIN });
       return res.status(400).json({ message: "GTIN already exists" });
     }
 
@@ -46,11 +49,12 @@ exports.createTradeItem = async (req, res) => {
       TradeItemCategory,
     });
 
+    logger.info("Trade Item created", { TradeItemID: newTradeItem.TradeItemID });
     await publishTradeItemCreated(newTradeItem);
 
     res.status(201).json({ message: "Trade Item created successfully", data: newTradeItem });
   } catch (error) {
-    console.error("Error in createTradeItem:", error);
+    logger.error("Error in createTradeItem", { error });
     res.status(500).json({ message: "Internal server error", error: error.message });
   }
 };
@@ -67,6 +71,8 @@ exports.getAllTradeItems = async (req, res) => {
       order: [["createdAt", "DESC"]],
     });
 
+    logger.info("Fetched trade items", { count: tradeItems.count, page });
+
     res.status(200).json({
       totalItems: tradeItems.count,
       totalPages: Math.ceil(tradeItems.count / limit),
@@ -74,7 +80,7 @@ exports.getAllTradeItems = async (req, res) => {
       data: tradeItems.rows,
     });
   } catch (error) {
-    console.error("Error in getAllTradeItems:", error);
+    logger.error("Error in getAllTradeItems", { error });
     res.status(500).json({ message: "Internal server error", error: error.message });
   }
 };
@@ -84,11 +90,14 @@ exports.getTradeItemById = async (req, res) => {
   try {
     const { id } = req.params;
     const tradeItem = await TradeItem.findByPk(id);
-    if (!tradeItem) return res.status(404).json({ message: "Trade Item not found" });
+    if (!tradeItem) {
+      logger.warn("Trade Item not found", { id });
+      return res.status(404).json({ message: "Trade Item not found" });
+    }
 
     res.status(200).json(tradeItem);
   } catch (error) {
-    console.error("Error in getTradeItemById:", error);
+    logger.error("Error in getTradeItemById", { error });
     res.status(500).json({ message: "Internal server error", error: error.message });
   }
 };
@@ -100,14 +109,18 @@ exports.updateTradeItem = async (req, res) => {
     const updatedData = req.body;
 
     const tradeItem = await TradeItem.findByPk(id);
-    if (!tradeItem) return res.status(404).json({ message: "Trade Item not found" });
+    if (!tradeItem) {
+      logger.warn("Trade Item not found for update", { id });
+      return res.status(404).json({ message: "Trade Item not found" });
+    }
 
     await tradeItem.update(updatedData);
     await publishTradeItemUpdated(tradeItem);
 
+    logger.info("Trade Item updated", { TradeItemID: id });
     res.status(200).json({ message: "Trade Item updated successfully", data: tradeItem });
   } catch (error) {
-    console.error("Error in updateTradeItem:", error);
+    logger.error("Error in updateTradeItem", { error });
     res.status(500).json({ message: "Internal server error", error: error.message });
   }
 };
@@ -118,14 +131,18 @@ exports.deleteTradeItem = async (req, res) => {
     const { id } = req.params;
     const tradeItem = await TradeItem.findByPk(id);
 
-    if (!tradeItem) return res.status(404).json({ message: "Trade Item not found" });
+    if (!tradeItem) {
+      logger.warn("Trade Item not found for deletion", { id });
+      return res.status(404).json({ message: "Trade Item not found" });
+    }
 
     await tradeItem.destroy();
     await publishTradeItemDeleted(id);
 
+    logger.info("Trade Item deleted", { TradeItemID: id });
     res.status(200).json({ message: "Trade Item deleted successfully" });
   } catch (error) {
-    console.error("Error in deleteTradeItem:", error);
+    logger.error("Error in deleteTradeItem", { error });
     res.status(500).json({ message: "Internal server error", error: error.message });
   }
 };
