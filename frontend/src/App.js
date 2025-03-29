@@ -16,6 +16,12 @@ import CreateTradeItem from "./components/CreateTradeItemService";
 import EditProfile from "./components/Editprofile";
 import ManageTradeItems from "./components/ManageTradeItems";
 import EditTradeItemService from "./components/EditTradeItemService";
+import StockLevelUI from "./components/StockLevelService";
+import ManageLocations from "./components/ManageLocations";
+import CreateLocation from "./components/CreateLocation";
+import EditLocation from "./components/EditLocation";
+import ZoneRackShelfBin from "./components/ZoneRackShelfBin";
+
 
 const OktaCallback = () => {
   const { handleOktaCallback } = useAuth();
@@ -101,6 +107,47 @@ const AppLayout = () => {
               }
             />
 
+            <Route
+              path="/stock-levels"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager"]}>
+                  <StockLevelUI />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/locations"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager"]}>
+                  <ManageLocations />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/locations/create"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager"]}>
+                  <CreateLocation />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/locations/edit/:id"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager"]}>
+                  <EditLocation />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/locations/storage"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager"]}>
+                  <ZoneRackShelfBin />
+                </PrivateRoute>
+              }
+            />
 
             <Route
               path="/edit-profile"

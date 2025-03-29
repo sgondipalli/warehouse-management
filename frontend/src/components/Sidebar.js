@@ -53,6 +53,26 @@ const Sidebar = () => {
                 <span>Manage Trade Items</span>
               </Link>
             </li>
+            <li>
+              <Link to="/stock-levels" className={styles.gridItem}>
+                <i className="fa-solid fa-layer-group"></i>
+                <span>Stock Level Service</span>
+              </Link>
+
+            </li>
+            <li>
+              <Link to="/locations" className={styles.gridItem}>
+                <i className="fa-solid fa-location-dot"></i>
+                <span>Manage Locations</span>
+              </Link>
+            </li>
+            <li>
+
+              <Link to="/locations/storage" className={styles.gridItem}>
+                <i className="fa-solid fa-boxes-stacked"></i>
+                <span>Zone & Bin Structure</span>
+              </Link>
+            </li>
           </>
         )}
 
@@ -79,6 +99,13 @@ const Sidebar = () => {
                 <i className="fa-solid fa-warehouse"></i>
                 <span>Manage Trade Items</span>
               </Link>
+            </li>
+            <li>
+              <Link to="/stock-levels" className={styles.gridItem}>
+                <i className="fa-solid fa-layer-group"></i>
+                <span>Stock Level Service</span>
+              </Link>
+
             </li>
           </>
         )}

@@ -9,3 +9,87 @@
 {"TradeItemID":3,"level":"info","message":"Trade Item created","timestamp":"2025-03-23 15:29:57"}
 {"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-23 15:29:59"}
 {"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-23 15:29:59"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 12:26:29"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 12:26:29"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 12:29:05"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 12:29:05"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-03-25 12:29:09"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-03-25 12:29:09"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-03-25 12:29:09"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-03-25 12:29:09"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-03-25 12:29:09"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-03-25 12:29:09"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-03-25 12:29:09"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-03-25 12:29:09"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 13:07:03"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 13:07:03"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 13:07:10"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 13:07:10"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 13:24:29"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 13:24:29"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 13:34:09"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 13:34:09"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 13:37:05"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 13:37:05"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-03-25 13:37:08"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-03-25 13:37:08"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-03-25 13:37:08"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-03-25 13:37:08"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-03-25 13:37:08"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-03-25 13:37:08"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-03-25 13:37:08"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-03-25 13:37:08"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-03-25 13:39:30"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-03-25 13:39:30"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-03-25 13:39:30"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-03-25 13:39:30"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-03-25 13:39:30"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-03-25 13:39:30"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-03-25 13:39:30"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-03-25 13:39:30"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 13:39:33"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 13:39:33"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 13:39:37"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 13:39:37"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 13:52:28"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 13:52:28"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 14:17:37"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 14:17:37"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-03-25 14:17:48"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-03-25 14:17:48"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-03-25 14:17:48"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-03-25 14:17:48"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-03-25 14:17:48"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-03-25 14:17:48"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-03-25 14:17:48"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-03-25 14:17:48"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 14:17:49"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 14:17:49"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 14:17:55"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 14:17:55"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 14:34:50"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 14:34:50"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 15:21:58"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 15:21:58"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 15:30:17"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 15:30:17"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 15:52:45"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 15:52:45"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 16:10:27"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 16:10:27"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 16:11:06"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-25 16:11:06"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-26 10:49:46"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-26 10:49:46"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-03-26 14:31:36"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-03-26 14:31:36"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-03-26 14:31:36"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-03-26 14:31:36"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-03-26 14:31:36"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-03-26 14:31:36"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-03-26 14:31:36"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-03-26 14:31:36"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-26 14:31:44"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-26 14:31:44"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-26 15:28:49"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-03-26 15:28:49"}

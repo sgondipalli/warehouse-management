@@ -1,0 +1,66 @@
+.wrapper {
+    padding: 20px;
+    max-width: 900px;
+    margin: auto;
+}
+
+.formGroup {
+    margin-bottom: 20px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.zoneList {
+    margin-top: 30px;
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.zoneBox {
+    background: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+input,
+select {
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.message {
+    color: green;
+    margin-top: 10px;
+}
+
+.messageBox {
+    background-color: #ffe9e9;
+    border-left: 4px solid red;
+    padding: 10px;
+    margin-bottom: 15px;
+    color: #b20000;
+    font-weight: bold;
+}

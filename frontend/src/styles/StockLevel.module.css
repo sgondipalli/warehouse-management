@@ -1,0 +1,216 @@
+.stockWrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #f9fafe;
+    font-family: "Segoe UI", sans-serif;
+}
+
+.contentWrapper {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    margin-top: 60px;
+}
+
+.container {
+    flex: 1;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    margin: 2rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    overflow-y: auto;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Search & Filter */
+.filterRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.filterGroup {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 250px;
+}
+
+.filterGroup label {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 0.3rem;
+}
+
+.filterGroup input,
+.filterGroup select {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    font-size: 1rem;
+}
+
+.error {
+    color: red;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.success {
+    color: green;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.stockTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.stockTable th,
+.stockTable td {
+    padding: 0.9rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.stockTable th {
+    background-color: #2563eb;
+    color: white;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.stockTable td {
+    color: #333;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.stockTable tr:hover {
+    background-color: #f5f7fa;
+}
+
+.stockTable td button {
+    margin-right: 0.4rem;
+    padding: 0.3rem 0.6rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.stockTable td button:first-child {
+    background-color: #facc15;
+    color: #333;
+}
+
+.stockTable td button:last-child {
+    background-color: #ef4444;
+    color: white;
+}
+
+/* Reuse container */
+.formContainer {
+    background-color: #f8fafc;
+    padding: 1.5rem 2rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.formHeader {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1rem;
+    border-left: 4px solid #2563eb;
+    padding-left: 0.6rem;
+}
+
+.formRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+}
+
+.formGroup {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.formGroup label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+    color: #374151;
+}
+
+.formGroup input,
+.formGroup select {
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background-color: white;
+    transition: border 0.3s;
+}
+
+.formGroup input:focus,
+.formGroup select:focus {
+    border-color: #2563eb;
+    outline: none;
+}
+
+.formActions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.submitBtn {
+    background-color: #2563eb;
+    color: white;
+    padding: 0.5rem 1.2rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submitBtn:hover {
+    background-color: #1d4ed8;
+}
+
+.clearBtn {
+    background-color: #9ca3af;
+    color: white;
+    padding: 0.5rem 1.2rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.clearBtn:hover {
+    background-color: #6b7280;
+}
