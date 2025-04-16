@@ -1,4 +1,4 @@
-const { Zone } = require("../../../common/db/models");
+const { Zone, Rack, Shelf, StorageBin } = require("../../../common/db/models");
 const logger = require("../../../common/utils/logger");
 
 // zoneController.js
@@ -60,7 +60,7 @@ exports.deleteZone = async (req, res) => {
   try {
     const zone = await Zone.findByPk(req.params.id);
     if (!zone) return res.status(404).json({ message: "Zone not found" });
-    await zone.destroy();
+    await zone.update({ isDeleted: true });
     res.status(200).json({ message: "Zone deleted" });
   } catch (error) {
     logger.error("Delete Zone Error", error);
@@ -77,3 +77,45 @@ exports.getZoneDropdown = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch zone dropdown", error: error.message });
   }
 };
+
+exports.getZoneHierarchy = async (req, res) => {
+  const { locationId } = req.query;
+
+  if (!locationId) {
+    return res.status(400).json({ message: "Location ID is required" });
+  }
+
+  try {
+    const zones = await Zone.findAll({
+      where: { LocationID: locationId, isDeleted: false },
+      include: [
+        {
+          model: Rack,
+          where: { isDeleted: false },
+          required: false,
+          include: [
+            {
+              model: Shelf,
+              where: { isDeleted: false },
+              required: false,
+              include: [
+                {
+                  model: StorageBin,
+                  where: { isDeleted: false },
+                  required: false,
+                  attributes: ["id", "BinNumber", "MaxCapacity", "CurrentStock"],
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    });
+
+    res.status(200).json(zones);
+  } catch (error) {
+    logger.error("Fetch Zone Hierarchy Error", error);
+    res.status(500).json({ message: "Failed to fetch zone hierarchy", error: error.message });
+  }
+};
+

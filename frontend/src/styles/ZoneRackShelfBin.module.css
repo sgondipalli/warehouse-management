@@ -1,7 +1,8 @@
 .wrapper {
-    padding: 20px;
-    max-width: 900px;
+    padding: 32px;
+    max-width: 1100px;
     margin: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .formGroup {
@@ -9,58 +10,112 @@
 }
 
 .form {
+    background: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-}
-
-.zoneList {
-    margin-top: 30px;
-    background: #f1f1f1;
-    padding: 10px;
-    border-radius: 4px;
-}
-
-.zoneBox {
-    background: #fff;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    gap: 15px;
 }
 
 input,
 select {
     padding: 10px;
+    font-size: 14px;
     width: 100%;
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
+    transition: border 0.2s ease;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #007bff;
 }
 
 button {
-    background: #28a745;
+    background: #007bff;
     color: white;
-    padding: 10px;
+    padding: 8px 14px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
 }
 
 button:hover {
-    background-color: #218838;
-}
-
-.message {
-    color: green;
-    margin-top: 10px;
+    background-color: #0056b3;
 }
 
 .messageBox {
-    background-color: #ffe9e9;
-    border-left: 4px solid red;
+    background-color: #eafaf1;
+    border-left: 5px solid #28a745;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    color: #155724;
+    font-weight: 500;
+}
+
+.zoneList {
+    margin-top: 20px;
+}
+
+.zoneBox {
+    background: #ffffff;
+    border-left: 4px solid #007bff;
+    margin-bottom: 16px;
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+}
+
+.zoneBox strong {
+    font-size: 16px;
+    color: #343a40;
+}
+
+.rackBox {
+    margin-left: 20px;
     padding: 10px;
-    margin-bottom: 15px;
-    color: #b20000;
-    font-weight: bold;
+    background: #f6f9fc;
+    border-left: 3px solid #17a2b8;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+
+.shelfBox {
+    margin-left: 30px;
+    padding: 8px;
+    background: #fff3cd;
+    border-left: 3px solid #ffc107;
+    margin-top: 8px;
+    border-radius: 4px;
+}
+
+.binBox {
+    margin-left: 40px;
+    padding: 6px;
+    background: #f8f9fa;
+    border-left: 3px solid #6c757d;
+    margin-top: 6px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #495057;
+}
+
+.binBox input {
+    width: 80px;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.binBox button {
+    margin-left: 5px;
+    font-size: 13px;
+    padding: 5px 10px;
 }

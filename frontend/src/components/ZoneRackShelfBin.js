@@ -15,6 +15,9 @@ const ZoneRackShelfBin = () => {
     CurrentStock: ""
   });
   const [message, setMessage] = useState("");
+  const [editBinId, setEditBinId] = useState(null);
+  const [editMaxCapacity, setEditMaxCapacity] = useState("");
+
   const BASE_URL = "http://localhost:5030/api";
 
   const fetchLocations = async () => {
@@ -24,8 +27,12 @@ const ZoneRackShelfBin = () => {
 
   const fetchZones = async (locationId) => {
     if (!locationId) return;
-    const res = await axios.get(`${BASE_URL}/zones?locationId=${locationId}`);
-    setZones(res.data || []);
+    try {
+      const res = await axios.get(`${BASE_URL}/zones/hierarchy?locationId=${locationId}`);
+      setZones(res.data || []);
+    } catch (error) {
+      console.error("Failed to fetch full hierarchy", error);
+    }
   };
 
   const handleLocationChange = async (e) => {
@@ -37,6 +44,51 @@ const ZoneRackShelfBin = () => {
     console.log("Zone LocationID:", zones.map(z => [z.ZoneName, z.LocationID, typeof z.LocationID]));
 
   };
+
+  const handleEdit = (bin, type) => {
+    if (type === 'bin') {
+      setEditBinId(bin.id);
+      setEditMaxCapacity(bin.MaxCapacity.toString());
+    }
+  };
+
+  const handleSaveMaxCapacity = async () => {
+    try {
+      await axios.put(`${BASE_URL}/bins/${editBinId}`, {
+        MaxCapacity: parseInt(editMaxCapacity),
+      });
+      setEditBinId(null);
+      setEditMaxCapacity("");
+      setMessage("✅ Bin updated successfully");
+      fetchZones(selectedLocation);
+    } catch (err) {
+      console.error("Update error:", err);
+      alert("Failed to update max capacity");
+    }
+  };
+
+
+
+  const handleDelete = async (id, type) => {
+    if (!window.confirm(`Are you sure you want to delete this ${type}?`)) return;
+
+    const endpointMap = {
+      zone: 'zones',
+      rack: 'racks',
+      shelf: 'shelves',
+      bin: 'bins'
+    };
+
+    try {
+      await axios.delete(`${BASE_URL}/${endpointMap[type]}/${id}`);
+      setMessage(`${type} deleted successfully`);
+      fetchZones(selectedLocation); // Refresh hierarchy
+    } catch (err) {
+      console.error("Delete error:", err);
+      alert(`Failed to delete ${type}`);
+    }
+  };
+
 
 
   const handleChange = (e) => {
@@ -133,18 +185,54 @@ const ZoneRackShelfBin = () => {
         </form>
       )}
 
-      {zones.length > 0 && (
-        <div className={styles.zoneList}>
-          <h4>Existing Zones & Bins</h4>
-          {zones
-            .filter((zone) => zone.LocationID === selectedLocation)
-            .map((zone) => (
-              <div key={zone.ZoneID} className={styles.zoneBox}>
-                <strong>Zone: {zone.ZoneName}</strong>
-              </div>
-            ))}
+      {zones.map((zone) => (
+        <div key={zone.ZoneID} className={styles.zoneBox}>
+          <strong>Zone: {zone.ZoneName}</strong>
+          <button onClick={() => handleDelete(zone.ZoneID, 'zone')}>Delete</button>
+
+          {zone.Racks?.map((rack) => (
+            <div key={rack.RackID} className={styles.rackBox}>
+              └ Rack: {rack.RackNumber}
+              <button onClick={() => handleDelete(rack.RackID, 'rack')}>Delete</button>
+
+              {rack.Shelves?.map((shelf) => (
+                <div key={shelf.ShelfID} className={styles.shelfBox}>
+                  &nbsp;&nbsp; └ Shelf: {shelf.ShelfNumber}
+                  <button onClick={() => handleDelete(shelf.ShelfID, 'shelf')}>Delete</button>
+
+                  {shelf.StorageBins?.map((bin) => (
+                    <div key={bin.id} className={styles.binBox}>
+                      &nbsp;&nbsp;&nbsp;&nbsp; └ <strong>Bin:</strong> {bin.BinNumber} &nbsp;
+
+                      {editBinId === bin.id ? (
+                        <>
+                          <input
+                            type="number"
+                            value={editMaxCapacity}
+                            onChange={(e) => setEditMaxCapacity(e.target.value)}
+                            style={{ width: "80px", marginRight: "8px" }}
+                          />
+                          <button onClick={handleSaveMaxCapacity}>Save</button>
+                          <button onClick={() => setEditBinId(null)}>Cancel</button>
+                        </>
+                      ) : (
+                        <>
+                          (Stock: {bin.CurrentStock}/{bin.MaxCapacity}){" "}
+                          <button onClick={() => handleEdit(bin, "bin")}>Edit</button>
+                          <button onClick={() => handleDelete(bin.id, "bin")}>Delete</button>
+                        </>
+                      )}
+                    </div>
+                  ))}
+
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
-      )}
+      ))}
+
+
 
     </div>
   );

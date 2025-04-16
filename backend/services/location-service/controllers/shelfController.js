@@ -62,7 +62,7 @@ exports.deleteShelf = async (req, res) => {
   try {
     const shelf = await Shelf.findByPk(req.params.id);
     if (!shelf) return res.status(404).json({ message: "Shelf not found" });
-    await shelf.destroy();
+    await shelf.update({ isDeleted: true });
     res.status(200).json({ message: "Shelf deleted" });
   } catch (error) {
     logger.error("Delete Shelf Error", error);

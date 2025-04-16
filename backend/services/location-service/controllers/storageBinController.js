@@ -89,7 +89,7 @@ exports.deleteStorageBin = async (req, res) => {
   try {
     const bin = await StorageBin.findByPk(req.params.id);
     if (!bin) return res.status(404).json({ message: "Storage Bin not found" });
-    await bin.destroy();
+    await bin.update({ isDeleted: true });
     res.status(200).json({ message: "Storage Bin deleted" });
   } catch (error) {
     logger.error("Delete Bin Error", error);

@@ -1,5 +1,11 @@
 'use strict';
 const { StockLevels, TradeItem, LocationMaster, StorageBin } = require("../../../common/db/models");
+const {
+  publishStockCreated,
+  publishStockUpdated,
+  publishStockDeleted
+} = require("../kafka/stockLevelProducer");
+
 const logger = require("../../../common/utils/logger");
 const { Op } = require("sequelize");
 
@@ -7,6 +13,7 @@ const { Op } = require("sequelize");
 exports.createStockLevel = async (req, res) => {
   try {
     const newStock = await StockLevels.create(req.body);
+    await publishStockCreated(newStock);
     logger.info("Stock level created:", newStock.toJSON());
     res.status(201).json({ message: "Stock level created", data: newStock });
   } catch (error) {
@@ -103,6 +110,7 @@ exports.updateStockLevel = async (req, res) => {
     if (!stock) return res.status(404).json({ message: "Stock level not found" });
 
     await stock.update(req.body);
+    await publishStockUpdated(stock);
     logger.info("Stock level updated", stock.toJSON());
     res.status(200).json({ message: "Stock level updated", data: stock });
   } catch (error) {
@@ -120,6 +128,7 @@ exports.deleteStockLevel = async (req, res) => {
     if (!stock) return res.status(404).json({ message: "Stock level not found" });
 
     await stock.destroy();
+    await publishStockDeleted(id);
     logger.info(`Stock level ID ${id} deleted`);
     res.status(200).json({ message: "Stock level deleted" });
   } catch (error) {

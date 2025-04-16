@@ -63,7 +63,7 @@ exports.deleteRack = async (req, res) => {
   try {
     const rack = await Rack.findByPk(req.params.id);
     if (!rack) return res.status(404).json({ message: "Rack not found" });
-    await rack.destroy();
+    await rack.update({ isDeleted: true });
     res.status(200).json({ message: "Rack deleted" });
   } catch (error) {
     logger.error("Delete Rack Error", error);

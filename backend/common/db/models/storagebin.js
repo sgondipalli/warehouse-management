@@ -27,12 +27,15 @@ module.exports = (sequelize, DataTypes) => {
     RackID: { type: DataTypes.INTEGER, allowNull: true },
     ShelfID: { type: DataTypes.INTEGER, allowNull: true },
     MaxCapacity: { type: DataTypes.INTEGER, allowNull: false },
-    CurrentStock: { type: DataTypes.INTEGER, allowNull: false }
+    CurrentStock: { type: DataTypes.INTEGER, allowNull: false },
+    isDeleted: { type: DataTypes.BOOLEAN, defaultValue: false },
+    deletedAt: { type: DataTypes.DATE, allowNull: true }
   }, {
     sequelize,
     modelName: 'StorageBin',
     tableName: 'StorageBins',
-    timestamps: true
+    timestamps: true,
+    paranoid: true
   });
 
   return StorageBin;
