@@ -19,12 +19,14 @@ module.exports = (sequelize, DataTypes) => {
       through: models.UserRoles, 
       foreignKey: "userId"  // Fix FK reference in association
     });
+    Users.hasMany(models.Inbound, { foreignKey: "ReceivedBy" });
   };
   
   // Hash password before saving user
   Users.beforeCreate(async (user) => {
     user.password = await bcrypt.hash(user.password, 10);
   });
+
 
   return Users;
 };

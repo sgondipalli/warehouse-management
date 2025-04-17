@@ -21,6 +21,8 @@ import ManageLocations from "./components/ManageLocations";
 import CreateLocation from "./components/CreateLocation";
 import EditLocation from "./components/EditLocation";
 import ZoneRackShelfBin from "./components/ZoneRackShelfBin";
+import InboundPage from "./components/inbound";
+import ManageSuppliers from "./components/ManageSuppliers";
 
 
 const OktaCallback = () => {
@@ -157,6 +159,26 @@ const AppLayout = () => {
                 </PrivateRoute>
               }
             />
+
+            {/* Inbound Service - Super Admin, Manager, Worker */}
+            <Route
+              path="/inbounds"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager", "Warehouse Worker"]}>
+                  <InboundPage /> {/* <-- Import this component */}
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/suppliers"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager"]}>
+                  <ManageSuppliers />
+                </PrivateRoute>
+              }
+            />
+
 
 
           </Routes>

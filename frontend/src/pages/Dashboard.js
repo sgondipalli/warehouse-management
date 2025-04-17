@@ -6,6 +6,7 @@ import DashboardNavbar from "../components/DashboardNavbar";
 import Footer from "../components/Footer";
 import styles from "../styles/Dashboard.module.css";
 
+
 const Dashboard = () => {
   const { authState } = useAuth();
   const { user, roles } = authState;
@@ -35,10 +36,17 @@ const Dashboard = () => {
             {/* Role-based Content in a 4x4 Grid */}
             <div className={styles.gridContainer}>
               {(isSuperAdmin || isManager) && (
-                <Link to="/manage-users" className={styles.gridItem}>
-                  <i className="fa-solid fa-users-cog"></i>
-                  <span>Manage Users</span>
-                </Link>
+                <>
+                  <Link to="/manage-users" className={styles.gridItem}>
+                    <i className="fa-solid fa-users-cog"></i>
+                    <span>Manage Users</span>
+                  </Link>
+                  <Link to="/suppliers" className={styles.gridItem}>
+                    <i className="fa-solid fa-building-circle-check"></i>
+                    <span>Manage Suppliers</span>
+                  </Link>
+                </>
+
               )}
 
               {isWorker && (
@@ -100,6 +108,12 @@ const Dashboard = () => {
 
                 </>
 
+              )}
+              {(isSuperAdmin || isManager || isWorker) && (
+                <Link to="/inbounds" className={styles.gridItem}>
+                  <i className="fa-solid fa-arrow-down-a-z"></i>
+                  <span>Inbounds</span>
+                </Link>
               )}
             </div>
           </div>

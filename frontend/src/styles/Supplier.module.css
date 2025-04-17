@@ -1,0 +1,91 @@
+.wrapper {
+    max-width: 1000px;
+    margin: auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.message {
+    color: green;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form input {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.form button:hover {
+    background-color: #0056b3;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    border: 1px solid #eee;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f4f4f4;
+    font-weight: 600;
+    color: #333;
+}
+
+.table td button {
+    margin-right: 8px;
+    padding: 6px 10px;
+    font-size: 13px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.table td button:first-of-type {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.table td button:last-of-type {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.table td button:hover {
+    opacity: 0.85;
+}

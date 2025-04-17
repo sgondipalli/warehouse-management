@@ -99,13 +99,27 @@ exports.deleteStorageBin = async (req, res) => {
 
 exports.getStorageBinDropdown = async (req, res) => {
   try {
-    const dropdown = await StorageBin.findAll({
-      attributes: ["BinID", "BinNumber"],
+    const bins = await StorageBin.findAll({
+      where: { isDeleted: false },
+      include: [
+        { model: Zone, attributes: ["ZoneName"] },
+        { model: Rack, attributes: ["RackNumber"] },
+        { model: Shelf, attributes: ["ShelfNumber"] },
+      ],
+      attributes: ["id", "BinNumber"],
       order: [["BinNumber", "ASC"]],
     });
+
+    // Format label like: Zone A > Rack 1 > Shelf A > BIN-001
+    const dropdown = bins.map((bin) => ({
+      id: bin.id,
+      label: `${bin.Zone?.ZoneName || "N/A"} > ${bin.Rack?.RackNumber || "N/A"} > ${bin.Shelf?.ShelfNumber || "N/A"} > ${bin.BinNumber}`,
+    }));
+
     res.status(200).json(dropdown);
   } catch (error) {
     logger.error("Dropdown Bin Error", error);
     res.status(500).json({ message: "Failed to fetch bin dropdown", error: error.message });
   }
 };
+

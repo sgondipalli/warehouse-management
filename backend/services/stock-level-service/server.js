@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const { startConsumer } = require("./kafka/inboundConsumer");
 
 // Middlewares
 app.use(express.json());
@@ -23,6 +24,9 @@ app.use("/api", stockLevelRoutes);
 app.get("/", (req, res) => {
   res.send("Stock Level Service is running!");
 });
+
+//kafka consumer
+startConsumer().catch((err) => console.error("❌ Kafka startup error", err));
 
 // Start server
 const PORT = process.env.StockServicePORT || 5020;

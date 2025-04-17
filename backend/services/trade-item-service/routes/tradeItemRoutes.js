@@ -5,6 +5,7 @@ const tradeItemController = require("../controllers/tradeItemController");
 // Define Routes
 router.post("/trade-items", tradeItemController.createTradeItem);
 router.get("/trade-items", tradeItemController.getAllTradeItems);
+router.get("/trade-items/dropdown", tradeItemController.getTradeItemDropdown);
 router.get("/trade-items/:id", tradeItemController.getTradeItemById);
 router.put("/trade-items/:id", tradeItemController.updateTradeItem);
 router.delete("/trade-items/:id", tradeItemController.deleteTradeItem);
