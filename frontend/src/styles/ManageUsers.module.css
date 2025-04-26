@@ -69,6 +69,27 @@ button {
     background: #b22222;
 }
 
+.locationBadges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.badge {
+    background-color: #007bff;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.noLocation {
+    color: #888;
+    font-style: italic;
+}
+
+
 @media (max-width: 768px) {
     table {
         display: block;

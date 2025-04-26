@@ -4,10 +4,13 @@ import { Link } from "react-router-dom";
 import styles from "../styles/Sidebar.module.css";
 
 const Sidebar = () => {
-  const { authState } = useAuth();
+  const { authState, loading } = useAuth(); // ✅ include loading
+
+  if (loading) return null; // ✅ wait for auth to be restored
+  if (!authState.user) return null;
+
   const { roles, user } = authState;
 
-  // ** Role-based Access **
   const isSuperAdmin = roles.includes("Super Admin");
   const isManager = roles.includes("Warehouse Manager");
   const isWorker = roles.includes("Warehouse Worker");
@@ -17,10 +20,9 @@ const Sidebar = () => {
   return (
     <div className={styles.sidebarContainer}>
       <h2 className={styles.title}>Welcome</h2>
-      <p className={styles.userName}>{user?.lastName || "Guest"}</p>
+      <p className={styles.userName}>{user ? `Welcome, ${authState.user.firstName}` : "Welcome, Guest"}</p>
 
       <ul className={styles.menuList}>
-        {/* Edit Profile */}
         <li>
           <Link to="/edit-profile" className={styles.sidebarLink}>
             <i className="fa-solid fa-user-pen"></i> Edit Profile
@@ -29,7 +31,6 @@ const Sidebar = () => {
 
         <h3 className={styles.sectionTitle}>Dashboard</h3>
 
-        {/* Super Admin Access */}
         {isSuperAdmin && (
           <>
             <li>
@@ -58,7 +59,6 @@ const Sidebar = () => {
                 <i className="fa-solid fa-layer-group"></i>
                 <span>Stock Level Service</span>
               </Link>
-
             </li>
             <li>
               <Link to="/locations" className={styles.gridItem}>
@@ -67,16 +67,26 @@ const Sidebar = () => {
               </Link>
             </li>
             <li>
-
               <Link to="/locations/storage" className={styles.gridItem}>
                 <i className="fa-solid fa-boxes-stacked"></i>
                 <span>Zone & Bin Structure</span>
               </Link>
             </li>
+            <li>
+              <Link to="/inbounds" className={styles.gridItem}>
+                <i className="fa-solid fa-arrow-down-a-z"></i>
+                <span>Inbounds</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/suppliers" className={styles.gridItem}>
+                <i className="fa-solid fa-building-circle-check"></i>
+                <span>Manage Suppliers</span>
+              </Link>
+            </li>
           </>
         )}
 
-        {/* Warehouse Manager Access */}
         {isManager && (
           <>
             <li>
@@ -105,21 +115,32 @@ const Sidebar = () => {
                 <i className="fa-solid fa-layer-group"></i>
                 <span>Stock Level Service</span>
               </Link>
-
+            </li>
+            <li>
+              <Link to="/suppliers" className={styles.gridItem}>
+                <i className="fa-solid fa-building-circle-check"></i>
+                <span>Manage Suppliers</span>
+              </Link>
             </li>
           </>
         )}
 
-        {/* Warehouse Worker Access */}
         {isWorker && (
-          <li>
-            <Link to="/inventory" className={styles.sidebarLink}>
-              <i className="fa-solid fa-warehouse"></i> Inventory Management
-            </Link>
-          </li>
+          <>
+            <li>
+              <Link to="/inventory" className={styles.sidebarLink}>
+                <i className="fa-solid fa-warehouse"></i> Inventory Management
+              </Link>
+            </li>
+            <li>
+              <Link to="/inbounds" className={styles.gridItem}>
+                <i className="fa-solid fa-arrow-down-a-z"></i>
+                <span>Inbounds</span>
+              </Link>
+            </li>
+          </>
         )}
 
-        {/* Auditor Access */}
         {isAuditor && (
           <li>
             <Link to="/audit-logs" className={styles.sidebarLink}>
@@ -128,7 +149,6 @@ const Sidebar = () => {
           </li>
         )}
 
-        {/* Delivery Agent Access */}
         {isDeliveryAgent && (
           <li>
             <Link to="/deliveries" className={styles.sidebarLink}>

@@ -8,6 +8,7 @@ const BASE_URL_API = "http://localhost:5001/auth";
 const ManageUserService = () => {
   const { authState } = useAuth();
   const [users, setUsers] = useState([]);
+  const [locations, setLocations] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterRole, setFilterRole] = useState("");
   const [editingUser, setEditingUser] = useState(null);
@@ -25,16 +26,27 @@ const ManageUserService = () => {
         console.error("Error fetching users.");
       }
     };
+
+    const fetchLocations = async () => {
+      try {
+        const response = await axios.get("http://localhost:5030/api/locations/dropdown", {
+          headers: { Authorization: `Bearer ${authState.token}` },
+        });
+        setLocations(response.data);
+      } catch (err) {
+        console.error("Failed to fetch location dropdown:", err);
+      }
+    };
+
     fetchUsers();
+    fetchLocations();
   }, [authState.token]);
 
-  // Soft delete user
   const handleDeleteUser = async (id) => {
     try {
       await axios.delete(`${BASE_URL_API}/delete-user/${id}`, {
         headers: { Authorization: `Bearer ${authState.token}` },
       });
-
       setUsers(users.map(user => user.id === id ? { ...user, isDeleted: true } : user));
       alert("User marked as deleted.");
     } catch (err) {
@@ -42,23 +54,36 @@ const ManageUserService = () => {
     }
   };
 
-  // Restore user
-  const handleRestoreUser = async (id, newRole) => {
+  const handleRestoreUser = async (user) => {
+    const newRole = prompt("Enter a new role (or leave blank to keep the same):", user.role);
+    if (!newRole) return;
+
+    let locationIds = [];
+    if (newRole !== "Super Admin") {
+      const selectedLocations = window.prompt(
+        `Enter comma-separated Location IDs to assign to this ${newRole} (e.g., 1,2):`
+      );
+      locationIds = selectedLocations
+        .split(",")
+        .map((id) => parseInt(id.trim()))
+        .filter((id) => !isNaN(id));
+    }
+
     try {
       await axios.post(
-        `${BASE_URL_API}/restore-user/${id}`,
-        { newRole },
+        `${BASE_URL_API}/restore-user/${user.id}`,
+        { newRole, locationIds },
         { headers: { Authorization: `Bearer ${authState.token}` } }
       );
 
-      setUsers(users.map(user => user.id === id ? { ...user, isDeleted: false, role: newRole || user.role } : user));
+      setUsers(users.map(u => u.id === user.id ? { ...u, isDeleted: false, role: newRole || user.role } : u));
       alert("User restored successfully.");
     } catch (err) {
       console.error("Error restoring user.");
+      alert("Restore failed: " + (err?.response?.data?.message || "Unknown error"));
     }
   };
 
-  // Update user role
   const handleUpdateUser = async (id, updatedRole) => {
     try {
       await axios.put(
@@ -66,8 +91,7 @@ const ManageUserService = () => {
         { role: updatedRole },
         { headers: { Authorization: `Bearer ${authState.token}` } }
       );
-
-      setUsers(users.map(user => (user.id === id ? { ...user, role: updatedRole } : user)));
+      setUsers(users.map(user => user.id === id ? { ...user, role: updatedRole } : user));
       setEditingUser(null);
       alert("User role updated successfully.");
     } catch (err) {
@@ -81,7 +105,6 @@ const ManageUserService = () => {
     (filterRole ? user.role === filterRole : true)
   );
 
-  // **Pagination Logic**
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
   const paginatedUsers = filteredUsers.slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage);
 
@@ -89,7 +112,6 @@ const ManageUserService = () => {
     <div className={styles.manageUserContainer}>
       <h3>Manage Users</h3>
 
-      {/* Search & Filter UI */}
       <div className={styles.filterContainer}>
         <input
           type="text"
@@ -112,7 +134,6 @@ const ManageUserService = () => {
         </select>
       </div>
 
-      {/*  Users Table */}
       <div className={styles.tableContainer}>
         <table>
           <thead>
@@ -121,8 +142,10 @@ const ManageUserService = () => {
               <th>Username</th>
               <th>Email</th>
               <th>Role</th>
+              <th>Assigned Locations</th>
               <th>Status</th>
               <th>Actions</th>
+
             </tr>
           </thead>
           <tbody>
@@ -144,6 +167,19 @@ const ManageUserService = () => {
                     user.role
                   )}
                 </td>
+                <td>
+                  {user.locations && user.locations.length > 0 ? (
+                    <div className={styles.locationBadges}>
+                      {user.locations.map((loc, index) => (
+                        <span key={index} className={styles.badge}>
+                          {loc}
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    <span className={styles.noLocation}>N/A</span>
+                  )}
+                </td>
                 <td>{user.isDeleted ? "Inactive (Deleted)" : "Active"}</td>
                 <td>
                   {editingUser?.id === user.id ? (
@@ -152,7 +188,7 @@ const ManageUserService = () => {
                     <button onClick={() => setEditingUser(user)} className={styles.updateButton}>Update</button>
                   )}
                   {user.isDeleted ? (
-                    <button onClick={() => handleRestoreUser(user.id, user.role)} className={styles.restoreButton}>Restore</button>
+                    <button onClick={() => handleRestoreUser(user)} className={styles.restoreButton}>Restore</button>
                   ) : (
                     <button onClick={() => handleDeleteUser(user.id)} className={styles.deleteButton}>Delete</button>
                   )}
@@ -163,7 +199,6 @@ const ManageUserService = () => {
         </table>
       </div>
 
-      {/* Pagination */}
       <div className={styles.pagination}>
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -172,7 +207,6 @@ const ManageUserService = () => {
         >
           ◀ Prev
         </button>
-
         {Array.from({ length: totalPages }, (_, i) => (
           <button
             key={i}
@@ -182,7 +216,6 @@ const ManageUserService = () => {
             {i + 1}
           </button>
         ))}
-
         <button
           onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={currentPage === totalPages}

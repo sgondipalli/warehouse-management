@@ -25,7 +25,7 @@ const HomePage = () => {
 
   return (
     <div className={styles.homePage}>
-      <Navbar />
+      {/* <Navbar /> */}
 
       {/* Running Update Section */}
       <div className={styles.runningUpdate}>

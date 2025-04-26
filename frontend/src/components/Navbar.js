@@ -8,9 +8,9 @@ const Navbar = () => {
   const { authState, logout } = useAuth(); // Access authState and logout function
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout(); // Reset authentication state
-    navigate("/login"); // Redirect to login page after logout
+  const handleLogout =async() => {
+    await logout(); // Reset authentication state
+    navigate("/login, { replace: true }"); // Redirect to login page after logout
   };
 
   if (!authState) {

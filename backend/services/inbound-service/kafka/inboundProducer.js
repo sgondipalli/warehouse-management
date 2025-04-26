@@ -46,8 +46,8 @@ const publishInboundUpdated = async (inbound) => {
   await publishInboundEvent("INBOUND_UPDATED", inbound);
 };
 
-const publishInboundDeleted = async (inboundID) => {
-  await publishInboundEvent("INBOUND_DELETED", { InboundID: inboundID });
+const publishInboundDeleted = async (inbound) => {
+  await publishInboundEvent("INBOUND_DELETED",  inbound);
 };
 
 // Optional: graceful shutdown

@@ -71,8 +71,16 @@ h2 {
     margin-bottom: 1rem;
 }
 
-.stockTable {
+.tableWrapper {
     width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+}
+
+
+.stockTable {
+    min-width: 1200px;
     border-collapse: collapse;
     margin-top: 1rem;
     background-color: #fff;
@@ -80,11 +88,28 @@ h2 {
     overflow: hidden;
 }
 
+.stockTable thead th {
+    position: sticky;
+    top: 0;
+    background-color: #2563eb;
+    color: white;
+    z-index: 10;
+    /* Ensures it sits above rows */
+    text-align: left;
+    padding: 0.9rem 1rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+
 .stockTable th,
 .stockTable td {
     padding: 0.9rem 1rem;
     text-align: left;
     border-bottom: 1px solid #eaeaea;
+    white-space: nowrap;
+    vertical-align: middle;
+
 }
 
 .stockTable th {
@@ -213,4 +238,23 @@ h2 {
 
 .clearBtn:hover {
     background-color: #6b7280;
+}
+
+.stockTable tfoot {
+    font-weight: bold;
+    background-color: #f3f4f6;
+}
+
+.stockTable tr:hover {
+    background-color: #f5f7fa;
+}
+
+@media screen and (max-width: 768px) {
+    .formRow {
+        flex-direction: column;
+    }
+
+    .formGroup {
+        flex: 1 1 100%;
+    }
 }

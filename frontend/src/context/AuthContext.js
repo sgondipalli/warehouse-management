@@ -1,16 +1,86 @@
 import { createContext, useState, useContext, useEffect, useCallback } from "react";
 import { OktaAuth } from "@okta/okta-auth-js";
-
+import axios from "axios";
 
 const AuthContext = createContext();
 
-// Configure Okta
 const oktaAuth = new OktaAuth({
   issuer: "https://dev-69702302.okta.com/oauth2/default",
   clientId: "0oanp201ksS11SXU85d7",
   redirectUri: "http://localhost:3000/auth/callback",
 });
 
+const api = axios.create({
+  baseURL: "http://localhost:5001",
+  withCredentials: true,
+});
+
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach(prom => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+  failedQueue = [];
+};
+
+api.interceptors.response.use(
+  res => res,
+  async error => {
+    const originalRequest = error.config;
+
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url.includes("/auth/login") &&
+      !originalRequest.url.includes("/auth/refresh")
+    ) {
+      originalRequest._retry = true;
+
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({
+            resolve: token => {
+              originalRequest.headers["Authorization"] = "Bearer " + token;
+              resolve(api(originalRequest));
+            },
+            reject: err => reject(err),
+          });
+        });
+      }
+
+      isRefreshing = true;
+
+      try {
+        const res = await api.get("/auth/refresh");
+        const { token: newToken, user, roles } = res.data;
+
+        localStorage.setItem("token", newToken);
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("roles", JSON.stringify(roles));
+        api.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+        processQueue(null, newToken);
+        originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
+        return api(originalRequest);
+      } catch (refreshErr) {
+        processQueue(refreshErr, null);
+        window.dispatchEvent(new Event("sessionExpired"));
+        localStorage.clear();
+        window.location.href = "/login";
+        return Promise.reject(refreshErr);
+      } finally {
+        isRefreshing = false;
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = useState({
@@ -19,169 +89,143 @@ export const AuthProvider = ({ children }) => {
     roles: [],
     token: localStorage.getItem("token") || null,
   });
-
   const [loading, setLoading] = useState(true);
-  /** Logout Function for BOTH Email/Password & Okta */
-  const logout = useCallback(async () => {
-    console.log("Logging out...");
-    console.log("Token in localStorage before logout:", localStorage.getItem("token"));
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+  const [wasRestored, setWasRestored] = useState(false);
+  const [lastActive, setLastActive] = useState(Date.now());
 
+  const logout = useCallback(async (navigate) => {
+    localStorage.clear();
     try {
-      await oktaAuth.signOut(); // Logout from Okta
-    } catch (error) {
-      console.error("Okta Logout Error:", error);
+      await api.post("/auth/logout");
+      await oktaAuth.signOut();
+    } catch (err) {
+      console.error("Logout error", err);
     }
-
     setAuthState({ isAuthenticated: false, user: null, roles: [], token: null });
-    window.location.href = "/login";
+    window.dispatchEvent(new CustomEvent("authStateSync"));
+    if (navigate) navigate("/login", { replace: true });
   }, []);
 
-  /** Fetch user details from backend (For Email/Password Authentication) */
-  const fetchUser = useCallback(
-    async (token) => {
-      try {
-        console.log("Fetching user with token:", token);
+  const fetchUser = useCallback(async (token) => {
+    const res = await api.get("/auth/me", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const { user, roles } = res.data;
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("roles", JSON.stringify(roles));
+    setAuthState({
+      isAuthenticated: true,
+      user,
+      roles,
+      token,
+    });
+  }, []);
 
-        const response = await fetch("http://localhost:5001/auth/me", {
-          method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!response.ok) {
-          console.log("Token is invalid or expired. Logging out...");
-          logout();
-          return;
-        }
-
-        const data = await response.json();
-        console.log("User data received:", data);
-        setAuthState({
-          isAuthenticated: true,
-          user: {
-            id: data.user.id,
-            username: data.user.username,
-            email: data.user.email,
-            firstName: data.user.firstName, 
-            lastName: data.user.lastName,    
-          },
-          roles: Array.isArray(data.roles) ? data.roles : [],
-          token,
-        });
-        
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-        logout();
-      }
-    },
-    [logout]
-  );
-
-  /** 🔹 Handle Email/Password Login */
   const login = async (email, password, navigate) => {
-    try {
-      const response = await fetch("http://localhost:5001/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || "Login failed");
-
-      console.log("Login Successful. User:", data.user);
-
-      // Store token in localStorage
-      localStorage.setItem("token", data.token);
-
-      // Update Auth State
-      setAuthState({
-        isAuthenticated: true,
-        user: data.user,
-        roles: Array.isArray(data.roles) ? data.roles : [],
-        token: data.token,
-      });
-
-      navigate("/dashboard"); // Redirect after login
-
-      return data;
-    } catch (error) {
-      console.error("Login Error:", error.message);
-      throw error;
-    }
+    const res = await api.post("/auth/login", { email, password });
+    const { accessToken, user, roles } = res.data;
+    localStorage.setItem("token", accessToken);
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("roles", JSON.stringify(roles));
+    api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    setAuthState({ isAuthenticated: true, user, roles, token: accessToken });
+    window.dispatchEvent(new CustomEvent("authStateSync"));
+    navigate("/dashboard");
   };
 
-  /** 🔹 Login with Okta */
   const loginWithOkta = async () => {
     await oktaAuth.signInWithRedirect();
   };
 
-  /** 🔹 Handle Okta Authentication Callback */
   const handleOktaCallback = async (navigate) => {
     try {
       const tokens = await oktaAuth.token.parseFromUrl();
       if (tokens.idToken) {
-        localStorage.setItem("token", tokens.idToken.idToken);
+        const token = tokens.idToken.idToken;
+        localStorage.setItem("token", token);
+        setAuthState({ isAuthenticated: true, user: tokens.idToken.claims, roles: [], token });
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      console.error("Okta callback error", err);
+    }
+  };
+
+  const restoreSession = useCallback(async () => {
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user"));
+    const roles = JSON.parse(localStorage.getItem("roles"));
+
+    try {
+      if (token && user) {
+        api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        setAuthState({ isAuthenticated: true, user, roles, token });
+        setWasRestored(true);
+      } else {
+        const res = await api.get("/auth/refresh");
+        const { token: newToken, user: refreshedUser, roles: refreshedRoles } = res.data;
+        localStorage.setItem("token", newToken);
+        localStorage.setItem("user", JSON.stringify(refreshedUser));
+        localStorage.setItem("roles", JSON.stringify(refreshedRoles));
+        api.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
         setAuthState({
           isAuthenticated: true,
-          user: tokens.idToken.claims,
-          roles: [], // Okta roles can be fetched via API if needed
-          token: tokens.idToken.idToken,
+          user: refreshedUser,
+          roles: refreshedRoles,
+          token: newToken,
         });
-        navigate("/dashboard"); // Redirect after successful login
+        setWasRestored(true);
       }
-    } catch (error) {
-      console.error("Okta Authentication Error:", error);
+    } catch {
+      localStorage.clear();
+      setAuthState({ isAuthenticated: false, user: null, roles: [], token: null });
+    } finally {
+      setLoading(false);
     }
-  };
-
-  /** Restore Session on Refresh */
-  const restoreSession = async () => {
-    const token = localStorage.getItem("token");
-    console.log("Restoring session with token:", token);
-
-    if (token) {
-      try {
-        console.log("Checking backend session first...");
-        await fetchUser(token);
-        return;
-      } catch (error) {
-        console.log("Backend session failed. Checking Okta session...");
-      }
-
-      try {
-        const sessionExists = await oktaAuth.session.exists();
-        if (sessionExists) {
-          const userInfo = await oktaAuth.getUser();
-          console.log("User authenticated via Okta session:", userInfo);
-
-          setAuthState({
-            isAuthenticated: true,
-            user: userInfo,
-            roles: [],
-            token,
-          });
-        }
-      } catch (error) {
-        console.error("Okta session restore failed:", error);
-      }
-    }
-
-    setLoading(false); // Ensure loading state updates if session is not restored
-  };
-
-  useEffect(() => {
-    restoreSession();
   }, []);
 
   useEffect(() => {
-    console.log("Auth state updated:", authState);
-  }, [authState]);
+    restoreSession();
+  }, [restoreSession]);
+
+  useEffect(() => {
+    const syncHandler = () => {
+      restoreSession();
+    };
+    window.addEventListener("authStateSync", syncHandler);
+    window.addEventListener("storage", syncHandler);
+    return () => {
+      window.removeEventListener("authStateSync", syncHandler);
+      window.removeEventListener("storage", syncHandler);
+    };
+  }, [restoreSession]);
+
+  useEffect(() => {
+    const interval = setInterval(() => setLastActive(Date.now()), 60000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const isExpiringSoon = () => {
+    const exp = JSON.parse(atob(authState.token?.split(".")[1] || "{}"))?.exp;
+    if (!exp) return false;
+    const secondsLeft = exp - Math.floor(Date.now() / 1000);
+    return secondsLeft < 60 * 3;
+  };
 
   return (
-    <AuthContext.Provider value={{ authState, login, loginWithOkta, logout, handleOktaCallback, loading }}>
+    <AuthContext.Provider
+      value={{
+        authState,
+        login,
+        loginWithOkta,
+        logout,
+        handleOktaCallback,
+        loading,
+        wasRestored,
+        lastActive,
+        isExpiringSoon,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -189,8 +233,6 @@ export const AuthProvider = ({ children }) => {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
+  if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
 };

@@ -12,8 +12,9 @@ if (!authController || !authController.login || !authController.register) {
 }
 
 //  Define Routes
-router.post("/register", authController.register);
+// router.post("/register", authController.register);
 router.post("/login", authController.login);
+router.get("/refresh", authController.refresh);
 router.post("/login/okta", authController.loginWithOkta);
 router.get("/me", authMiddleware, authController.getUserDetails); // Get User Details
 router.get("/users", authMiddleware, authController.getAllUsers);

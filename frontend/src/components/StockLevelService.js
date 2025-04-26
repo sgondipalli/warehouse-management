@@ -3,12 +3,18 @@ import axios from "axios";
 import Sidebar from "../components/Sidebar";
 import DashboardNavbar from "../components/DashboardNavbar";
 import styles from "../styles/StockLevel.module.css";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import { saveAs } from "file-saver";
+import Papa from "papaparse";
+
 
 const StockLevelService = () => {
   const [stockLevels, setStockLevels] = useState([]);
   const [locations, setLocations] = useState([]);
   const [tradeItems, setTradeItems] = useState([]);
   const [storageBins, setStorageBins] = useState([]);
+  const [filteredBins, setFilteredBins] = useState([]);
   const [filterLocation, setFilterLocation] = useState("");
   const [searchGTIN, setSearchGTIN] = useState("");
   const [searchCategory, setSearchCategory] = useState("");
@@ -18,6 +24,8 @@ const StockLevelService = () => {
   const [editId, setEditId] = useState(null);
 
   const BASE_URL = "http://localhost:5020/api";
+  const BIN_BASE = "http://localhost:5030/api";
+
 
   const fetchStockLevels = async () => {
     try {
@@ -52,20 +60,31 @@ const StockLevelService = () => {
       setTradeItems([]);
     }
   };
-  
-  const fetchStorageBins = async () => {
-    try {
-      const res = await axios.get(`${BASE_URL}/bins/dropdown`);
-      setStorageBins(res.data || []);
-    } catch (err) {
-      console.error("Error fetching bins", err);
-      setStorageBins([]);
-    }
-  };
-  
 
-  const handleInputChange = (e) => {
-    setNewStock({ ...newStock, [e.target.name]: e.target.value });
+  // const fetchStorageBins = async () => {
+  //   try {
+  //     const res = await axios.get(`${BASE_URL}/bins/dropdown`);
+  //     setStorageBins(res.data || []);
+  //   } catch (err) {
+  //     console.error("Error fetching bins", err);
+  //     setStorageBins([]);
+  //   }
+  // };
+
+  const handleInputChange = async (e) => {
+    const { name, value } = e.target;
+    setNewStock({ ...newStock, [name]: value });
+
+    if (name === "LocationID") {
+      try {
+        const res = await axios.get(`${BIN_BASE}/bins/location/${value}`);
+        setFilteredBins(res.data || []);
+        setNewStock((prev) => ({ ...prev, StorageBinID: "" }));
+      } catch (err) {
+        console.error("Failed to fetch bins by location", err);
+        setFilteredBins([]);
+      }
+    }
   };
 
   const handleCreateStock = async () => {
@@ -83,7 +102,7 @@ const StockLevelService = () => {
     }
   };
 
-  const handleEditStock = (item) => {
+  const handleEditStock = async (item) => {
     setNewStock({
       TradeItemID: item.TradeItemID,
       LocationID: item.LocationID,
@@ -91,6 +110,15 @@ const StockLevelService = () => {
       Quantity: item.Quantity,
     });
     setEditId(item.StockLevelID);
+
+    if (item.LocationID) {
+      try {
+        const res = await axios.get(`${BASE_URL}/bins/location/${item.LocationID}`);
+        setFilteredBins(res.data || []);
+      } catch (err) {
+        console.error("Failed to fetch bins by location during edit", err);
+      }
+    }
   };
 
   const handleUpdateStock = async () => {
@@ -117,11 +145,51 @@ const StockLevelService = () => {
       setMessage("Failed to delete stock level");
     }
   };
+  const exportToCSV = () => {
+    const csv = Papa.unparse(
+      filteredStocks.map(item => ({
+        GTIN: item.TradeItem?.GTIN || "—",
+        MaterialNumber: item.TradeItem?.MaterialNumber || "—",
+        TradeItemID: item.TradeItemID,
+        Category: item.TradeItem?.TradeItemCategory || "—",
+        Location: item.Location?.LocationName || "—",
+        Bin: `${item.StorageBin?.Shelf?.Rack?.Zone?.ZoneName || "—"} > ${item.StorageBin?.Shelf?.Rack?.RackNumber || "—"} > ${item.StorageBin?.Shelf?.ShelfNumber || "—"} > ${item.StorageBin?.BinNumber || "—"}`,
+        Quantity: item.Quantity,
+        LastUpdated: new Date(item.LastUpdated).toLocaleString()
+      }))
+    );
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    saveAs(blob, "stock_levels.csv");
+  };
+
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    autoTable(doc, {
+      head: [["GTIN", "Material Number", "TradeItem ID", "Category", "Location", "Bin", "Quantity", "Last Updated"]],
+      body: filteredStocks.map(item => [
+        item.TradeItem?.GTIN || "—",
+        item.TradeItem?.MaterialNumber || "—",
+        item.TradeItemID,
+        item.TradeItem?.TradeItemCategory || "—",
+        item.Location?.LocationName || "—",
+        `${item.StorageBin?.Shelf?.Rack?.Zone?.ZoneName || "—"} > ${item.StorageBin?.Shelf?.Rack?.RackNumber || "—"} > ${item.StorageBin?.Shelf?.ShelfNumber || "—"} > ${item.StorageBin?.BinNumber || "—"}`,
+        item.Quantity,
+        new Date(item.LastUpdated).toLocaleString(),
+      ]),
+    });
+    doc.save("stock_levels.pdf");
+  };
+
+  const handleCancelEdit = () => {
+    setEditId(null);
+    setNewStock({ TradeItemID: "", LocationID: "", StorageBinID: "", Quantity: 0 });
+    setMessage("");
+  };
 
   useEffect(() => {
     fetchLocations();
     fetchTradeItems();
-    fetchStorageBins();
+    // fetchStorageBins();
   }, []);
 
   useEffect(() => {
@@ -183,6 +251,7 @@ const StockLevelService = () => {
             </div>
           </div>
 
+
           {error && <p className={styles.error}>{error}</p>}
           {message && <p className={styles.success}>{message}</p>}
 
@@ -223,10 +292,10 @@ const StockLevelService = () => {
 
               <div className={styles.formGroup}>
                 <label>Storage Bin</label>
-                <select name="StorageBinID" value={newStock.StorageBinID} onChange={handleInputChange}>
+                <select name="StorageBinID" value={newStock.StorageBinID} onChange={handleInputChange} disabled={!newStock.LocationID}>
                   <option value="">Select Bin</option>
-                  {storageBins.map(bin => (
-                    <option key={bin.id} value={bin.id}>{bin.BinNumber}</option>
+                  {filteredBins.map(bin => (
+                    <option key={bin.id} value={bin.id}>{bin.label || bin.BinNumber}</option>
                   ))}
                 </select>
               </div>
@@ -261,46 +330,67 @@ const StockLevelService = () => {
               </button>
             </div>
           </div>
-
-          <table className={styles.stockTable}>
-            <thead>
-              <tr>
-                <th>GTIN</th>
-                <th>Material Number</th>
-                <th>Trade Item ID</th>
-                <th>Category</th>
-                <th>Location</th>
-                <th>Bin</th>
-                <th>Quantity</th>
-                <th>Last Updated</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredStocks.length > 0 ? (
-                filteredStocks.map((item) => (
-                  <tr key={item.StockLevelID}>
-                    <td>{item.TradeItem?.GTIN || "—"}</td>
-                    <td>{item.TradeItem?.MaterialNumber || "—"}</td>
-                    <td>{item.TradeItemID}</td>
-                    <td>{item.TradeItem?.TradeItemCategory || "—"}</td>
-                    <td>{item.Location?.LocationName || "—"}</td>
-                    <td>{item.StorageBin?.BinNumber || "—"}</td>
-                    <td>{item.Quantity}</td>
-                    <td>{new Date(item.LastUpdated).toLocaleString()}</td>
-                    <td>
-                      <button onClick={() => handleEditStock(item)}>Edit</button>
-                      <button onClick={() => handleDeleteStock(item.StockLevelID)}>Delete</button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
+          <div style={{ marginBottom: "1rem" }}>
+            <button className={styles.exportBtn} onClick={exportToCSV}>Export to CSV</button>
+            <button className={styles.exportBtn} onClick={exportToPDF}>Export to PDF</button>
+          </div>
+          <div className={styles.tableWrapper}>
+            <table className={styles.stockTable}>
+              <thead>
                 <tr>
-                  <td colSpan="8">No stock levels available.</td>
+                  <th>GTIN</th>
+                  <th>Material Number</th>
+                  <th>Trade Item ID</th>
+                  <th>Category</th>
+                  <th>Location</th>
+                  <th>Bin</th>
+                  <th>Quantity</th>
+                  <th>Last Updated</th>
+                  <th>Actions</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {filteredStocks.length > 0 ? (
+                  filteredStocks.map((item) => (
+                    <tr key={item.StockLevelID}>
+                      <td>{item.TradeItem?.GTIN || "—"}</td>
+                      <td>{item.TradeItem?.MaterialNumber || "—"}</td>
+                      <td>{item.TradeItemID}</td>
+                      <td>{item.TradeItem?.TradeItemCategory || "—"}</td>
+                      <td>{item.Location?.LocationName || "—"}</td>
+                      <td>
+                        {item.StorageBin?.Shelf?.Rack?.Zone?.ZoneName || "—"} &gt;{" "}
+                        {item.StorageBin?.Shelf?.Rack?.RackNumber || "—"} &gt;{" "}
+                        {item.StorageBin?.Shelf?.ShelfNumber || "—"} &gt;{" "}
+                        {item.StorageBin?.BinNumber || "—"}
+                      </td>
+
+
+                      <td>{item.Quantity}</td>
+                      <td>{new Date(item.LastUpdated).toLocaleString()}</td>
+                      <td>
+                        <button onClick={() => handleEditStock(item)}>Edit</button>
+                        <button onClick={() => handleDeleteStock(item.StockLevelID)}>Delete</button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="9">No stock levels available.</td>
+                  </tr>
+                )}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colSpan="6" style={{ fontWeight: "bold" }}>Total Quantity</td>
+                  <td colSpan="3" style={{ fontWeight: "bold" }}>
+                    {filteredStocks.reduce((acc, cur) => acc + cur.Quantity, 0)}
+                  </td>
+                </tr>
+              </tfoot>
+
+            </table>
+          </div>
         </div>
       </div>
     </div>

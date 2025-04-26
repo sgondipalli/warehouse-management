@@ -59,6 +59,19 @@ module.exports = (sequelize, DataTypes) => {
     PurchaseOrderNumber: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    LocationID: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    isDeleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    deletedAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
     }
   }, {
     tableName: "Inbounds",
@@ -68,8 +81,9 @@ module.exports = (sequelize, DataTypes) => {
   Inbound.associate = (models) => {
     Inbound.belongsTo(models.TradeItem, { foreignKey: "TradeItemID" });
     Inbound.belongsTo(models.StorageBin, { foreignKey: "StorageBinID" });
-    Inbound.belongsTo(models.Users, { foreignKey: "ReceivedBy" }); // NEW
+    Inbound.belongsTo(models.Users, { foreignKey: "ReceivedBy" });
     Inbound.belongsTo(models.Supplier, { foreignKey: "SupplierID" });
+    Inbound.belongsTo(models.LocationMaster, { foreignKey: "LocationID", as: "Location" });
   };
 
   return Inbound;

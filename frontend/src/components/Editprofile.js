@@ -12,6 +12,26 @@ const EditProfile = () => {
     lastName: authState.user?.lastName || '',
   });
   const [message, setMessage] = useState('');
+  const [locations, setLocations] = useState([]);
+  const [selectedLocations, setSelectedLocations] = useState([]);
+  const isSuperAdmin = authState.roles?.includes("Super Admin");
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      const res = await axios.get("http://localhost:5030/api/locations/dropdown", {
+        headers: { Authorization: `Bearer ${authState.token}` },
+      });
+      setLocations(res.data);
+    };
+
+    fetchLocations();
+  }, []);
+
+  const handleLocationChange = (e) => {
+    const options = Array.from(e.target.selectedOptions);
+    const ids = options.map((o) => parseInt(o.value));
+    setSelectedLocations(ids);
+  };
 
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -21,8 +41,8 @@ const EditProfile = () => {
     e.preventDefault();
     try {
       const res = await axios.put(
-        'http://localhost:5001/api/edit-profile',
-        formData,
+        'http://localhost:5001/auth/edit-profile',
+        { ...formData, locationIds: selectedLocations },
         { headers: { Authorization: `Bearer ${authState.token}` } }
       );
       setMessage(res.data.message);
@@ -56,6 +76,19 @@ const EditProfile = () => {
         <label>Last Name:
           <input name="lastName" value={formData.lastName} onChange={handleChange} />
         </label>
+
+        {!isSuperAdmin && (
+          <label>Location Access:
+            <select multiple value={selectedLocations} onChange={handleLocationChange}>
+              {locations.map(loc => (
+                <option key={loc.LocationID} value={loc.LocationID}>
+                  {loc.LocationName} ({loc.City})
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
+
 
         <button type="submit">Save Changes</button>
       </form>

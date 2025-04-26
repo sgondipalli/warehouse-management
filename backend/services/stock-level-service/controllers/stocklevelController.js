@@ -1,5 +1,6 @@
 'use strict';
 const { StockLevels, TradeItem, LocationMaster, StorageBin } = require("../../../common/db/models");
+const { Zone, Rack, Shelf } = require("../../../common/db/models");
 const {
   publishStockCreated,
   publishStockUpdated,
@@ -22,7 +23,7 @@ exports.createStockLevel = async (req, res) => {
   }
 };
 
-// Get all stock levels with pagination + filtering
+
 exports.getAllStockLevels = async (req, res) => {
   try {
     const { page = 1, limit = 10, locationId, tradeItemId, storageBinId } = req.query;
@@ -52,7 +53,25 @@ exports.getAllStockLevels = async (req, res) => {
           model: StorageBin,
           as: "StorageBin",
           attributes: ["BinNumber"],
-        },
+          include: [
+            {
+              model: Shelf,
+              attributes: ["ShelfNumber"],
+              include: [
+                {
+                  model: Rack,
+                  attributes: ["RackNumber"],
+                  include: [
+                    {
+                      model: Zone,
+                      attributes: ["ZoneName"]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       ],
       order: [["LastUpdated", "DESC"]],
     });
@@ -68,6 +87,7 @@ exports.getAllStockLevels = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch stock levels", error: error.message });
   }
 };
+
 
 // Get Stock Level by ID
 exports.getStockLevelById = async (req, res) => {

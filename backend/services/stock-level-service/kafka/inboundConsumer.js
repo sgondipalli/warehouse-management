@@ -1,6 +1,6 @@
 'use strict';
 const { Kafka } = require("kafkajs");
-const { StockLevels, StorageBin } = require("../../../common/db/models");
+const { StockLevels } = require("../../../common/db/models");
 const logger = require("../../../common/utils/logger");
 
 const kafka = new Kafka({
@@ -24,22 +24,12 @@ const startConsumer = async () => {
           logger.info(`📩 Received Kafka Message: ${eventType}`);
 
           if (eventType === "INBOUND_CREATED") {
-            const TradeItemID = parseInt(payload.TradeItemID);
-            const StorageBinID = parseInt(payload.StorageBinID);
-            const ReceivedQuantity = parseInt(payload.ReceivedQuantity);
+            const { TradeItemID, StorageBinID, ReceivedQuantity, LocationID } = payload;
 
-            if (!TradeItemID || !StorageBinID || !ReceivedQuantity) {
+            if (!TradeItemID || !StorageBinID || !ReceivedQuantity || !LocationID) {
               logger.warn("⚠️ Missing fields in INBOUND_CREATED payload");
               return;
             }
-
-            const bin = await StorageBin.findByPk(StorageBinID);
-            if (!bin) {
-              logger.warn(`❌ Bin ID ${StorageBinID} not found`);
-              return;
-            }
-
-            const LocationID = bin.LocationID;
 
             const existing = await StockLevels.findOne({ where: { TradeItemID, StorageBinID } });
 
@@ -59,10 +49,78 @@ const startConsumer = async () => {
               logger.info(`🆕 Created New Stock Level ID ${newStock.StockLevelID}`);
             }
           }
+
+          else if (eventType === "INBOUND_UPDATED") {
+            const { old, new: updated } = payload;
+
+            if (!old || !updated) {
+              logger.warn("⚠️ Missing 'old' or 'new' data in INBOUND_UPDATED payload");
+              return;
+            }
+
+            // Reverse quantity from old stock
+            const oldStock = await StockLevels.findOne({
+              where: { TradeItemID: old.TradeItemID, StorageBinID: old.StorageBinID },
+            });
+
+            if (oldStock) {
+              oldStock.Quantity -= old.ReceivedQuantity;
+              oldStock.LastUpdated = new Date();
+              await oldStock.save();
+              logger.info(`↩️ Reversed old quantity from StockLevelID ${oldStock.StockLevelID}`);
+            }
+
+            // Apply new quantity to updated stock
+            const newStock = await StockLevels.findOne({
+              where: { TradeItemID: updated.TradeItemID, StorageBinID: updated.StorageBinID },
+            });
+
+            if (newStock) {
+              newStock.Quantity += updated.ReceivedQuantity;
+              newStock.LastUpdated = new Date();
+              await newStock.save();
+              logger.info(`🔁 Updated Stock Level with new data StockLevelID ${newStock.StockLevelID}`);
+            } else {
+              if (!updated.LocationID) {
+                logger.warn("⚠️ LocationID missing in updated payload: ", updated);
+                return;
+              }
+
+              const created = await StockLevels.create({
+                TradeItemID: updated.TradeItemID,
+                StorageBinID: updated.StorageBinID,
+                LocationID: updated.LocationID,
+                Quantity: updated.ReceivedQuantity,
+                LastUpdated: new Date(),
+              });
+              logger.info(`🆕 Created new stock from update StockLevelID ${created.StockLevelID}`);
+            }
+          }
+
+          else if (eventType === "INBOUND_DELETED") {
+            const { TradeItemID, StorageBinID, ReceivedQuantity } = payload;
+
+            if (!TradeItemID || !StorageBinID || !ReceivedQuantity) {
+              logger.warn("⚠️ Missing fields in INBOUND_DELETED payload");
+              return;
+            }
+
+            const stock = await StockLevels.findOne({ where: { TradeItemID, StorageBinID } });
+
+            if (stock) {
+              stock.Quantity -= ReceivedQuantity;
+              stock.LastUpdated = new Date();
+              await stock.save();
+              logger.info(`🗑️ Deducted quantity due to INBOUND_DELETED. StockLevelID ${stock.StockLevelID}`);
+            } else {
+              logger.warn("⚠️ No stock found to deduct on delete event");
+            }
+          }
+
         } catch (err) {
           logger.error("💥 Error processing Kafka message", err);
         }
-      },
+      }
     });
 
     logger.info("🚀 Kafka consumer for inbound-events is running...");

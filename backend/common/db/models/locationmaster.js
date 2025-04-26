@@ -45,6 +45,11 @@ module.exports = (sequelize, DataTypes) => {
     LocationMaster.hasMany(models.Events, { foreignKey: "LocationID" });
     LocationMaster.hasMany(models.StorageBin, { foreignKey: "LocationID" });
     LocationMaster.hasMany(models.StockLevels, { foreignKey: "LocationID" }); // Add for StockLevels linkage
+    LocationMaster.hasMany(models.UserLocationAccess, {
+      foreignKey: "locationId",
+      as: "UserLocationAccesses"
+    });
+
   };
 
   return LocationMaster;

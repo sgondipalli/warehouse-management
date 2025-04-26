@@ -2,30 +2,39 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+const spinnerStyle = {
+  textAlign: "center",
+  padding: "80px",
+  fontSize: "1.25rem",
+  color: "#555",
+};
+
 const PrivateRoute = ({ children, allowedRoles }) => {
   const { authState, loading } = useAuth();
 
-  console.log("PrivateRoute Check - isAuthenticated:", authState.isAuthenticated);
-  console.log("PrivateRoute Check - Roles:", authState.roles);
-
-  // **Wait until loading completes**
+  // ⏳ Show spinner while auth is loading
   if (loading) {
-    console.log("Auth is still loading... Holding PrivateRoute check.");
-    return <p>Loading...</p>; // Show a proper loading UI
+    return (
+      <div style={spinnerStyle}>
+        <div className="spinner" style={{ fontSize: "3rem" }}>🔐</div>
+        <p>Restoring session. Please wait...</p>
+      </div>
+    );
   }
 
-  // **If not authenticated, redirect to login**
+  // ❌ Not authenticated — redirect to login
   if (!authState.isAuthenticated) {
-    console.warn("Access Denied: User is not authenticated.");
-    return <Navigate to="/login" />;
+    console.warn("🔒 Access Denied: Not authenticated");
+    return <Navigate to="/login" replace />;
   }
 
-  // **Ensure role-based access**
+  // 🔒 Role check failed — redirect to unauthorized
   if (allowedRoles?.length && !allowedRoles.some(role => authState.roles.includes(role))) {
-    console.warn(`Access Denied: User roles [${authState.roles.join(", ")}] do not match required roles.`);
-    return <Navigate to="/unauthorized" />;
+    console.warn(`🚫 Access Denied: User lacks required roles (${allowedRoles.join(", ")})`);
+    return <Navigate to="/unauthorized" replace />;
   }
 
+  // ✅ Access granted
   return children;
 };
 

@@ -3,8 +3,9 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const OpenIDConnectStrategy = require("passport-openidconnect").Strategy;
 const OktaJwtVerifier = require("@okta/jwt-verifier");
-const { Users, Roles, UserRoles } = require("../../../common/db/models");
+const { Users, Roles, UserRoles, UserLocationAccess } = require("../../../common/db/models");
 const logger = require('../../../common/utils/logger');
+const { LocationMaster, AddressTable } = require("../../../common/db/models");
 require("dotenv").config();
 
 // Initialize Okta JWT Verifier
@@ -18,39 +19,92 @@ const oktaJwtVerifier = new OktaJwtVerifier({
 // ** Fetch all users with their assigned roles **
 exports.getAllUsers = async (req, res) => {
   try {
+    const requesterRole = req.user.roles[0]; 
+    const requesterId = req.user.userId;
+
+    let userWhereClause = { isDeleted: false };
+
+    let allowedUserIds = [];
+
+    if (requesterRole === "Warehouse Manager") {
+      const managerLocations = await UserLocationAccess.findAll({
+        where: { userId: requesterId },
+      });
+      const allowedLocationIds = managerLocations.map((loc) => loc.locationId);
+
+      if (allowedLocationIds.length > 0) {
+        const userLocationAccesses = await UserLocationAccess.findAll({
+          where: { locationId: allowedLocationIds },
+          attributes: ['userId'],
+          group: ['userId'],
+        });
+        allowedUserIds = userLocationAccesses.map(u => u.userId);
+
+        userWhereClause.id = allowedUserIds.length > 0 ? allowedUserIds : [-1];
+      } else {
+        userWhereClause.id = [-1];
+      }
+    }
+
     const users = await Users.findAll({
-      where: { isDeleted: false },
+      where: userWhereClause,
       attributes: ["id", "username", "email", "firstName", "lastName", "isActive", "createdAt"],
       include: [
         {
           model: Roles,
           as: "Roles",
-          through: { model: UserRoles, attributes: [] }, // Exclude UserRoles table from response
-          attributes: ["roleName"], // Fetch only assigned roles
+          through: { model: UserRoles, attributes: [] },
+          attributes: ["roleName"],
         },
+        {
+          model: UserLocationAccess,
+          as: "UserLocationAccesses",
+          include: [
+            {
+              model: LocationMaster,
+              as: "Location",
+              attributes: ["LocationID", "LocationName"],
+              include: [{ model: AddressTable, as: "AddressTable", attributes: ["City"] }]
+            }
+          ]
+        }
       ],
     });
 
-    // Format response to structure roles correctly
-    const formattedUsers = users.map(user => ({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      isActive: user.isActive,
-      createdAt: user.createdAt,
-      role: user.Roles.length > 0 ? user.Roles[0].roleName : "No Role Assigned", // Extract **only assigned** roles
-    }));
+    // Additional filter after fetching:
+    const formattedUsers = users
+      .filter(user => {
+        if (requesterRole === "Warehouse Manager") {
+          // Manager should not see Admins or Auditors
+          return !["Super Admin", "Auditor/Compliance Officer"].includes(user.Roles[0]?.roleName);
+        }
+        return true; // Super Admin sees all
+      })
+      .map(user => ({
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        isActive: user.isActive,
+        createdAt: user.createdAt,
+        role: user.Roles.length > 0 ? user.Roles[0].roleName : "No Role Assigned",
+        locations: user.UserLocationAccesses?.map(access => {
+          const loc = access.Location;
+          const city = loc?.AddressTable?.City || "N/A";
+          return `${loc?.LocationName} (${city})`;
+        }) || []
+      }));
 
-    logger.info('Fetched all users successfully', { count: formattedUsers.length });
+    logger.info('Fetched users successfully', { count: formattedUsers.length });
     res.status(200).json(formattedUsers);
   } catch (error) {
-    console.error("Error fetching users with roles:", error);
-    logger.error("Error fetching users with roles", { error: error.message });
+    console.error("Error fetching users:", error);
+    logger.error("Error fetching users", { error: error.message });
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
 
 
 
@@ -88,7 +142,7 @@ exports.register = async (req, res) => {
     // Assign Role
     const roleRecord = await Roles.findOne({ where: { roleName: role } });
     if (!roleRecord) {
-      logger.warn("Invalid role provided during registration", { email, role }); 
+      logger.warn("Invalid role provided during registration", { email, role });
       return res.status(400).json({ message: "Invalid role provided." });
     }
     await UserRoles.create({ userId: newUser.id, roleId: roleRecord.id });
@@ -116,7 +170,7 @@ exports.login = async (req, res) => {
     });
     console.log("Fetched User Data:", JSON.stringify(user, null, 2));
 
-    if (!user){ 
+    if (!user) {
       logger.warn("Login attempt with invalid email", { email });
       return res.status(401).json({ message: "Invalid credentials" });
     }
@@ -125,14 +179,27 @@ exports.login = async (req, res) => {
     if (!isMatch) return res.status(401).json({ message: "Invalid credentials" });
 
     // Generate JWT Token
-    const token = jwt.sign(
-      { userId: user.id, roles: user.Roles.map(role => role.roleName) },
+    const accessToken = jwt.sign(
+      { userId: user.id, roles: user.Roles.map(r => r.roleName) },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "15m" }
     );
     logger.info("User login successful", { userId: user.id, email });
+    // 🔑 Generate Refresh Token
+    const refreshToken = jwt.sign(
+      { userId: user.id },
+      process.env.REFRESH_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: false, // Set to true in production
+      sameSite: "Strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
     res.json({
-      token,
+      accessToken,
       user: { id: user.id, username: user.username, email: user.email, lastName: user.lastName, firstName: user.firstName },
       roles: user.Roles.map(role => role.roleName),
     });
@@ -171,7 +238,7 @@ exports.getUserDetails = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     res.json({
-      user: { id: user.id, username: user.username, email: user.email, firstName: user.firstName, lastName: user.lastName, },
+      user: { id: user.id, username: user.username, email: user.email, firstName: user.firstName || user.username?.split(" ")[0] || "User", lastName: user.lastName, },
       roles: user.Roles ? user.Roles.map(role => role.roleName) : [],
     });
   } catch (error) {
@@ -179,6 +246,42 @@ exports.getUserDetails = async (req, res) => {
     res.status(401).json({ message: "Unauthorized" });
   }
 };
+
+exports.refresh = async (req, res) => {
+  const token = req.cookies.refreshToken;
+  if (!token) return res.status(401).json({ message: "No refresh token" });
+
+  try {
+    const decoded = jwt.verify(token, process.env.REFRESH_SECRET);
+    const user = await Users.findByPk(decoded.userId, {
+      include: [{ model: Roles, through: UserRoles, attributes: ["roleName"] }]
+    });
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const newAccessToken = jwt.sign(
+      { userId: user.id, roles: user.Roles.map(r => r.roleName) },
+      process.env.JWT_SECRET,
+      { expiresIn: "15m" }
+    );
+
+    res.json({
+      token: newAccessToken,
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        firstName: user.firstName || user.username?.split(" ")[0] || "User",
+        lastName: user.lastName
+      },
+      roles: user.Roles.map(r => r.roleName),
+    });
+
+  } catch (err) {
+    res.status(403).json({ message: "Refresh token invalid" });
+  }
+};
+
 
 
 // **Login with Okta**
@@ -254,7 +357,7 @@ exports.getUserDetails = async (req, res) => {
 /* edit profile api*/
 exports.editUserProfile = async (req, res) => {
   const userId = req.user.userId;
-  const { username, password, firstName, lastName } = req.body;
+  const { username, password, firstName, lastName, locationIds } = req.body;
 
   try {
     const user = await Users.findByPk(userId);
@@ -272,6 +375,7 @@ exports.editUserProfile = async (req, res) => {
       }
     }
 
+
     // Prepare update data
     const updateData = {
       username: username || user.username,
@@ -284,6 +388,13 @@ exports.editUserProfile = async (req, res) => {
     }
 
     await user.update(updateData);
+
+    if (Array.isArray(locationIds) && !req.user.roles.includes("Super Admin")) {
+      await UserLocationAccess.destroy({ where: { userId } });
+      for (const locationId of locationIds) {
+        await UserLocationAccess.create({ userId, locationId });
+      }
+    }
 
     logger.info("Profile updated successfully", { userId });
     res.json({
@@ -306,6 +417,7 @@ exports.editUserProfile = async (req, res) => {
 // **Logout User**
 exports.logout = async (req, res) => {
   try {
+    res.clearCookie("refreshToken");
     res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });

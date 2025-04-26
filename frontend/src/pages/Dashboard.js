@@ -8,7 +8,14 @@ import styles from "../styles/Dashboard.module.css";
 
 
 const Dashboard = () => {
-  const { authState } = useAuth();
+  const { authState, loading } = useAuth();
+  
+
+  if (loading) return <div>Loading dashboard...</div>; // ⬅️ Wait until restoreSession finishes
+
+  if (!authState.isAuthenticated || !authState.user) {
+    return <div>Unauthorized - Please login again</div>;
+  }
   const { user, roles } = authState;
 
   // ** Role-based Access Checks **

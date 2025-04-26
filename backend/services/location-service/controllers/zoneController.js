@@ -6,15 +6,22 @@ exports.createZone = async (req, res) => {
   try {
     const { ZoneName, LocationID } = req.body;
 
-    // Check if Zone already exists
-    const existingZone = await Zone.findOne({ where: { ZoneName, LocationID } });
+    // Validate LocationID exists
+    const locationExists = await LocationMaster.findByPk(LocationID);
+    if (!locationExists) {
+      return res.status(400).json({ message: "Invalid LocationID. Warehouse not found." });
+    }
 
+    // Prevent duplicate zone names within same warehouse
+    const existingZone = await Zone.findOne({ where: { ZoneName, LocationID } });
     if (existingZone) {
       return res.status(200).json({ message: "Zone already exists", data: existingZone });
     }
 
+    // Create new zone
     const newZone = await Zone.create({ ZoneName, LocationID });
     res.status(201).json({ message: "Zone created", data: newZone });
+
   } catch (error) {
     console.error("Create Zone Error", error);
     res.status(500).json({ message: "Failed to create zone", error: error.message });

@@ -20,6 +20,18 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "userId"  // Fix FK reference in association
     });
     Users.hasMany(models.Inbound, { foreignKey: "ReceivedBy" });
+    Users.belongsToMany(models.LocationMaster, {
+      through: models.UserLocationAccess,
+      foreignKey: 'userId',
+      otherKey: 'locationId',
+      as: 'AccessibleLocations'
+    });
+    Users.hasMany(models.UserLocationAccess, {
+      foreignKey: 'userId',
+      as: 'UserLocationAccesses'
+    });
+    
+    
   };
   
   // Hash password before saving user

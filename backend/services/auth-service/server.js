@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const authRoutes = require("../auth-service/routes/authroutes");
 const userRoutes = require("../auth-service/routes/userRoutes");
 const sessionMiddleware = require("../../config/redisConfig");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
@@ -11,10 +12,12 @@ const app = express();
 app.use(
     cors({
       origin: "http://localhost:3000", // Allow frontend to access
+      credentials: true, // Allow cookies to be sent
       methods: ["GET", "POST", "PUT", "DELETE"],
       allowedHeaders: ["Content-Type", "Authorization"]
     })
   );
+app.use(cookieParser());
   
 
 app.use(express.json());

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import PrivateRoute from "./routes/PrivateRoute";
 import Navbar from "./components/Navbar";
@@ -23,6 +23,8 @@ import EditLocation from "./components/EditLocation";
 import ZoneRackShelfBin from "./components/ZoneRackShelfBin";
 import InboundPage from "./components/inbound";
 import ManageSuppliers from "./components/ManageSuppliers";
+import HomePage from "./pages/Homepage";
+import ToastProvider from "./components/ToastProvider";
 
 
 const OktaCallback = () => {
@@ -49,12 +51,18 @@ const AppLayout = () => {
         <div style={{ flexGrow: 1, padding: "20px", marginLeft: authState.isAuthenticated ? "250px" : "0px" }}>
 
           <Routes>
+            <Route
+              path="/"
+              element={
+                authState.isAuthenticated ? <Navigate to="/dashboard" /> : <HomePage />
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route path="/unauthorized" element={<UnauthorizedPage />} /> {/* Unauthorized Page */}
             <Route path="/auth/callback" element={<OktaCallback />} /> {/* Okta Authentication Callback */}
-            <Route path="/dashboard" element={<Dashboard />} />
+            {/* <Route path="/dashboard" element={<Dashboard />} /> */}
 
             {/* Protected Routes */}
             <Route
@@ -190,6 +198,7 @@ const AppLayout = () => {
 
 const App = () => (
   <AuthProvider>
+    <ToastProvider />
     <AppLayout />
   </AuthProvider>
 );

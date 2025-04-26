@@ -123,3 +123,34 @@ exports.getStorageBinDropdown = async (req, res) => {
   }
 };
 
+// GET /api/bins/location/:locationId
+exports.getBinsByLocation = async (req, res) => {
+  try {
+    const { locationId } = req.params;
+
+    const bins = await StorageBin.findAll({
+      where: {
+        isDeleted: false,
+        LocationID: locationId
+      },
+      include: [
+        { model: Zone, attributes: ["ZoneName"] },
+        { model: Rack, attributes: ["RackNumber"] },
+        { model: Shelf, attributes: ["ShelfNumber"] }
+      ],
+      attributes: ["id", "BinNumber"],
+      order: [["BinNumber", "ASC"]]
+    });
+
+    const formatted = bins.map(bin => ({
+      id: bin.id,
+      label: `${bin.Zone?.ZoneName || "N/A"} > ${bin.Rack?.RackNumber || "N/A"} > ${bin.Shelf?.ShelfNumber || "N/A"} > ${bin.BinNumber}`
+    }));
+
+    res.status(200).json(formatted);
+  } catch (error) {
+    console.error("Error fetching bins by location with hierarchy", error);
+    res.status(500).json({ message: "Failed to fetch bins by location", error: error.message });
+  }
+};
+
