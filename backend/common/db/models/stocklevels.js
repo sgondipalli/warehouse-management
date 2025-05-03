@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       references: {
         model: 'StorageBins',
-        key: 'id'  // ✅ fixed: match the actual DB column name
+        key: 'BinID'  // ✅ fixed: match the actual DB column name
       },
       onDelete: 'SET NULL',
     },
@@ -61,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
     StockLevels.belongsTo(models.StorageBin, {
       foreignKey: 'StorageBinID',
       as: 'StorageBin',
-      targetKey: 'id'  
+      targetKey: 'BinID'  
     });
   };
 

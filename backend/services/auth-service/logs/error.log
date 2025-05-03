@@ -183,3 +183,5 @@
 {"error":"column UserLocationAccesses.createdAt does not exist","level":"error","message":"Error fetching users with roles","timestamp":"2025-04-24 21:57:24"}
 {"error":"column UserLocationAccesses.LocationMasterLocationID does not exist","level":"error","message":"Error fetching users with roles","timestamp":"2025-04-24 21:59:15"}
 {"error":"column UserLocationAccesses.LocationMasterLocationID does not exist","level":"error","message":"Error fetching users with roles","timestamp":"2025-04-24 21:59:15"}
+{"error":"database \"Ware_House_Management\" does not exist","level":"error","message":"Error during login","timestamp":"2025-05-01 20:01:31"}
+{"email":"palavalasai1@gmail.com","level":"error","message":"Password reset email failed to send","timestamp":"2025-05-01 20:45:32","userId":2}

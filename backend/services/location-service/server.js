@@ -20,7 +20,6 @@ const storageBinRoutes = require("./routes/storageBinRoutes");
 const locationRoutes = require("./routes/locationRoutes");
 const addressRoutes = require("./routes/addressRoutes");
 
-
 // Mount routes
 app.use("/api", zoneRoutes);
 app.use("/api", rackRoutes);
@@ -29,11 +28,15 @@ app.use("/api", storageBinRoutes);
 app.use("/api", locationRoutes);
 app.use("/api", addressRoutes);
 
-
-
 // Health Check
 app.get("/", (req, res) => {
   res.send("Location Service is running!");
+});
+
+// Start Kafka Consumer
+const { startConsumer } = require("./Kafka/stockLevelConsumer");
+startConsumer().catch(err => {
+  console.error("Kafka consumer failed to start:", err);
 });
 
 // Start server

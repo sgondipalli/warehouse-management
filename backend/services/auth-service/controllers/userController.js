@@ -8,7 +8,7 @@ const createUser = async (req, res) => {
   const t = await sequelize.transaction(); //  Start a transaction
   try {
     const { username, email, password, firstName, lastName, role, locationIds } = req.body;
-    const creatorRole = req.user.role;
+    const creatorRole = req.user.roles?.[0] || "";
     const creatorId = req.user.id;
     
      // Validate required fields
@@ -137,7 +137,7 @@ const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
     const { username, email, firstName, lastName, role, locationIds } = req.body;
-    const updaterRole = req.user.role;
+    const updaterRole = req.user.roles?.[0] || "";
     const updaterId = req.user.id;
 
     const user = await Users.findByPk(id, { transaction: t });
@@ -208,7 +208,7 @@ const updateUser = async (req, res) => {
 const softDeleteUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const deleterRole = req.user.role;
+    const deleterRole = req.user.roles?.[0] || "";
 
     const user = await Users.findByPk(id);
     if (!user) {
@@ -237,7 +237,7 @@ const restoreUser = async (req, res) => {
   try {
     const { id } = req.params;
     const { newRole, locationIds = [] } = req.body;
-    const restorerRole = req.user.role;
+    const restorerRole = req.user.roles?.[0] || "";
     const restorerId = req.user.id;
 
     const user = await Users.findByPk(id);

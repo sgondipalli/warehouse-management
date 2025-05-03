@@ -34,28 +34,38 @@ const InboundPage = () => {
     const fetchDropdowns = async () => {
         if (!userId) return;
         const [tradeItemRes, supplierRes, locationRes] = await Promise.all([
-            axios.get(`${TRADEITEM_BASE}/trade-items/dropdown`),
-            axios.get(SUPPLIER_BASE),
-            axios.get(`${INBOUND_BASE}/inbounds/accessible-locations/${userId}`)
+            axios.get(`${TRADEITEM_BASE}/trade-items/dropdown`, {
+                headers: { Authorization: `Bearer ${authState.token}` },
+            }),
+            axios.get(SUPPLIER_BASE, {
+                headers: { Authorization: `Bearer ${authState.token}` },
+            }),
+            axios.get(`${INBOUND_BASE}/inbounds/accessible-locations/${userId}`, {
+                headers: { Authorization: `Bearer ${authState.token}` },
+            }),
         ]);
         setTradeItems(tradeItemRes.data || []);
         setSuppliers(supplierRes.data || []);
         setLocations(locationRes.data || []);
     };
+
     const fetchAllBins = async () => {
         try {
-            const res = await axios.get(`${BIN_BASE}/bins/dropdown/list`);
+            const res = await axios.get(`${BIN_BASE}/bins/dropdown/list`, {
+                headers: { Authorization: `Bearer ${authState.token}` },
+            });
             setBins(res.data || []);
         } catch (err) {
             console.error("Failed to fetch all bins", err);
         }
     };
 
-
     const fetchBinsByLocation = async (locationId) => {
         if (!locationId) return setBins([]);
         try {
-            const res = await axios.get(`${BIN_BASE}/bins/location/${locationId}`);
+            const res = await axios.get(`${BIN_BASE}/bins/location/${locationId}`, {
+                headers: { Authorization: `Bearer ${authState.token}` },
+            });
             setBins(res.data || []);
         } catch (err) {
             console.error("Error fetching bins by location", err);
@@ -64,7 +74,9 @@ const InboundPage = () => {
 
     const fetchInbounds = async () => {
         try {
-            const res = await axios.get(`${INBOUND_BASE}/inbounds`);
+            const res = await axios.get(`${INBOUND_BASE}/inbounds`, {
+                headers: { Authorization: `Bearer ${authState.token}` },
+            });
             const inboundsWithLabels = res.data.map((inbound) => {
                 const bin = bins.find((b) => b.id === inbound.StorageBinID);
                 return {
@@ -77,8 +89,6 @@ const InboundPage = () => {
             console.error("Failed to fetch inbounds", err);
         }
     };
-
-
 
     const autoGenerateBatch = () => {
         const now = new Date();
@@ -93,7 +103,6 @@ const InboundPage = () => {
             fetchBinsByLocation(value);
             setForm((prev) => ({ ...prev, StorageBinID: "" }));
         }
-
     };
 
     const handleSubmit = async (e) => {
@@ -105,10 +114,14 @@ const InboundPage = () => {
         };
         try {
             if (editId) {
-                await axios.put(`${INBOUND_BASE}/inbounds/${editId}`, payload);
+                await axios.put(`${INBOUND_BASE}/inbounds/${editId}`, payload, {
+                    headers: { Authorization: `Bearer ${authState.token}` },
+                });
                 setMessage("✅ Inbound record updated successfully");
             } else {
-                await axios.post(`${INBOUND_BASE}/inbounds`, payload);
+                await axios.post(`${INBOUND_BASE}/inbounds`, payload, {
+                    headers: { Authorization: `Bearer ${authState.token}` },
+                });
                 setMessage("✅ Inbound record created successfully");
             }
             setForm({
@@ -144,12 +157,12 @@ const InboundPage = () => {
         fetchBinsByLocation(record.LocationID);
     };
 
-
-
     const handleDelete = async (id) => {
         if (!window.confirm("Are you sure to delete this inbound record?")) return;
         try {
-            await axios.delete(`${INBOUND_BASE}/inbounds/${id}`);
+            await axios.delete(`${INBOUND_BASE}/inbounds/${id}`, {
+                headers: { Authorization: `Bearer ${authState.token}` },
+            });
             setMessage("✅ Inbound deleted");
             fetchInbounds();
         } catch (err) {

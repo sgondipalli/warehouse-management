@@ -38,8 +38,7 @@ const ZoneRackShelfBin = () => {
   const handleLocationChange = async (e) => {
     const locationId = parseInt(e.target.value);
     setSelectedLocation(locationId);
-    setZones([]);
-    if (locationId) await fetchZones(locationId);
+    await fetchZones(locationId);
     console.log("Selected:", selectedLocation, typeof selectedLocation);
     console.log("Zone LocationID:", zones.map(z => [z.ZoneName, z.LocationID, typeof z.LocationID]));
 
@@ -47,7 +46,7 @@ const ZoneRackShelfBin = () => {
 
   const handleEdit = (bin, type) => {
     if (type === 'bin') {
-      setEditBinId(bin.id);
+      setEditBinId(bin.BinID);
       setEditMaxCapacity(bin.MaxCapacity.toString());
     }
   };
@@ -201,10 +200,10 @@ const ZoneRackShelfBin = () => {
                   <button onClick={() => handleDelete(shelf.ShelfID, 'shelf')}>Delete</button>
 
                   {shelf.StorageBins?.map((bin) => (
-                    <div key={bin.id} className={styles.binBox}>
+                    <div key={bin.BinID} className={styles.binBox}>
                       &nbsp;&nbsp;&nbsp;&nbsp; └ <strong>Bin:</strong> {bin.BinNumber} &nbsp;
 
-                      {editBinId === bin.id ? (
+                      {editBinId === bin.BinID ? (
                         <>
                           <input
                             type="number"
@@ -219,7 +218,7 @@ const ZoneRackShelfBin = () => {
                         <>
                           (Stock: {bin.CurrentStock}/{bin.MaxCapacity}){" "}
                           <button onClick={() => handleEdit(bin, "bin")}>Edit</button>
-                          <button onClick={() => handleDelete(bin.id, "bin")}>Delete</button>
+                          <button onClick={() => handleDelete(bin.BinID, "bin")}>Delete</button>
                         </>
                       )}
                     </div>

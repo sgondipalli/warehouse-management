@@ -23,7 +23,7 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'StorageBins',
-          key: 'id'
+          key: 'BinID'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'

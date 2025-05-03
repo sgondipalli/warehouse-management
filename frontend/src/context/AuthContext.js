@@ -58,7 +58,7 @@ api.interceptors.response.use(
 
       try {
         const res = await api.get("/auth/refresh");
-        const { token: newToken, user, roles } = res.data;
+        const { accessToken: newToken, user, roles } = res.data;
 
         localStorage.setItem("token", newToken);
         localStorage.setItem("user", JSON.stringify(user));
@@ -137,19 +137,19 @@ export const AuthProvider = ({ children }) => {
     await oktaAuth.signInWithRedirect();
   };
 
-  const handleOktaCallback = async (navigate) => {
-    try {
-      const tokens = await oktaAuth.token.parseFromUrl();
-      if (tokens.idToken) {
-        const token = tokens.idToken.idToken;
-        localStorage.setItem("token", token);
-        setAuthState({ isAuthenticated: true, user: tokens.idToken.claims, roles: [], token });
-        navigate("/dashboard");
-      }
-    } catch (err) {
-      console.error("Okta callback error", err);
-    }
-  };
+  // const handleOktaCallback = async (navigate) => {
+  //   try {
+  //     const tokens = await oktaAuth.token.parseFromUrl();
+  //     if (tokens.idToken) {
+  //       const token = tokens.idToken.idToken;
+  //       localStorage.setItem("token", token);
+  //       setAuthState({ isAuthenticated: true, user: tokens.idToken.claims, roles: [], token });
+  //       navigate("/dashboard");
+  //     }
+  //   } catch (err) {
+  //     console.error("Okta callback error", err);
+  //   }
+  // };
 
   const restoreSession = useCallback(async () => {
     const token = localStorage.getItem("token");
@@ -157,11 +157,13 @@ export const AuthProvider = ({ children }) => {
     const roles = JSON.parse(localStorage.getItem("roles"));
 
     try {
-      if (token && user) {
+      if (token && token.split('.').length === 3 && user) {
+        // Good token
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         setAuthState({ isAuthenticated: true, user, roles, token });
         setWasRestored(true);
       } else {
+        // Bad token -> try refresh
         const res = await api.get("/auth/refresh");
         const { token: newToken, user: refreshedUser, roles: refreshedRoles } = res.data;
         localStorage.setItem("token", newToken);
@@ -183,6 +185,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     }
   }, []);
+
 
   useEffect(() => {
     restoreSession();
@@ -219,7 +222,7 @@ export const AuthProvider = ({ children }) => {
         login,
         loginWithOkta,
         logout,
-        handleOktaCallback,
+        // handleOktaCallback,
         loading,
         wasRestored,
         lastActive,

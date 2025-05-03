@@ -14,7 +14,12 @@ exports.createSupplier = async (req, res) => {
       return res.status(200).json({ message: "Supplier reactivated", data: existing });
     }
 
-    const newSupplier = await Supplier.create(req.body);
+    const newSupplier = await Supplier.create({
+      SupplierName,
+      ContactEmail,
+      PhoneNumber,
+      CreatedByUserID: req.user.userId, // 🆕 track creator
+    });
     res.status(201).json({ message: "Supplier created", data: newSupplier });
   } catch (err) {
     res.status(500).json({ message: "Error creating supplier", error: err.message });
@@ -49,24 +54,36 @@ exports.updateSupplier = async (req, res) => {
   try {
     const supplier = await Supplier.findByPk(req.params.id);
     if (!supplier) return res.status(404).json({ message: "Supplier not found" });
-    await supplier.update(req.body);
+
+    await supplier.update({
+      ...req.body,
+      UpdatedByUserID: req.user.userId // 🆕 track who updated
+    });
+
     res.status(200).json({ message: "Supplier updated", data: supplier });
   } catch (err) {
     res.status(500).json({ message: "Error updating supplier", error: err.message });
   }
 };
 
+
 exports.deleteSupplier = async (req, res) => {
   try {
     const supplier = await Supplier.findByPk(req.params.id);
     if (!supplier) return res.status(404).json({ message: "Supplier not found" });
 
-    await supplier.update({ isDeleted: true });
+    await supplier.update({ 
+      isDeleted: true, 
+      deletedAt: new Date(),
+      UpdatedByUserID: req.user.userId // 🆕 track who deleted
+    });
+
     res.status(200).json({ message: "Supplier deleted (soft)" });
   } catch (err) {
     res.status(500).json({ message: "Error deleting supplier", error: err.message });
   }
 };
+
 
 
 exports.getSupplierDropdown = async (req, res) => {

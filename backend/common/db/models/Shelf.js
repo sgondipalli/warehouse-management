@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Shelf.associate = (models) => {
     Shelf.belongsTo(models.Rack, { foreignKey: "RackID" });
-    Shelf.hasMany(models.StorageBin, { foreignKey: "ShelfID" });
+    Shelf.hasMany(models.StorageBin, { foreignKey: "ShelfID", as: "StorageBins" });
   };
 
   return Shelf;

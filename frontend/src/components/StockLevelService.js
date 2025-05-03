@@ -13,7 +13,6 @@ const StockLevelService = () => {
   const [stockLevels, setStockLevels] = useState([]);
   const [locations, setLocations] = useState([]);
   const [tradeItems, setTradeItems] = useState([]);
-  const [storageBins, setStorageBins] = useState([]);
   const [filteredBins, setFilteredBins] = useState([]);
   const [filterLocation, setFilterLocation] = useState("");
   const [searchGTIN, setSearchGTIN] = useState("");
@@ -60,16 +59,6 @@ const StockLevelService = () => {
       setTradeItems([]);
     }
   };
-
-  // const fetchStorageBins = async () => {
-  //   try {
-  //     const res = await axios.get(`${BASE_URL}/bins/dropdown`);
-  //     setStorageBins(res.data || []);
-  //   } catch (err) {
-  //     console.error("Error fetching bins", err);
-  //     setStorageBins([]);
-  //   }
-  // };
 
   const handleInputChange = async (e) => {
     const { name, value } = e.target;
@@ -189,7 +178,6 @@ const StockLevelService = () => {
   useEffect(() => {
     fetchLocations();
     fetchTradeItems();
-    // fetchStorageBins();
   }, []);
 
   useEffect(() => {
@@ -294,9 +282,12 @@ const StockLevelService = () => {
                 <label>Storage Bin</label>
                 <select name="StorageBinID" value={newStock.StorageBinID} onChange={handleInputChange} disabled={!newStock.LocationID}>
                   <option value="">Select Bin</option>
-                  {filteredBins.map(bin => (
-                    <option key={bin.id} value={bin.id}>{bin.label || bin.BinNumber}</option>
+                  {filteredBins.map((bin) => (
+                    <option key={bin.BinID} value={bin.BinID}>
+                      {bin.label ?? `${bin.BinNumber} (BinID: ${bin.BinID})`}
+                    </option>
                   ))}
+
                 </select>
               </div>
 

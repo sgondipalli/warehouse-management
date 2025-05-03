@@ -6,7 +6,7 @@ module.exports = {
       allowNull: true,
       references: {
         model: 'StorageBins',
-        key: 'id'
+        key: 'BinID'
       },
       onDelete: 'SET NULL'
     });

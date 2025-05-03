@@ -47,14 +47,16 @@ exports.createStorageBin = async (req, res) => {
 exports.getAllStorageBins = async (req, res) => {
   try {
     const bins = await StorageBin.findAll({
+      where: { isDeleted: false },
       include: [
-        { model: LocationMaster, attributes: ["LocationName"] },
-        { model: Zone, attributes: ["ZoneName"] },
-        { model: Rack, attributes: ["RackNumber"] },
-        { model: Shelf, attributes: ["ShelfNumber"] },
+        { model: Zone, as: "Zone", attributes: ["ZoneName"] },
+        { model: Rack, as: "Rack", attributes: ["RackNumber"] },
+        { model: Shelf, as: "Shelf", attributes: ["ShelfNumber"] }
       ],
+      attributes: ["BinID", "BinNumber"],
       order: [["BinNumber", "ASC"]],
     });
+
     res.status(200).json(bins);
   } catch (error) {
     logger.error("Get Bins Error", error);
@@ -106,13 +108,13 @@ exports.getStorageBinDropdown = async (req, res) => {
         { model: Rack, attributes: ["RackNumber"] },
         { model: Shelf, attributes: ["ShelfNumber"] },
       ],
-      attributes: ["id", "BinNumber"],
+      attributes: ["BinID", "BinNumber"],
       order: [["BinNumber", "ASC"]],
     });
 
     // Format label like: Zone A > Rack 1 > Shelf A > BIN-001
     const dropdown = bins.map((bin) => ({
-      id: bin.id,
+      BinID: bin.BinID,
       label: `${bin.Zone?.ZoneName || "N/A"} > ${bin.Rack?.RackNumber || "N/A"} > ${bin.Shelf?.ShelfNumber || "N/A"} > ${bin.BinNumber}`,
     }));
 
@@ -134,16 +136,16 @@ exports.getBinsByLocation = async (req, res) => {
         LocationID: locationId
       },
       include: [
-        { model: Zone, attributes: ["ZoneName"] },
-        { model: Rack, attributes: ["RackNumber"] },
-        { model: Shelf, attributes: ["ShelfNumber"] }
+        { model: Zone, as: "Zone", attributes: ["ZoneName"] },
+        { model: Rack, as: "Rack", attributes: ["RackNumber"] },
+        { model: Shelf, as: "Shelf", attributes: ["ShelfNumber"] }
       ],
-      attributes: ["id", "BinNumber"],
+      attributes: ["BinID", "BinNumber"],
       order: [["BinNumber", "ASC"]]
     });
 
     const formatted = bins.map(bin => ({
-      id: bin.id,
+      BinID: bin.BinID,
       label: `${bin.Zone?.ZoneName || "N/A"} > ${bin.Rack?.RackNumber || "N/A"} > ${bin.Shelf?.ShelfNumber || "N/A"} > ${bin.BinNumber}`
     }));
 
@@ -153,4 +155,5 @@ exports.getBinsByLocation = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch bins by location", error: error.message });
   }
 };
+
 

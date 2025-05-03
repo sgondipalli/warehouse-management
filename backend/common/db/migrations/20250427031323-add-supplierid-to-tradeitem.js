@@ -2,19 +2,19 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.addColumn('StorageBins', 'ZoneID', {
+    await queryInterface.addColumn('TradeItems', 'SupplierID', {
       type: Sequelize.INTEGER,
       allowNull: true,
       references: {
-        model: 'Zones',
-        key: 'ZoneID'
+        model: 'Suppliers',
+        key: 'SupplierID',
       },
       onUpdate: 'CASCADE',
-      onDelete: 'SET NULL'
+      onDelete: 'SET NULL',
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.removeColumn('StorageBins', 'ZoneID');
+    await queryInterface.removeColumn('TradeItems', 'SupplierID');
   }
 };

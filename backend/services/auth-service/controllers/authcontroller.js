@@ -248,25 +248,25 @@ exports.getUserDetails = async (req, res) => {
 };
 
 exports.refresh = async (req, res) => {
-  const token = req.cookies.refreshToken;
-  if (!token) return res.status(401).json({ message: "No refresh token" });
+  const refreshToken = req.cookies.refreshToken;
+  if (!refreshToken) return res.status(401).json({ message: "No refresh token" });
 
   try {
-    const decoded = jwt.verify(token, process.env.REFRESH_SECRET);
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_SECRET);
     const user = await Users.findByPk(decoded.userId, {
       include: [{ model: Roles, through: UserRoles, attributes: ["roleName"] }]
     });
 
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    const newAccessToken = jwt.sign(
+    const token = jwt.sign(
       { userId: user.id, roles: user.Roles.map(r => r.roleName) },
       process.env.JWT_SECRET,
       { expiresIn: "15m" }
     );
 
     res.json({
-      token: newAccessToken,
+      token,
       user: {
         id: user.id,
         username: user.username,

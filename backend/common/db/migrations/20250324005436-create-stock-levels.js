@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'LocationMaster',
+          model: {tableName: 'LocationMaster' },
           key: 'LocationID',
         },
         onDelete: 'CASCADE',

@@ -469,3 +469,87 @@
 {"level":"info","message":"User updated successfully","timestamp":"2025-04-26 11:06:59","userId":"23"}
 {"email":"sainathreddypalavala7@gmail.com","level":"info","message":"User login successful","timestamp":"2025-04-26 11:07:35","userId":23}
 {"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 11:08:48","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 12:29:55","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 12:39:22","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 13:22:08","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 13:36:35","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 13:42:47","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 13:48:29","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 13:56:45","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 14:06:23","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 14:14:22","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 14:27:20","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 14:28:56","userId":1}
+{"count":2,"level":"info","message":"Fetched users successfully","timestamp":"2025-04-26 14:30:07"}
+{"count":2,"level":"info","message":"Fetched users successfully","timestamp":"2025-04-26 14:30:07"}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 14:34:16","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 14:42:46","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 14:48:18","userId":1}
+{"count":2,"level":"info","message":"Fetched users successfully","timestamp":"2025-04-26 14:48:25"}
+{"count":2,"level":"info","message":"Fetched users successfully","timestamp":"2025-04-26 14:48:25"}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 14:57:19","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 15:11:50","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 15:39:21","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 15:40:38","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 15:44:15","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 16:19:47","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 16:22:57","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 16:26:22","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-04-26 16:41:56","userId":1}
+{"error":"database \"Ware_House_Management\" does not exist","level":"error","message":"Error during login","timestamp":"2025-05-01 20:01:31"}
+{"email":"spalavala@aapssol.com","level":"warn","message":"Login attempt with invalid email","timestamp":"2025-05-01 20:36:24"}
+{"email":"spalavala@aapssol.com","level":"warn","message":"Login attempt with invalid email","timestamp":"2025-05-01 20:36:25"}
+{"email":"spalavala@aapssol.com","level":"warn","message":"Login attempt with invalid email","timestamp":"2025-05-01 20:37:08"}
+{"email":"spalavala@aapssol.com","level":"info","message":"Password reset email sent successfully","timestamp":"2025-05-01 20:43:53","userId":1}
+{"email":"palavalasai1@gmail.com","level":"error","message":"Password reset email failed to send","timestamp":"2025-05-01 20:45:32","userId":2}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-01 20:47:54","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-01 20:48:19","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-01 21:01:20","userId":1}
+{"level":"info","message":"Profile updated successfully","timestamp":"2025-05-01 21:01:29","userId":1}
+{"level":"warn","message":"Unauthorized location assignment attempt","timestamp":"2025-05-01 21:03:56"}
+{"level":"warn","message":"Unauthorized location assignment attempt","timestamp":"2025-05-01 21:06:45"}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-01 21:10:40","userId":1}
+{"createdBy":"Super Admin","level":"info","message":"User created successfully","timestamp":"2025-05-01 21:11:07","userId":5}
+{"count":3,"level":"info","message":"Fetched users successfully","timestamp":"2025-05-01 21:11:10"}
+{"count":3,"level":"info","message":"Fetched users successfully","timestamp":"2025-05-01 21:11:10"}
+{"deletedBy":"Super Admin","level":"info","message":"User soft-deleted successfully","timestamp":"2025-05-01 21:11:24","userId":2}
+{"email":"palavalasai1@gmail.com","level":"warn","message":"Attempt to re-create previously deleted user","timestamp":"2025-05-01 21:12:39"}
+{"level":"info","message":"User restored successfully","timestamp":"2025-05-01 21:12:43","userId":2}
+{"count":3,"level":"info","message":"Fetched users successfully","timestamp":"2025-05-01 21:12:52"}
+{"count":3,"level":"info","message":"Fetched users successfully","timestamp":"2025-05-01 21:12:52"}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-01 21:14:51","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-01 21:25:58","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 08:25:36","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 08:35:22","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 08:52:52","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 08:53:42","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 10:08:58","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 10:14:29","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 10:23:52","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 15:55:44","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 16:09:18","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 16:17:15","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 16:20:44","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 16:23:59","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 16:29:02","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 16:38:36","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 16:53:57","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 17:02:54","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 17:05:51","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 17:15:35","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 17:16:22","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 17:20:37","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 17:42:27","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 17:43:08","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 18:05:48","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 18:12:20","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 18:16:33","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 18:55:00","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 18:57:24","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 19:03:53","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 19:16:10","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 19:29:59","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 19:43:34","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 19:49:32","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 19:50:49","userId":1}
+{"email":"spalavala@aapssol.com","level":"info","message":"User login successful","timestamp":"2025-05-02 20:03:47","userId":1}

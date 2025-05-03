@@ -235,3 +235,369 @@
 {"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-24 20:01:50"}
 {"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-24 20:01:50"}
 {"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-24 20:01:50"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-04-26 13:22:17"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-04-26 13:22:17"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","status":"Active","timestamp":"2025-04-26 13:22:42"}
+{"count":0,"level":"info","message":"Fetched trade items","page":"1","status":"Inactive","timestamp":"2025-04-26 13:22:44"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","status":"Active","timestamp":"2025-04-26 13:22:47"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:23:21"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:23:21"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:23:21"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:23:21"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:23:21"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:23:21"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:23:21"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:23:21"}
+{"error":{},"level":"error","message":"Error in updateTradeItem","timestamp":"2025-04-26 13:23:54"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:36:47"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:36:47"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:36:47"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:36:47"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:36:47"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:36:47"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:36:47"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:36:47"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:42:22"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:42:22"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:42:22"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:42:22"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:42:22"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:42:22"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:42:22"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:42:22"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:42:54"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:42:54"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:42:54"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:42:54"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:42:54"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:42:54"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:42:54"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:42:54"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:43:43"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:43:43"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:43:43"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:43:43"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:43:43"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:43:43"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:43:43"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:43:43"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:44:26"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:44:26"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:44:26"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:44:26"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:44:26"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:44:26"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:44:26"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:44:26"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:48:35"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:48:35"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:48:35"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:48:35"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:48:35"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:48:35"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:48:35"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:48:35"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:50:05"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:50:05"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:50:05"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:50:05"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:50:05"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:50:05"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:50:05"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:50:05"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:53:25"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:53:25"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:53:25"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:53:25"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:53:25"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:53:25"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:53:25"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:53:25"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:55:24"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:55:24"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:55:24"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:55:24"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:56:37"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:56:37"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:56:37"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:56:37"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:56:37"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:56:37"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:56:37"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:56:37"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:56:48"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:56:48"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:56:48"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:56:48"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 13:56:48"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 13:56:48"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 13:56:48"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 13:56:48"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:00:24"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:00:24"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:00:24"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:00:24"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:01:07"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:01:07"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:01:07"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:01:07"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:02:40"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:02:40"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:02:40"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:02:40"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:06:25"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:06:25"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:06:25"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:06:25"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:06:25"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:06:25"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:06:25"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:06:25"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:16:01"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:16:01"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:16:01"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:16:01"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:16:01"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:16:01"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:16:01"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:16:01"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:22:17"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:22:17"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:22:17"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:22:17"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:22:17"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:22:17"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:22:17"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:22:17"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:27:22"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:27:22"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:27:22"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:27:22"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:27:22"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:27:22"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:27:22"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:27:22"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:29:01"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:29:01"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:29:01"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:29:01"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:29:01"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:29:01"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:29:01"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:29:01"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:34:22"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:34:22"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:34:22"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:34:22"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:34:22"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:34:22"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:34:22"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:34:22"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:42:16"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:42:16"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:42:16"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:42:16"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:42:16"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:42:16"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:42:16"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:42:16"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:43:43"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:43:43"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:43:43"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:43:43"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:43:43"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:43:43"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:43:43"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:43:43"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:49:02"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:49:02"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:49:02"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:49:02"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:49:02"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:49:02"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:49:02"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:49:02"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:57:21"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:57:21"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:57:21"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:57:21"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 14:57:21"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 14:57:21"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 14:57:21"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 14:57:21"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 15:11:53"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 15:11:53"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 15:11:53"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 15:11:53"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 15:11:53"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 15:11:53"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 15:11:53"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 15:11:53"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 15:12:14"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 15:12:14"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 15:12:14"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 15:12:14"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 15:12:14"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 15:12:14"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 15:12:14"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 15:12:14"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 15:13:19"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 15:13:19"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 15:13:19"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 15:13:19"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 15:13:19"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 15:13:19"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 15:13:19"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 15:13:19"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 15:20:37"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 15:20:37"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 15:20:37"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 15:20:37"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 15:20:37"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 15:20:37"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 15:20:37"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 15:20:37"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-04-26 15:50:50"}
+{"count":3,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-04-26 15:50:50"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 15:54:00"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 15:54:00"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 15:54:00"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 15:54:00"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 15:54:00"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 15:54:00"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 15:54:00"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 15:54:00"}
+{"TradeItemID":4,"level":"info","message":"Trade Item created","timestamp":"2025-04-26 15:54:19"}
+{"count":4,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-04-26 15:54:20"}
+{"count":4,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-04-26 15:54:20"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 15:54:40"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 15:54:40"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 15:54:40"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 15:54:40"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 15:54:40"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 15:54:40"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 15:54:40"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 15:54:40"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 15:56:49"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 15:56:49"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 15:56:49"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 15:56:49"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 15:56:49"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 15:56:49"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 15:56:49"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 15:56:49"}
+{"TradeItemID":"4","level":"info","message":"Trade Item updated","timestamp":"2025-04-26 15:57:16"}
+{"count":4,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-04-26 15:57:17"}
+{"count":4,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-04-26 15:57:17"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 16:30:10"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 16:30:10"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 16:30:10"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 16:30:10"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-04-26 16:30:10"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-04-26 16:30:10"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-04-26 16:30:10"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-04-26 16:30:10"}
+{"count":4,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-04-26 16:30:12"}
+{"count":4,"level":"info","message":"Fetched trade items","page":"1","timestamp":"2025-04-26 16:30:12"}
+{"error":{"name":"SequelizeConnectionError","original":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"},"parent":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"}},"level":"error","message":"Error fetching countries","timestamp":"2025-05-01 19:29:22"}
+{"error":{"name":"SequelizeConnectionError","original":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"},"parent":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"}},"level":"error","message":"Error fetching units","timestamp":"2025-05-01 19:29:22"}
+{"error":{"name":"SequelizeConnectionError","original":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"},"parent":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"}},"level":"error","message":"Error fetching categories","timestamp":"2025-05-01 19:29:22"}
+{"error":{"name":"SequelizeConnectionError","original":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"},"parent":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"}},"level":"error","message":"Error fetching serialization types","timestamp":"2025-05-01 19:29:22"}
+{"error":{"name":"SequelizeConnectionError","original":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"},"parent":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"}},"level":"error","message":"Error fetching countries","timestamp":"2025-05-01 19:29:22"}
+{"error":{"name":"SequelizeConnectionError","original":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"},"parent":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"}},"level":"error","message":"Error fetching units","timestamp":"2025-05-01 19:29:22"}
+{"error":{"name":"SequelizeConnectionError","original":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"},"parent":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"}},"level":"error","message":"Error fetching categories","timestamp":"2025-05-01 19:29:22"}
+{"error":{"name":"SequelizeConnectionError","original":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"},"parent":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"}},"level":"error","message":"Error fetching serialization types","timestamp":"2025-05-01 19:29:22"}
+{"error":{"name":"SequelizeConnectionError","original":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"},"parent":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"}},"level":"error","message":"Error fetching countries","timestamp":"2025-05-01 19:29:30"}
+{"error":{"name":"SequelizeConnectionError","original":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"},"parent":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"}},"level":"error","message":"Error fetching serialization types","timestamp":"2025-05-01 19:29:30"}
+{"error":{"name":"SequelizeConnectionError","original":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"},"parent":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"}},"level":"error","message":"Error fetching categories","timestamp":"2025-05-01 19:29:30"}
+{"error":{"name":"SequelizeConnectionError","original":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"},"parent":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"}},"level":"error","message":"Error fetching units","timestamp":"2025-05-01 19:29:30"}
+{"error":{"name":"SequelizeConnectionError","original":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"},"parent":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"}},"level":"error","message":"Error fetching countries","timestamp":"2025-05-01 19:29:30"}
+{"error":{"name":"SequelizeConnectionError","original":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"},"parent":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"}},"level":"error","message":"Error fetching serialization types","timestamp":"2025-05-01 19:29:30"}
+{"error":{"name":"SequelizeConnectionError","original":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"},"parent":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"}},"level":"error","message":"Error fetching categories","timestamp":"2025-05-01 19:29:30"}
+{"error":{"name":"SequelizeConnectionError","original":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"},"parent":{"code":"3D000","file":"postinit.c","length":107,"line":"1023","name":"error","routine":"InitPostgres","severity":"FATAL"}},"level":"error","message":"Error fetching units","timestamp":"2025-05-01 19:29:30"}
+{"count":12,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-01 21:13:09"}
+{"count":12,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-01 21:13:09"}
+{"count":16,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-01 21:13:09"}
+{"count":1000,"level":"info","message":"Fetched country list","timestamp":"2025-05-01 21:13:09"}
+{"count":12,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-01 21:13:09"}
+{"count":12,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-01 21:13:09"}
+{"count":16,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-01 21:13:09"}
+{"count":1000,"level":"info","message":"Fetched country list","timestamp":"2025-05-01 21:13:09"}
+{"count":12,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-01 21:14:52"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-01 21:14:52"}
+{"count":1000,"level":"info","message":"Fetched country list","timestamp":"2025-05-01 21:14:52"}
+{"count":12,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-01 21:14:52"}
+{"count":12,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-01 21:14:52"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-01 21:14:52"}
+{"count":12,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-01 21:14:52"}
+{"count":1000,"level":"info","message":"Fetched country list","timestamp":"2025-05-01 21:14:52"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-01 21:26:02"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-01 21:26:02"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-05-01 21:26:02"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-01 21:26:02"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-01 21:26:02"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-01 21:26:02"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-05-01 21:26:02"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-01 21:26:02"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-05-01 21:26:52"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-01 21:26:52"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-01 21:26:52"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-01 21:26:52"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-05-01 21:26:52"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-01 21:26:52"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-01 21:26:52"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-01 21:26:52"}
+{"level":"error","message":"getAllTradeItems error Supplier is not associated to TradeItemSupplier!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Supplier is not associated to TradeItemSupplier!\n    at TradeItemSupplier._getIncludedAssociation (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:565:13)\n    at TradeItemSupplier._validateIncludedElement (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:502:53)\n    at /Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:421:37\n    at Array.map (<anonymous>)\n    at TradeItemSupplier._validateIncludedElements (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:417:39)\n    at TradeItem._validateIncludedElement (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:557:38)\n    at /Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:421:37\n    at Array.map (<anonymous>)\n    at TradeItem._validateIncludedElements (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:417:39)\n    at TradeItem.aggregate (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:1252:12)","timestamp":"2025-05-01 21:27:17"}
+{"level":"error","message":"getAllTradeItems error Supplier is not associated to TradeItemSupplier!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Supplier is not associated to TradeItemSupplier!\n    at TradeItemSupplier._getIncludedAssociation (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:565:13)\n    at TradeItemSupplier._validateIncludedElement (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:502:53)\n    at /Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:421:37\n    at Array.map (<anonymous>)\n    at TradeItemSupplier._validateIncludedElements (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:417:39)\n    at TradeItem._validateIncludedElement (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:557:38)\n    at /Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:421:37\n    at Array.map (<anonymous>)\n    at TradeItem._validateIncludedElements (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:417:39)\n    at TradeItem.aggregate (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:1252:12)","timestamp":"2025-05-01 21:27:17"}
+{"level":"error","message":"getAllTradeItems error Supplier is not associated to TradeItemSupplier!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Supplier is not associated to TradeItemSupplier!\n    at TradeItemSupplier._getIncludedAssociation (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:565:13)\n    at TradeItemSupplier._validateIncludedElement (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:502:53)\n    at /Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:421:37\n    at Array.map (<anonymous>)\n    at TradeItemSupplier._validateIncludedElements (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:417:39)\n    at TradeItem._validateIncludedElement (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:557:38)\n    at /Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:421:37\n    at Array.map (<anonymous>)\n    at TradeItem._validateIncludedElements (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:417:39)\n    at TradeItem.aggregate (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:1252:12)","timestamp":"2025-05-01 21:27:29"}
+{"level":"error","message":"getAllTradeItems error Supplier is not associated to TradeItemSupplier!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Supplier is not associated to TradeItemSupplier!\n    at TradeItemSupplier._getIncludedAssociation (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:565:13)\n    at TradeItemSupplier._validateIncludedElement (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:502:53)\n    at /Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:421:37\n    at Array.map (<anonymous>)\n    at TradeItemSupplier._validateIncludedElements (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:417:39)\n    at TradeItem._validateIncludedElement (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:557:38)\n    at /Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:421:37\n    at Array.map (<anonymous>)\n    at TradeItem._validateIncludedElements (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:417:39)\n    at TradeItem.aggregate (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:1252:12)","timestamp":"2025-05-01 21:27:29"}
+{"level":"error","message":"getAllTradeItems error Supplier is not associated to TradeItemSupplier!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Supplier is not associated to TradeItemSupplier!\n    at TradeItemSupplier._getIncludedAssociation (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:565:13)\n    at TradeItemSupplier._validateIncludedElement (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:502:53)\n    at /Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:421:37\n    at Array.map (<anonymous>)\n    at TradeItemSupplier._validateIncludedElements (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:417:39)\n    at TradeItem._validateIncludedElement (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:557:38)\n    at /Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:421:37\n    at Array.map (<anonymous>)\n    at TradeItem._validateIncludedElements (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:417:39)\n    at TradeItem.aggregate (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:1252:12)","timestamp":"2025-05-02 08:25:40"}
+{"level":"error","message":"getAllTradeItems error Supplier is not associated to TradeItemSupplier!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Supplier is not associated to TradeItemSupplier!\n    at TradeItemSupplier._getIncludedAssociation (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:565:13)\n    at TradeItemSupplier._validateIncludedElement (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:502:53)\n    at /Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:421:37\n    at Array.map (<anonymous>)\n    at TradeItemSupplier._validateIncludedElements (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:417:39)\n    at TradeItem._validateIncludedElement (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:557:38)\n    at /Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:421:37\n    at Array.map (<anonymous>)\n    at TradeItem._validateIncludedElements (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:417:39)\n    at TradeItem.aggregate (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:1252:12)","timestamp":"2025-05-02 08:25:40"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-05-02 08:35:41"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-02 08:35:41"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-02 08:35:41"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-02 08:35:41"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-02 08:35:41"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-05-02 08:35:41"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-02 08:35:41"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-02 08:35:41"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-05-02 08:52:12"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-02 08:52:12"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-02 08:52:12"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-02 08:52:12"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-05-02 08:52:12"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-02 08:52:12"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-02 08:52:12"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-02 08:52:12"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-05-02 08:53:48"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-02 08:53:48"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-02 08:53:48"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-02 08:53:48"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-05-02 08:53:48"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-02 08:53:48"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-02 08:53:48"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-02 08:53:48"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-05-02 08:54:51"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-02 08:54:51"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-02 08:54:51"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-02 08:54:51"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-02 08:54:51"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-05-02 08:54:51"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-02 08:54:51"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-02 08:54:51"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-02 10:14:46"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-02 10:14:46"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-02 10:14:46"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-05-02 10:14:46"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-02 10:14:46"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-02 10:14:46"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-02 10:14:46"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-05-02 10:14:46"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-05-02 10:15:54"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-02 10:15:54"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-02 10:15:54"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-02 10:15:54"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-05-02 10:15:54"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-02 10:15:54"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-02 10:15:54"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-02 10:15:54"}

@@ -4,10 +4,10 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class StorageBin extends Model {
     static associate(models) {
-      StorageBin.belongsTo(models.LocationMaster, { foreignKey: "LocationID" });
-      StorageBin.belongsTo(models.Zone, { foreignKey: "ZoneID" });
-      StorageBin.belongsTo(models.Rack, { foreignKey: "RackID" });
-      StorageBin.belongsTo(models.Shelf, { foreignKey: "ShelfID" });
+      StorageBin.belongsTo(models.LocationMaster, { foreignKey: "LocationID", as : "Location" });
+      StorageBin.belongsTo(models.Zone, { foreignKey: "ZoneID", as : "Zone" });
+      StorageBin.belongsTo(models.Rack, { foreignKey: "RackID", as : "Rack" });
+      StorageBin.belongsTo(models.Shelf, { foreignKey: "ShelfID", as: "Shelf"});
       StorageBin.hasMany(models.StockLevels, {
         foreignKey: "StorageBinID",
         as: "StockLevels"
@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   StorageBin.init({
-    id: {
+    BinID: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,

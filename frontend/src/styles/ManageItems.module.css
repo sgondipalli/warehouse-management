@@ -55,3 +55,18 @@
     border: 1px solid #ccc;
     cursor: pointer;
 }
+
+.statusBtn {
+    background-color: #17a2b8;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 14px;
+}
+
+.statusBtn:hover {
+    background-color: #138496;
+}

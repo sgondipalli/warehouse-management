@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "../styles/Supplier.module.css";
+import { useAuth } from "../context/AuthContext"; // 🆕 Import auth
 
 const BASE_URL = "http://localhost:5040/api/suppliers";
 
 const ManageSuppliers = () => {
+  const { authState } = useAuth(); // 🆕 Get authState for token
   const [suppliers, setSuppliers] = useState([]);
   const [form, setForm] = useState({ SupplierName: "", ContactEmail: "", PhoneNumber: "" });
   const [editId, setEditId] = useState(null);
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false); // 🆕 Handle loading state
 
   const fetchSuppliers = async () => {
     try {
-      const res = await axios.get(BASE_URL);
+      const res = await axios.get(BASE_URL, {
+        headers: { Authorization: `Bearer ${authState.token}` }, // 🆕 Attach token
+      });
       setSuppliers(res.data || []);
     } catch (err) {
       console.error("Fetch failed", err);
@@ -25,34 +30,29 @@ const ManageSuppliers = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       if (editId) {
-        await axios.put(`${BASE_URL}/${editId}`, form);
-        setMessage("Updated successfully");
+        // Update Supplier
+        await axios.put(`${BASE_URL}/${editId}`, form, {
+          headers: { Authorization: `Bearer ${authState.token}` },
+        });
+        setMessage("Supplier updated successfully");
       } else {
-        // Soft-undelete logic
-        const { data: existing } = await axios.get(BASE_URL);
-        const duplicate = existing.find(
-          s => s.SupplierName === form.SupplierName &&
-               s.ContactEmail === form.ContactEmail &&
-               s.PhoneNumber === form.PhoneNumber &&
-               s.isDeleted === true
-        );
-
-        if (duplicate) {
-          await axios.put(`${BASE_URL}/${duplicate.SupplierID}`, { ...form, isDeleted: false });
-          setMessage("Reactivated existing supplier");
-        } else {
-          await axios.post(BASE_URL, form);
-          setMessage("Created successfully");
-        }
+        // Create New Supplier
+        await axios.post(BASE_URL, form, {
+          headers: { Authorization: `Bearer ${authState.token}` },
+        });
+        setMessage("Supplier created successfully");
       }
       setForm({ SupplierName: "", ContactEmail: "", PhoneNumber: "" });
       setEditId(null);
       fetchSuppliers();
     } catch (err) {
       console.error("Submit error", err);
-      setMessage("Operation failed");
+      setMessage("Operation failed: " + (err.response?.data?.message || "Unknown error"));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -66,14 +66,16 @@ const ManageSuppliers = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm("Are you sure?")) {
+    if (window.confirm("Are you sure you want to delete this supplier?")) {
       try {
-        await axios.delete(`${BASE_URL}/${id}`);
-        setMessage("Deleted successfully");
+        await axios.delete(`${BASE_URL}/${id}`, {
+          headers: { Authorization: `Bearer ${authState.token}` },
+        });
+        setMessage("Supplier deleted successfully");
         fetchSuppliers();
       } catch (err) {
         console.error("Delete error", err);
-        setMessage("Delete failed");
+        setMessage("Delete failed: " + (err.response?.data?.message || "Unknown error"));
       }
     }
   };
@@ -90,46 +92,52 @@ const ManageSuppliers = () => {
       <form onSubmit={handleSubmit} className={styles.form}>
         <input
           name="SupplierName"
-          placeholder="Name"
+          placeholder="Supplier Name"
           value={form.SupplierName}
           onChange={handleChange}
           required
         />
         <input
           name="ContactEmail"
-          placeholder="Email"
+          placeholder="Contact Email"
           value={form.ContactEmail}
           onChange={handleChange}
         />
         <input
           name="PhoneNumber"
-          placeholder="Phone"
+          placeholder="Phone Number"
           value={form.PhoneNumber}
           onChange={handleChange}
         />
-        <button type="submit">{editId ? "Update" : "Create"}</button>
+        <button type="submit" disabled={loading}>
+          {editId ? (loading ? "Updating..." : "Update") : (loading ? "Creating..." : "Create")}
+        </button>
       </form>
 
       <table className={styles.table}>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
+            <th>Supplier Name</th>
+            <th>Contact Email</th>
             <th>Phone</th>
+            {/* <th>CreatedBy (optional future)</th> */}
+            {/* <th>UpdatedBy (optional future)</th> */}
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {suppliers.map((s) => (
-            <tr key={s.SupplierID}>
-              <td>{s.SupplierID}</td>
-              <td>{s.SupplierName}</td>
-              <td>{s.ContactEmail || "—"}</td>
-              <td>{s.PhoneNumber || "—"}</td>
+          {suppliers.map((supplier) => (
+            <tr key={supplier.SupplierID}>
+              <td>{supplier.SupplierID}</td>
+              <td>{supplier.SupplierName}</td>
+              <td>{supplier.ContactEmail || "—"}</td>
+              <td>{supplier.PhoneNumber || "—"}</td>
+              {/* <td>{supplier.CreatedByUserID || "—"}</td> */}
+              {/* <td>{supplier.UpdatedByUserID || "—"}</td> */}
               <td>
-                <button onClick={() => handleEdit(s)}>Edit</button>
-                <button onClick={() => handleDelete(s.SupplierID)}>Delete</button>
+                <button onClick={() => handleEdit(supplier)}>Edit</button>
+                <button onClick={() => handleDelete(supplier.SupplierID)}>Delete</button>
               </td>
             </tr>
           ))}

@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Zone.associate = (models) => {
     Zone.belongsTo(models.LocationMaster, { foreignKey: "LocationID" });
-    Zone.hasMany(models.Rack, { foreignKey: "ZoneID" });
+    Zone.hasMany(models.Rack, { foreignKey: "ZoneID", as: "Racks" });
     Zone.hasMany(models.StorageBin, { foreignKey: "ZoneID" });
   };
 

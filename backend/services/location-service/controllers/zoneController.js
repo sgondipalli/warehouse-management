@@ -1,4 +1,4 @@
-const { Zone, Rack, Shelf, StorageBin } = require("../../../common/db/models");
+const { Zone, Rack, Shelf, StorageBin, LocationMaster } = require("../../../common/db/models");
 const logger = require("../../../common/utils/logger");
 
 // zoneController.js
@@ -32,7 +32,33 @@ exports.createZone = async (req, res) => {
 
 exports.getAllZones = async (req, res) => {
   try {
-    const zones = await Zone.findAll();
+    const zones = await Zone.findAll({
+      where: { LocationID: locationId, isDeleted: false },
+      include: [
+        {
+          model: Rack,
+          where: { isDeleted: false },
+          required: false,
+          include: [
+            {
+              model: Shelf,
+              where: { isDeleted: false },
+              required: false,
+              include: [
+                {
+                  model: StorageBin,
+                  as: "StorageBins", // use the same alias as in Shelf.hasMany()
+                  where: { isDeleted: false },
+                  required: false,
+                  attributes: ["BinID", "BinNumber", "MaxCapacity", "CurrentStock"]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    });
+
     res.status(200).json(zones);
   } catch (error) {
     logger.error("Get Zones Error", error);
@@ -98,31 +124,39 @@ exports.getZoneHierarchy = async (req, res) => {
       include: [
         {
           model: Rack,
+          as: "Racks",  // MUST match Zone.hasMany(Rack, { as: "Racks" })
           where: { isDeleted: false },
           required: false,
           include: [
             {
               model: Shelf,
+              as: "Shelves", // MUST match Rack.hasMany(Shelf, { as: "Shelves" })
               where: { isDeleted: false },
               required: false,
               include: [
                 {
                   model: StorageBin,
+                  as: "StorageBins", // MUST match Shelf.hasMany(StorageBin, { as: "StorageBins" })
                   where: { isDeleted: false },
                   required: false,
-                  attributes: ["id", "BinNumber", "MaxCapacity", "CurrentStock"],
+                  attributes: ["BinID", "BinNumber", "MaxCapacity", "CurrentStock"]
                 }
-              ]
+              ],
+              attributes: ["ShelfID", "ShelfNumber"]
             }
-          ]
+          ],
+          attributes: ["RackID", "RackNumber"]
         }
-      ]
+      ],
+      attributes: ["ZoneID", "ZoneName"]
     });
 
     res.status(200).json(zones);
   } catch (error) {
-    logger.error("Fetch Zone Hierarchy Error", error);
+    console.error("Fetch Zone Hierarchy Error", error);
     res.status(500).json({ message: "Failed to fetch zone hierarchy", error: error.message });
   }
 };
+
+
 

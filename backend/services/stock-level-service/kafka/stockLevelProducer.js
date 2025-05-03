@@ -6,16 +6,19 @@ const kafka = new Kafka({
 });
 
 const producer = kafka.producer();
-const topic = "stock-level-events";
+let isProducerConnected = false;
 
 const connectProducer = async () => {
-  await producer.connect();
+  if (!isProducerConnected) {
+    await producer.connect();
+    isProducerConnected = true;
+  }
 };
 
 const publishEvent = async (eventType, payload) => {
   await connectProducer();
   await producer.send({
-    topic,
+    topic: "stock-level-events",
     messages: [
       {
         key: eventType,
@@ -26,15 +29,28 @@ const publishEvent = async (eventType, payload) => {
 };
 
 const publishStockCreated = async (stock) => {
-  await publishEvent("STOCK_LEVEL_CREATED", stock);
+  await publishEvent("STOCK_LEVEL_CREATED", {
+    StockLevelID: stock.StockLevelID,
+    StorageBinID: stock.StorageBinID,
+    Quantity: stock.Quantity,
+  });
 };
 
-const publishStockUpdated = async (stock) => {
-  await publishEvent("STOCK_LEVEL_UPDATED", stock);
+const publishStockUpdated = async (stock, previousQuantity) => {
+  await publishEvent("STOCK_LEVEL_UPDATED", {
+    StockLevelID: stock.StockLevelID,
+    StorageBinID: stock.StorageBinID,
+    previousQuantity,
+    newQuantity: stock.Quantity,
+  });
 };
 
-const publishStockDeleted = async (id) => {
-  await publishEvent("STOCK_LEVEL_DELETED", { StockLevelID: id });
+const publishStockDeleted = async (stock) => {
+  await publishEvent("STOCK_LEVEL_DELETED", {
+    StockLevelID: stock.StockLevelID,
+    StorageBinID: stock.StorageBinID,
+    Quantity: stock.Quantity,
+  });
 };
 
 module.exports = {
