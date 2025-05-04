@@ -8,7 +8,7 @@ exports.createStorageBin = async (req, res) => {
     } = req.body;
 
     // Check for duplicate BinNumber
-    const existingBin = await StorageBin.findOne({ where: { BinNumber } });
+    const existingBin = await StorageBin.findOne({ where: { BinNumber, ShelfID, isDeleted: false } });
     if (existingBin) {
       return res.status(409).json({ message: `BinNumber '${BinNumber}' already exists.` });
     }
@@ -99,31 +99,48 @@ exports.deleteStorageBin = async (req, res) => {
   }
 };
 
+// Get all bins with hierarchical zone info
 exports.getStorageBinDropdown = async (req, res) => {
   try {
     const bins = await StorageBin.findAll({
-      where: { isDeleted: false },
+      attributes: ["BinID", "BinNumber", "CurrentStock", "MaxCapacity"],
       include: [
-        { model: Zone, attributes: ["ZoneName"] },
-        { model: Rack, attributes: ["RackNumber"] },
-        { model: Shelf, attributes: ["ShelfNumber"] },
+        {
+          model: Shelf,
+          as: "Shelf",
+          attributes: ["ShelfNumber"],
+          include: [
+            {
+              model: Rack,
+              as: "Rack",
+              attributes: ["RackNumber"],
+              include: [
+                {
+                  model: Zone,
+                  as: "Zone",
+                  attributes: ["ZoneName"]
+                }
+              ]
+            }
+          ]
+        }
       ],
-      attributes: ["BinID", "BinNumber"],
       order: [["BinNumber", "ASC"]],
     });
 
-    // Format label like: Zone A > Rack 1 > Shelf A > BIN-001
-    const dropdown = bins.map((bin) => ({
-      BinID: bin.BinID,
-      label: `${bin.Zone?.ZoneName || "N/A"} > ${bin.Rack?.RackNumber || "N/A"} > ${bin.Shelf?.ShelfNumber || "N/A"} > ${bin.BinNumber}`,
+    // Optional: Transform for dropdown label
+    const formatted = bins.map(bin => ({
+      id: bin.BinID,
+      label: `Zone: ${bin.Shelf?.Rack?.Zone?.ZoneName || "N/A"} > Rack: ${bin.Shelf?.Rack?.RackNumber || "N/A"} > Shelf: ${bin.Shelf?.ShelfNumber || "N/A"} > Bin: ${bin.BinNumber} (Stock: ${bin.CurrentStock}/${bin.MaxCapacity})`
     }));
 
-    res.status(200).json(dropdown);
+    res.status(200).json(formatted);
   } catch (error) {
     logger.error("Dropdown Bin Error", error);
     res.status(500).json({ message: "Failed to fetch bin dropdown", error: error.message });
   }
 };
+
 
 // GET /api/bins/location/:locationId
 exports.getBinsByLocation = async (req, res) => {

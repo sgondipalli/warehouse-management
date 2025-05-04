@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    BinNumber: { type: DataTypes.STRING, unique: true, allowNull: false },
+    BinNumber: { type: DataTypes.STRING, allowNull: false },
     LocationID: { type: DataTypes.INTEGER, allowNull: false },
     ZoneID: { type: DataTypes.INTEGER, allowNull: true },
     RackID: { type: DataTypes.INTEGER, allowNull: true },

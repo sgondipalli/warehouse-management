@@ -1,6 +1,16 @@
 'use strict';
-const { StockLevels, TradeItem, LocationMaster, StorageBin } = require("../../../common/db/models");
-const { Zone, Rack, Shelf } = require("../../../common/db/models");
+
+const {
+  StockLevels,
+  TradeItem,
+  LocationMaster,
+  StorageBin,
+  Zone,
+  Rack,
+  Shelf,
+  sequelize, //Importing the sequelize instance
+} = require("../../../common/db/models");
+
 const {
   publishStockCreated,
   publishStockUpdated,
@@ -8,38 +18,36 @@ const {
 } = require("../kafka/stockLevelProducer");
 
 const logger = require("../../../common/utils/logger");
-const { Op, Sequelize } = require("sequelize");
 
 // Create Stock Level
-// Create Stock Level with bin capacity validation and logging
 exports.createStockLevel = async (req, res) => {
-  const t = await Sequelize.transaction();
+  const t = await sequelize.transaction();
   try {
-    const { TradeItemID, LocationID, StorageBinID, Quantity } = req.body;
+    const {
+      TradeItemID,
+      LocationID,
+      StorageBinID,
+      Quantity: rawQuantity
+    } = req.body;
+
+    const Quantity = parseInt(rawQuantity);
     logger.info("CreateStockLevel request body:", req.body);
 
-    if (!TradeItemID || !LocationID || !StorageBinID || Quantity === undefined) {
-      logger.warn("Missing required fields");
-      return res.status(400).json({ message: "Missing required fields." });
+    if (!TradeItemID || !LocationID || !StorageBinID || isNaN(Quantity)) {
+      return res.status(400).json({ message: "Missing or invalid required fields." });
     }
 
     const bin = await StorageBin.findByPk(StorageBinID, { transaction: t });
-    if (!bin) {
-      logger.warn(`Invalid Storage Bin: ${StorageBinID}`);
-      return res.status(400).json({ message: "Invalid Storage Bin" });
-    }
+    if (!bin) return res.status(400).json({ message: "Invalid Storage Bin" });
 
-    if (bin.CurrentStock + Quantity > bin.MaxCapacity) {
-      logger.warn(`Bin capacity exceeded: Max ${bin.MaxCapacity}, Current ${bin.CurrentStock}, Attempted ${Quantity}`);
-      return res.status(400).json({ message: `Exceeds bin max capacity (${bin.MaxCapacity}). Current: ${bin.CurrentStock}, Attempted: ${Quantity}` });
-    }
+    // Do NOT modify CurrentStock in controller — handled by Kafka Consumer
 
-    const newStock = await StockLevels.create(req.body, { transaction: t });
-    await bin.update({ CurrentStock: bin.CurrentStock + Quantity }, { transaction: t });
+    const newStock = await StockLevels.create({
+      TradeItemID, LocationID, StorageBinID, Quantity
+    }, { transaction: t });
+
     await t.commit();
-
-    await publishStockCreated(newStock);
-    logger.info("Stock level created successfully:", newStock.toJSON());
+    await publishStockCreated(newStock); // Kafka handles the actual bin stock change
     res.status(201).json({ message: "Stock level created", data: newStock });
   } catch (error) {
     await t.rollback();
@@ -49,6 +57,65 @@ exports.createStockLevel = async (req, res) => {
 };
 
 
+// Update Stock Level
+exports.updateStockLevel = async (req, res) => {
+  const t = await sequelize.transaction();
+  try {
+    const { id } = req.params;
+    const {
+      TradeItemID,
+      LocationID,
+      StorageBinID,
+      Quantity: rawQuantity
+    } = req.body;
+
+    const Quantity = parseInt(rawQuantity);
+    logger.info("UpdateStockLevel request", req.body);
+
+    const stock = await StockLevels.findByPk(id, { transaction: t });
+    if (!stock) return res.status(404).json({ message: "Stock level not found" });
+
+    const previousQuantity = stock.Quantity;
+
+    // Do NOT check CurrentStock capacity here — consumer validates it
+    await stock.update({ TradeItemID, LocationID, StorageBinID, Quantity }, { transaction: t });
+
+    await t.commit();
+    await publishStockUpdated(stock, previousQuantity);
+    res.status(200).json({ message: "Stock level updated", data: stock });
+  } catch (error) {
+    await t.rollback();
+    logger.error("Update Stock Level Error", error);
+    res.status(500).json({ message: "Failed to update stock level", error: error.message });
+  }
+};
+
+
+
+// Delete Stock Level
+exports.deleteStockLevel = async (req, res) => {
+  const t = await sequelize.transaction();
+  try {
+    const { id } = req.params;
+    const stock = await StockLevels.findByPk(id, { transaction: t });
+
+    if (!stock) return res.status(404).json({ message: "Stock level not found" });
+
+    // Only delete; Kafka consumer handles bin rollback
+    await stock.destroy({ transaction: t });
+
+    await t.commit();
+    await publishStockDeleted(stock);
+    res.status(200).json({ message: "Stock level deleted" });
+  } catch (error) {
+    await t.rollback();
+    logger.error("Delete Stock Level Error", error);
+    res.status(500).json({ message: "Failed to delete stock level", error: error.message });
+  }
+};
+
+
+// Get all stock levels with associations and pagination
 exports.getAllStockLevels = async (req, res) => {
   try {
     const { page = 1, limit = 10, locationId, tradeItemId, storageBinId } = req.query;
@@ -118,6 +185,45 @@ exports.getAllStockLevels = async (req, res) => {
   }
 };
 
+// Dropdown list
+exports.getStockDropdown = async (req, res) => {
+  try {
+    const dropdown = await StockLevels.findAll({
+      attributes: ["StockLevelID", "Quantity"],
+      include: [
+        {
+          model: TradeItem,
+          as: "TradeItem",
+          attributes: ["MaterialNumber"],
+        },
+        {
+          model: StorageBin,
+          as: "StorageBin",
+          attributes: ["BinNumber"],
+        }
+      ],
+      order: [["LastUpdated", "DESC"]]
+    });
+    res.status(200).json(dropdown);
+  } catch (error) {
+    logger.error("Stock Dropdown Fetch Error", error);
+    res.status(500).json({ message: "Failed to fetch stock dropdown", error: error.message });
+  }
+};
+
+// Trade Item Dropdown
+exports.getTradeItemDropdown = async (req, res) => {
+  try {
+    const tradeItems = await TradeItem.findAll({
+      attributes: ["TradeItemID", "MaterialNumber", "GTIN", "TradeItemDescription", "TradeItemCategory"],
+      order: [["MaterialNumber", "ASC"]],
+    });
+    res.status(200).json(tradeItems);
+  } catch (error) {
+    logger.error("Trade Item Dropdown Fetch Error", error);
+    res.status(500).json({ message: "Failed to fetch trade items", error: error.message });
+  }
+};
 
 // Get Stock Level by ID
 exports.getStockLevelById = async (req, res) => {
@@ -148,112 +254,5 @@ exports.getStockLevelById = async (req, res) => {
   } catch (error) {
     logger.error("Fetch Stock Level by ID Error", error);
     res.status(500).json({ message: "Failed to fetch stock level", error: error.message });
-  }
-};
-
-// Update Stock Level
-exports.updateStockLevel = async (req, res) => {
-  const t = await Sequelize.transaction();
-  try {
-    const { id } = req.params;
-    const { TradeItemID, LocationID, StorageBinID, Quantity } = req.body;
-
-    logger.info("UpdateStockLevel request", req.body);
-
-    const stock = await StockLevels.findByPk(id, { transaction: t });
-    if (!stock) return res.status(404).json({ message: "Stock level not found" });
-
-    const bin = await StorageBin.findByPk(StorageBinID, { transaction: t });
-    if (!bin) {
-      logger.warn(`Invalid Storage Bin: ${StorageBinID}`);
-      return res.status(400).json({ message: "Invalid Storage Bin" });
-    }
-
-    const previousQuantity = stock.Quantity;
-    const delta = Quantity - previousQuantity;
-
-    if (bin.CurrentStock + delta > bin.MaxCapacity) {
-      logger.warn(`Update exceeds bin max capacity. Max: ${bin.MaxCapacity}, Current: ${bin.CurrentStock}, Delta: ${delta}`);
-      return res.status(400).json({ message: `Update exceeds bin max capacity (${bin.MaxCapacity})` });
-    }
-
-    await stock.update(req.body, { transaction: t });
-    await bin.update({ CurrentStock: bin.CurrentStock + delta }, { transaction: t });
-    await t.commit();
-
-    await publishStockUpdated(stock, previousQuantity);
-    logger.info("Stock level updated", stock.toJSON());
-    res.status(200).json({ message: "Stock level updated", data: stock });
-  } catch (error) {
-    await t.rollback();
-    logger.error("Update Stock Level Error", error);
-    res.status(500).json({ message: "Failed to update stock level", error: error.message });
-  }
-};
-
-// Delete Stock Level
-exports.deleteStockLevel = async (req, res) => {
-  const t = await Sequelize.transaction();
-  try {
-    const { id } = req.params;
-    const stock = await StockLevels.findByPk(id, { transaction: t });
-
-    if (!stock) return res.status(404).json({ message: "Stock level not found" });
-
-    const bin = await StorageBin.findByPk(stock.StorageBinID, { transaction: t });
-    if (bin) {
-      await bin.update({ CurrentStock: bin.CurrentStock - stock.Quantity }, { transaction: t });
-    }
-
-    await stock.destroy({ transaction: t });
-    await t.commit();
-
-    await publishStockDeleted(id);
-    logger.info(`Stock level ID ${id} deleted`);
-    res.status(200).json({ message: "Stock level deleted" });
-  } catch (error) {
-    await t.rollback();
-    logger.error("Delete Stock Level Error", error);
-    res.status(500).json({ message: "Failed to delete stock level", error: error.message });
-  }
-};
-
-// Dropdown list (ID + Name + Bin Number)
-exports.getStockDropdown = async (req, res) => {
-  try {
-    const dropdown = await StockLevels.findAll({
-      attributes: ["StockLevelID", "Quantity"],
-      include: [
-        {
-          model: TradeItem,
-          as: "TradeItem",
-          attributes: ["MaterialNumber"],
-        },
-        {
-          model: StorageBin,
-          as: "StorageBin",
-          attributes: ["BinNumber"],
-        }
-      ],
-      order: [["LastUpdated", "DESC"]]
-    });
-    res.status(200).json(dropdown);
-  } catch (error) {
-    logger.error("Stock Dropdown Fetch Error", error);
-    res.status(500).json({ message: "Failed to fetch stock dropdown", error: error.message });
-  }
-};
-
-// Get Trade Item Dropdown (ID + Name)
-exports.getTradeItemDropdown = async (req, res) => {
-  try {
-    const tradeItems = await TradeItem.findAll({
-      attributes: ["TradeItemID", "MaterialNumber", "GTIN", "TradeItemDescription", "TradeItemCategory"],
-      order: [["MaterialNumber", "ASC"]],
-    });
-    res.status(200).json(tradeItems);
-  } catch (error) {
-    logger.error("Trade Item Dropdown Fetch Error", error);
-    res.status(500).json({ message: "Failed to fetch trade items", error: error.message });
   }
 };

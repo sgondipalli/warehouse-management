@@ -97,13 +97,18 @@ const InboundPage = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setForm({ ...form, [name]: value });
+        const parsedValue = ["StorageBinID", "TradeItemID", "SupplierID", "LocationID"].includes(name)
+            ? parseInt(value, 10)
+            : value;
+
+        setForm({ ...form, [name]: parsedValue });
 
         if (name === "LocationID") {
             fetchBinsByLocation(value);
             setForm((prev) => ({ ...prev, StorageBinID: "" }));
         }
     };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -206,7 +211,7 @@ const InboundPage = () => {
                 <select name="StorageBinID" value={form.StorageBinID} onChange={handleChange} required disabled={!form.LocationID}>
                     <option value="">Select Storage Bin</option>
                     {bins.map((bin) => (
-                        <option key={bin.id} value={bin.id}>
+                        <option key={bin.BinID} value={bin.BinID}>
                             {bin.label || bin.BinNumber}
                         </option>
                     ))}

@@ -38,10 +38,10 @@ const incrementBinStock = async (binId, delta) => {
 
     await bin.update({ CurrentStock: newStock }, { transaction });
     await transaction.commit();
-    logger.info(`✅ Updated Bin ${binId} stock to ${newStock}`);
+    logger.info(`Updated Bin ${binId} stock to ${newStock}`);
   } catch (err) {
     await transaction.rollback();
-    logger.error(`🔥 Error updating stock for Bin ${binId}`, err);
+    logger.error(`Error updating stock for Bin ${binId}`, err);
   }
 };
 
@@ -74,12 +74,12 @@ const startConsumer = async () => {
               logger.warn(`⚠️ Unhandled event type: ${eventType}`);
           }
         } catch (err) {
-          logger.error(`🔥 Failed to process ${eventType}`, err);
+          logger.error(`Failed to process ${eventType}`, err);
         }
       },
     });
   } catch (err) {
-    logger.error("🔥 Kafka consumer initialization failed", err);
+    logger.error("Kafka consumer initialization failed", err);
   }
 };
 
