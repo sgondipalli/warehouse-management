@@ -25,6 +25,13 @@ import InboundPage from "./components/inbound";
 import ManageSuppliers from "./components/ManageSuppliers";
 import HomePage from "./pages/Homepage";
 import ToastProvider from "./components/ToastProvider";
+import CreateOrderService from "./components/CreateOrderService";
+import OutboundDispatchService from "./components/OutboundDispatchService";
+import DeliveryAssignmentService from "./components/DeliveryAssignmentService";
+import ManageOrders from "./components/ManageOrders";
+import ViewOrder from "./components/ViewOrder";
+import VehicleService from "./components/VehicleService";
+import ManageDispatches from "./components/ManageDispatches";
 
 
 const OktaCallback = () => {
@@ -83,6 +90,25 @@ const AppLayout = () => {
                 </PrivateRoute>
               }
             />
+            <Route
+              path="/create-order"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager"]}>
+                  <CreateOrderService />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/manage-orders"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager"]}>
+                  <ManageOrders />
+                </PrivateRoute>
+              }
+            />
+
+
             <Route
               path="/create-user"
               element={
@@ -159,6 +185,27 @@ const AppLayout = () => {
               }
             />
 
+            {/* Outbound Dispatch - Super Admin & Manager */}
+            <Route
+              path="/outbounds"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager"]}>
+                  <OutboundDispatchService />
+                </PrivateRoute>
+              }
+            />
+
+            {/* Delivery Assignment - Super Admin & Manager */}
+            <Route
+              path="/assign-delivery"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager"]}>
+                  <DeliveryAssignmentService />
+                </PrivateRoute>
+              }
+            />
+
+
             <Route
               path="/edit-profile"
               element={
@@ -186,6 +233,36 @@ const AppLayout = () => {
                 </PrivateRoute>
               }
             />
+
+            <Route
+              path="/orders/view/:id"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager", "Auditor/Compliance Officer"]}>
+                  <ViewOrder />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/vehicles"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager"]}>
+                  <VehicleService />
+                </PrivateRoute>
+              }
+            />
+
+
+
+            <Route
+              path="/manage-dispatches"
+              element={
+                <PrivateRoute allowedRoles={["Super Admin", "Warehouse Manager"]}>
+                  <ManageDispatches />
+                </PrivateRoute>
+              }
+            />
+
 
 
 

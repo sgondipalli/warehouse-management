@@ -1,0 +1,105 @@
+.container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+}
+
+.section label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #444;
+}
+
+input,
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border 0.2s ease;
+}
+
+input:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.itemRow {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.itemRow select,
+.itemRow input {
+    flex: 1;
+}
+
+.itemRow button {
+    padding: 8px 12px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.itemRow button:hover {
+    background-color: #c82333;
+}
+
+button[type="button"],
+button[type="submit"] {
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button[type="button"]:hover,
+button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+button[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.message {
+    margin-top: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #d9534f;
+}
+
+.message::before {
+    content: "⚠ ";
+    display: inline;
+}

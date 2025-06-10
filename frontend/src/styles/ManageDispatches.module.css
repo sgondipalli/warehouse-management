@@ -1,0 +1,108 @@
+.container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #2c3e50;
+}
+
+.dispatchTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background-color: white;
+    border: 1px solid #ddd;
+}
+
+.dispatchTable th,
+.dispatchTable td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.dispatchTable th {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.dispatchTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.dispatchTable tr:hover {
+    background-color: #eef;
+}
+
+.tag {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.tag.final {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+.tag.linked {
+    background-color: #d9edf7;
+    color: #31708f;
+}
+
+.assignBtn {
+    padding: 6px 12px;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.assignBtn:hover {
+    background-color: #2471a3;
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    background-color: white;
+    padding: 24px;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal label {
+    display: block;
+    margin-top: 12px;
+    font-weight: 600;
+}
+
+.modal select {
+    width: 100%;
+    padding: 6px;
+    margin-top: 4px;
+}
+
+.modalActions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}

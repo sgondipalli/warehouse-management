@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const { startConsumer } = require("./kafka/inboundConsumer");
+const { startOutboundConsumer } = require("./kafka/outboundConsumer");
 
 // Middlewares
 app.use(express.json());
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
 
 //kafka consumer
 startConsumer().catch((err) => console.error("❌ Kafka startup error", err));
+startOutboundConsumer().catch(console.error);
 
 // Start server
 const PORT = process.env.StockServicePORT || 5020;

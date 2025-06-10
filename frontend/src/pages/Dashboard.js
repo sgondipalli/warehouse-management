@@ -9,7 +9,7 @@ import styles from "../styles/Dashboard.module.css";
 
 const Dashboard = () => {
   const { authState, loading } = useAuth();
-  
+
 
   if (loading) return <div>Loading dashboard...</div>; // ⬅️ Wait until restoreSession finishes
 
@@ -112,6 +112,35 @@ const Dashboard = () => {
                     <i className="fa-solid fa-boxes-stacked"></i>
                     <span>Zone & Bin Structure</span>
                   </Link>
+
+                  <Link to="/create-order" className={styles.gridItem}>
+                    <i className="fa-solid fa-cart-plus"></i>
+                    <span>Create Order</span>
+                  </Link>
+
+                  <Link to="/manage-orders" className={styles.gridItem}>
+                    <i className="fa-solid fa-list-check"></i>
+                    <span>Manage Orders</span>
+                  </Link>
+
+
+                  <Link to="/outbounds" className={styles.gridItem}>
+                    <i className="fa-solid fa-dolly"></i>
+                    <span>Outbound Dispatch</span>
+                  </Link>
+                  <Link to="/assign-delivery" className={styles.gridItem}>
+                    <i className="fa-solid fa-user-check"></i>
+                    <span>Assign Delivery Agent</span>
+                  </Link>
+                  <Link to="/vehicles" className={styles.gridItem}>
+                    <i className="fa-solid fa-truck-fast"></i>
+                    <span>VehicleService</span>
+                  </Link>
+                  <Link to="/manage-dispatches" className={styles.gridItem}>
+                    <i className="fa-solid fa-truck-ramp-box"></i>
+                    <span>Manage Dispatches</span>
+                  </Link>
+
 
                 </>
 

@@ -1,6 +1,7 @@
-const { Users, UserRoles, Roles, UserLocationAccess, sequelize } = require("../../../common/db/models");
+const { Users, UserRoles, Roles, UserLocationAccess, DeliverySchedule, sequelize } = require("../../../common/db/models");
 const bcrypt = require("bcryptjs");
 const logger = require('../../../common/utils/logger');
+const { Op } = require("sequelize");
 const { isRoleRestrictedByManager, canAssignLocations } = require("../../../common/utils/roleValidator");
 
 // Create User (Only Super Admin & Manager)
@@ -10,8 +11,8 @@ const createUser = async (req, res) => {
     const { username, email, password, firstName, lastName, role, locationIds } = req.body;
     const creatorRole = req.user.roles?.[0] || "";
     const creatorId = req.user.id;
-    
-     // Validate required fields
+
+    // Validate required fields
     if (!username || !email || !password || !firstName || !lastName || !role) {
       logger.warn("Create user failed: Missing required fields", { requestedBy: creatorRole });
       return res.status(400).json({ message: "All fields are required." });
@@ -20,7 +21,7 @@ const createUser = async (req, res) => {
     if (isRoleRestrictedByManager(creatorRole, role)) {
       return res.status(403).json({ message: "Managers cannot create Admins or Auditors." });
     }
-    
+
     // Check if email is already registered
     const existingUser = await Users.findOne({ where: { email }, transaction: t });
 
@@ -32,7 +33,7 @@ const createUser = async (req, res) => {
       logger.warn("Attempt to create user with existing email", { email });
       return res.status(400).json({ message: "Email already in use." });
     }
-    
+
     // Check if username already exists
     const existingUsername = await Users.findOne({ where: { username }, transaction: t });
     if (existingUsername) {
@@ -302,4 +303,63 @@ const getDeletedUsers = async (req, res) => {
   }
 };
 
-module.exports = { createUser, updateUser, softDeleteUser, restoreUser, getDeletedUsers };
+// Get available delivery agents by date and location
+const getAvailableDeliveryAgents = async (req, res) => {
+  try {
+    const { date, sourceLocationId, destinationLocationId } = req.query;
+
+    if (!date || !sourceLocationId || !destinationLocationId) {
+      return res.status(400).json({ message: "Date, sourceLocationId and destinationLocationId are required." });
+    }
+
+    // Get busy agent IDs for the date
+    const busySchedules = await DeliverySchedule.findAll({ where: { DispatchDate: date } });
+    const busyAgentIds = busySchedules.map(s => s.DeliveryAgentID);
+
+    // Fetch eligible agents
+    const agents = await Users.findAll({
+      where: {
+        id: { [Op.notIn]: busyAgentIds },
+        isDeleted: false,
+        isActive: true
+      },
+      include: [
+        {
+          model: Roles,
+          where: { roleName: "Delivery Agent" },
+          through: { attributes: [] }
+        },
+        {
+          model: UserLocationAccess,
+          as: "UserLocationAccesses",
+          required: true
+        }
+      ]
+    });
+
+    // Filter agents with access to source OR both if required
+    const filtered = agents.filter(agent => {
+      const access = agent.UserLocationAccesses.map(l => l.locationId);
+      // Only require source access for now (single-leg support)
+      return access.includes(parseInt(sourceLocationId));
+    });
+
+
+    console.log("Filtered Delivery Agents:", filtered.map(a => ({
+      id: a.id,
+      email: a.email,
+      locations: a.UserLocationAccesses.map(loc => loc.locationId)
+    })));
+
+    res.status(200).json(filtered);
+  } catch (err) {
+    console.error("Get Available Agents Error", err);
+    res.status(500).json({ message: "Failed to fetch available delivery agents", error: err.message });
+  }
+};
+
+
+module.exports = { createUser, updateUser, softDeleteUser, restoreUser, getDeletedUsers, getAvailableDeliveryAgents };
+
+
+

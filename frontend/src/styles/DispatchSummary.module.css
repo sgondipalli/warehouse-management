@@ -1,0 +1,40 @@
+.summaryCard {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 16px;
+    margin-bottom: 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    max-width: 500px;
+}
+
+.summaryCard h3 {
+    margin-bottom: 12px;
+    color: #2c3e50;
+}
+
+.summaryCard ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.summaryCard li {
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+.scanButton {
+    margin-top: 12px;
+    padding: 8px 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.scanButton:hover {
+    background-color: #0056b3;
+}
