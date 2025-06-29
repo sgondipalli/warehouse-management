@@ -633,3 +633,11 @@
 {"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-05-19 09:52:03"}
 {"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-05-19 09:52:03"}
 {"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-05-19 09:52:03"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-06-16 09:30:12"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-06-16 09:30:12"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-06-16 09:30:12"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-06-16 09:30:12"}
+{"count":4,"level":"info","message":"Fetched unit of measure list","timestamp":"2025-06-16 09:30:12"}
+{"count":3,"level":"info","message":"Fetched serialization types","timestamp":"2025-06-16 09:30:12"}
+{"count":250,"level":"info","message":"Fetched country list","timestamp":"2025-06-16 09:30:12"}
+{"count":3,"level":"info","message":"Fetched trade item categories","timestamp":"2025-06-16 09:30:12"}
