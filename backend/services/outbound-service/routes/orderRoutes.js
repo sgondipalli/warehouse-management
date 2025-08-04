@@ -27,4 +27,11 @@ router.get(
 );
 
 
+router.delete(
+    "/:id",
+    authenticateJWT,
+    authorizeRoles(["Super Admin"]),
+    orderController.cancelOrder
+);
+
 module.exports = router;

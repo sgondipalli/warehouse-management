@@ -44,10 +44,10 @@ const Dashboard = () => {
             <div className={styles.gridContainer}>
               {(isSuperAdmin || isManager) && (
                 <>
-                  <Link to="/manage-users" className={styles.gridItem}>
+                  {/* <Link to="/manage-users" className={styles.gridItem}>
                     <i className="fa-solid fa-users-cog"></i>
                     <span>Manage Users</span>
-                  </Link>
+                  </Link> */}
                   <Link to="/suppliers" className={styles.gridItem}>
                     <i className="fa-solid fa-building-circle-check"></i>
                     <span>Manage Suppliers</span>

@@ -33,7 +33,7 @@ const reduceStockFIFO = async ({ TradeItemID, DispatchedQuantity, LocationID }) 
       LocationID,
       Quantity: { [Op.gt]: 0 }
     },
-    order: [['createdAt', 'ASC']]
+    order: [['LastUpdated', 'ASC']]
   });
 
   if (stockRecords.length === 0) {

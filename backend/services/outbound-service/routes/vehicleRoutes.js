@@ -45,9 +45,6 @@ router.get(
   vehicleController.getAvailableVehicles
 );
 
-router.put(
-  "/assign/:id",
-  authenticateJWT,
-  authorizeRoles(["Super Admin", "Warehouse Manager"]),
-  vehicleController.assignFinalLeg
-);
+// routes/outboundDispatchRoutes.js or routes/vehicleRoutes.js
+router.post("/assign-final-leg/:id", authenticateJWT, authorizeRoles("Super Admin", "Warehouse Manager"), vehicleController.assignFinalLeg);
+

@@ -1,5 +1,5 @@
 'use strict';
-const { Vehicle, DeliverySchedule } = require("../../../common/db/models");
+const { Vehicle, DeliverySchedule, OutboundDispatch, deliveryAssignment } = require("../../../common/db/models");
 const { Op } = require("sequelize");
 
 // Create vehicle
@@ -89,15 +89,40 @@ exports.assignFinalLeg = async (req, res) => {
       return res.status(404).json({ message: "Final-leg dispatch not found" });
     }
 
+    // Update the dispatch record
     await dispatch.update({
       VehicleID,
       DeliveryAgentID,
       Status: "Dispatched"
     });
 
-    res.status(200).json({ message: "Final leg assigned", dispatch });
-  } catch (err) {
-    console.error("Assign Final Leg Error", err);
-    res.status(500).json({ message: "Failed to assign final leg" });
+    // Log delivery assignment
+    await DeliveryAssignment.create({
+      OutboundDispatchID: dispatch.DispatchID,
+      VehicleID,
+      DeliveryAgentID,
+      Status: "ASSIGNED",
+      AssignedAt: new Date()
+    });
+
+    // Ensure DeliverySchedule entry for both agent and vehicle
+    const dispatchDate = dispatch.DispatchDate?.toISOString().split("T")[0];
+    if (dispatchDate) {
+      await Promise.all([
+        DeliverySchedule.findOrCreate({
+          where: { DispatchDate: dispatchDate, DeliveryAgentID },
+          defaults: { VehicleID, Status: "ASSIGNED" }
+        }),
+        DeliverySchedule.findOrCreate({
+          where: { DispatchDate: dispatchDate, VehicleID },
+          defaults: { DeliveryAgentID, Status: "ASSIGNED" }
+        }),
+      ]);
+    }
+
+    res.status(200).json({ message: "Final-leg dispatch assigned successfully", dispatch });
+  } catch (error) {
+    console.error("Assign Final Leg Error:", error);
+    res.status(500).json({ message: "Failed to assign final leg", error: error.message });
   }
 };

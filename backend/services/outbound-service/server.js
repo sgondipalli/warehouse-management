@@ -22,11 +22,14 @@ app.get("/", (req, res) => {
 const vehicleRoutes = require("./routes/vehicleRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const outboundDispatchRoutes = require("./routes/outboundDispatchRoutes");
+const deliveryAssignmentRoutes = require("./routes/deliveryAssignmentRoutes");
+
 
 // Mount Routes
 app.use("/api/vehicles", vehicleRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/outbounds", outboundDispatchRoutes);
+app.use("/api/delivery-assignments", deliveryAssignmentRoutes);
 
 // ✅ Kafka Producer (connect on server start)
 const { publishOutboundDispatched } = require("./kafka/outboundProducer");

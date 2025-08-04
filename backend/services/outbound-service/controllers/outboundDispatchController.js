@@ -1,14 +1,18 @@
-'use strict';
 const {
   sequelize,
   OutboundDispatch,
   OrderItem,
   Vehicle,
   Users,
-  LocationMaster
+  LocationMaster,
+  Order,
+  DeliveryAssignment,
+  DeliverySchedule
 } = require("../../../common/db/models");
+const { publishOutboundDispatched } = require("../kafka/outboundProducer");
+const { Op } = require("sequelize");
+const { monitorSecondLegs} = require("../jobs/secondLegMonitor");
 
-// Create a dispatch (supports two-leg delivery)
 exports.createDispatch = async (req, res) => {
   const t = await sequelize.transaction();
   try {
@@ -26,7 +30,11 @@ exports.createDispatch = async (req, res) => {
       CustomerAddress
     } = req.body;
 
-    // Validation
+    const orderItem = await OrderItem.findByPk(OrderItemID);
+    if (!orderItem) {
+      return res.status(404).json({ message: "Order item not found" });
+    }
+
     if (AssignedLocationID) {
       const locationExists = await LocationMaster.findByPk(AssignedLocationID);
       if (!locationExists) {
@@ -34,7 +42,6 @@ exports.createDispatch = async (req, res) => {
       }
     }
 
-    // First leg creation
     const firstLeg = await OutboundDispatch.create({
       OrderItemID,
       VehicleID,
@@ -44,21 +51,48 @@ exports.createDispatch = async (req, res) => {
       AssignedLocationID,
       Remarks,
       IsFinalLeg,
-      ParentDispatchID: null, // explicitly null for first leg
+      ParentDispatchID: null,
       CustomerName,
-      CustomerAddress
+      CustomerAddress,
+      DispatchDate: new Date()
     }, { transaction: t });
 
-    // Auto-create second leg if required (W2C flow)
-    let secondLeg = null;
+    if (!IsFinalLeg) {
+      await DeliveryAssignment.create({
+        OutboundDispatchID: firstLeg.DispatchID,
+        VehicleID,
+        DeliveryAgentID,
+        AssignedAt: new Date(),
+        Status: "ASSIGNED"
+      }, { transaction: t });
 
+      await DeliverySchedule.create({
+        VehicleID,
+        DeliveryAgentID,
+        DispatchDate: new Date().toISOString().split("T")[0],
+        Status: "ASSIGNED"
+      }, { transaction: t });
+
+      await Vehicle.update(
+        { Status: "IN_USE" },
+        { where: { VehicleID }, transaction: t }
+      );
+    }
+
+    await publishOutboundDispatched({
+      ...firstLeg.toJSON(),
+      TradeItemID: orderItem.TradeItemID,
+      DispatchedQuantity: orderItem.Quantity
+    });
+
+    let secondLeg = null;
     const isW2C = CustomerName && CustomerAddress;
     if (!IsFinalLeg && isW2C) {
       secondLeg = await OutboundDispatch.create({
         OrderItemID,
-        SourceWarehouseID: DestinationWarehouseID, // Second leg starts where first ends
-        DestinationWarehouseID: null,               // Customer is not a warehouse
-        DeliveryAgentID: null,                      // Let someone assign later
+        SourceWarehouseID: DestinationWarehouseID,
+        DestinationWarehouseID: null,
+        DeliveryAgentID: null,
         VehicleID: null,
         DispatchDate: firstLeg.DispatchDate,
         AssignedLocationID: null,
@@ -70,13 +104,27 @@ exports.createDispatch = async (req, res) => {
       }, { transaction: t });
     }
 
-    await t.commit();
+    const orderId = orderItem.OrderID;
+    const allOrderItems = await OrderItem.findAll({ where: { OrderID: orderId }, transaction: t });
 
-    return res.status(201).json({
-      message: "Dispatch created successfully",
-      firstLeg,
-      secondLeg
+    const dispatchedItemRecords = await OutboundDispatch.findAll({
+      attributes: ["OrderItemID"],
+      where: { OrderItemID: allOrderItems.map(item => item.OrderItemID) },
+      transaction: t
     });
+
+    const dispatchedItemIDs = dispatchedItemRecords.map(record => record.OrderItemID);
+    const allItemsDispatched = allOrderItems.every(item => dispatchedItemIDs.includes(item.OrderItemID));
+
+    if (allItemsDispatched) {
+      await Order.update(
+        { Status: "DISPATCHED" },
+        { where: { OrderID: orderId }, transaction: t }
+      );
+    }
+
+    await t.commit();
+    return res.status(201).json({ message: "Dispatch created successfully", firstLeg, secondLeg });
   } catch (err) {
     await t.rollback();
     console.error("Create Dispatch Error", err);
@@ -84,26 +132,19 @@ exports.createDispatch = async (req, res) => {
   }
 };
 
-
-// Fetch all dispatches (view only), with optional role filtering
 exports.getDispatches = async (req, res) => {
   try {
-    const user = req.user; // Injected from JWT middleware
-
+    const user = req.user;
     const roles = Array.isArray(user.roles) ? user.roles : [];
-
     const isManager = roles.includes("Warehouse Manager");
     const isAgent = roles.includes("Delivery Agent");
     const isSuperAdmin = roles.includes("Super Admin");
 
     let whereCondition = {};
-
     if (isAgent) {
       whereCondition = { DeliveryAgentID: user.id };
     } else if (isManager && Array.isArray(user.assignedLocationIds) && user.assignedLocationIds.length > 0) {
-      whereCondition = {
-        AssignedLocationID: user.assignedLocationIds,
-      };
+      whereCondition = { AssignedLocationID: user.assignedLocationIds };
     }
 
     const dispatches = await OutboundDispatch.findAll({
@@ -113,11 +154,7 @@ exports.getDispatches = async (req, res) => {
         { model: Users, as: "DeliveryAgent" },
         { model: Vehicle, as: "Vehicle" },
         { model: LocationMaster, as: "AssignedLocation" },
-        {
-          model: OutboundDispatch,
-          as: "ParentDispatch",
-          attributes: ["DispatchID"]
-        }
+        { model: OutboundDispatch, as: "ParentDispatch", attributes: ["DispatchID"] }
       ],
       order: [["DispatchDate", "DESC"]]
     });
@@ -126,56 +163,31 @@ exports.getDispatches = async (req, res) => {
       ...d.toJSON(),
       isLinkedToAnother: !!d.ParentDispatchID,
       isFinalLeg: d.IsFinalLeg,
-      parentLink: d.ParentDispatch ? d.ParentDispatch.DispatchID : null,
+      parentLink: d.ParentDispatch ? d.ParentDispatch.DispatchID : null
     }));
 
-    return res.status(200).json(result);
+    res.status(200).json(result);
   } catch (err) {
     console.error("Fetch Manage Dispatch Error", err);
     res.status(500).json({ message: "Failed to fetch manage dispatches", error: err.message });
   }
 };
 
-
-
-// Update dispatch
 exports.updateDispatch = async (req, res) => {
   try {
     const { id } = req.params;
-    const {
-      OrderItemID,
-      VehicleID,
-      DeliveryAgentID,
-      SourceWarehouseID,
-      DestinationWarehouseID,
-      AssignedLocationID,
-      Remarks,
-      IsFinalLeg,
-      ParentDispatchID
-    } = req.body;
-
+    const updateData = req.body;
     const dispatch = await OutboundDispatch.findByPk(id);
     if (!dispatch) return res.status(404).json({ message: "Dispatch not found" });
 
-    if (AssignedLocationID) {
-      const locationExists = await LocationMaster.findByPk(AssignedLocationID);
+    if (updateData.AssignedLocationID) {
+      const locationExists = await LocationMaster.findByPk(updateData.AssignedLocationID);
       if (!locationExists) {
         return res.status(400).json({ message: "Invalid Assigned Location ID" });
       }
     }
 
-    await dispatch.update({
-      OrderItemID,
-      VehicleID,
-      DeliveryAgentID,
-      SourceWarehouseID,
-      DestinationWarehouseID,
-      AssignedLocationID,
-      Remarks,
-      IsFinalLeg,
-      ParentDispatchID
-    });
-
+    await dispatch.update(updateData);
     res.status(200).json({ message: "Dispatch updated", data: dispatch });
   } catch (err) {
     console.error("Update Dispatch Error", err);
@@ -183,13 +195,11 @@ exports.updateDispatch = async (req, res) => {
   }
 };
 
-// Delete dispatch
 exports.deleteDispatch = async (req, res) => {
   try {
     const { id } = req.params;
     const dispatch = await OutboundDispatch.findByPk(id);
     if (!dispatch) return res.status(404).json({ message: "Dispatch not found" });
-
     await dispatch.destroy();
     res.status(200).json({ message: "Dispatch deleted" });
   } catch (err) {
@@ -205,7 +215,7 @@ exports.getPendingSecondLegs = async (req, res) => {
         IsFinalLeg: true,
         DeliveryAgentID: null,
         VehicleID: null,
-        ParentDispatchID: { [sequelize.Op.ne]: null }
+        ParentDispatchID: { [Op.ne]: null }
       },
       include: [
         { model: OrderItem, as: "OrderItem" },
@@ -220,7 +230,6 @@ exports.getPendingSecondLegs = async (req, res) => {
   }
 };
 
-
 exports.getDispatchSummary = async (req, res) => {
   try {
     const total = await OutboundDispatch.count();
@@ -230,15 +239,10 @@ exports.getDispatchSummary = async (req, res) => {
         IsFinalLeg: true,
         DeliveryAgentID: null,
         VehicleID: null,
-        ParentDispatchID: { [sequelize.Op.ne]: null }
+        ParentDispatchID: { [Op.ne]: null }
       }
     });
-
-    res.status(200).json({
-      total,
-      finalLegs,
-      pendingSecondLegs
-    });
+    res.status(200).json({ total, finalLegs, pendingSecondLegs });
   } catch (err) {
     console.error("Summary Fetch Error", err);
     res.status(500).json({ message: "Failed to load dispatch summary" });
@@ -247,10 +251,72 @@ exports.getDispatchSummary = async (req, res) => {
 
 exports.manualSecondLegScan = async (req, res) => {
   try {
-    await monitorSecondLegs(); // make sure it's exported from the job file
+    await monitorSecondLegs();
     res.status(200).json({ message: "Manual scan executed." });
   } catch (err) {
     res.status(500).json({ message: "Manual scan failed.", error: err.message });
   }
 };
 
+exports.markDispatchAsDelivered = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const dispatch = await OutboundDispatch.findByPk(id);
+    if (!dispatch) return res.status(404).json({ message: "Dispatch not found" });
+
+    await dispatch.update({ Status: "Delivered" });
+    await DeliveryAssignment.update(
+      { Status: "Delivered" },
+      { where: { OutboundDispatchID: id } }
+    );
+
+    const dispatchDate = dispatch.DispatchDate?.toISOString().split("T")[0];
+    await DeliverySchedule.update(
+      { Status: "Delivered" },
+      {
+        where: {
+          DispatchDate: dispatchDate,
+          [Op.or]: [
+            { DeliveryAgentID: dispatch.DeliveryAgentID },
+            { VehicleID: dispatch.VehicleID }
+          ]
+        }
+      }
+    );
+
+    if (dispatch.VehicleID) {
+      const vehicle = await Vehicle.findByPk(dispatch.VehicleID);
+      if (vehicle && vehicle.Status !== "MAINTENANCE") {
+        await vehicle.update({ Status: "AVAILABLE" });
+      }
+    }
+
+    res.status(200).json({ message: "✅ Dispatch marked as delivered." });
+  } catch (err) {
+    console.error("Delivery completion error:", err);
+    res.status(500).json({ message: "Failed to mark dispatch delivered", error: err.message });
+  }
+};
+
+
+exports.assignFinalLegDispatch = async (req, res) => {
+  const { dispatchId } = req.params;
+  const { VehicleID, DeliveryAgentID } = req.body;
+
+  try {
+    const dispatch = await OutboundDispatch.findByPk(dispatchId);
+    if (!dispatch || !dispatch.IsFinalLeg) {
+      return res.status(404).json({ message: "Final leg dispatch not found" });
+    }
+
+    dispatch.VehicleID = VehicleID;
+    dispatch.DeliveryAgentID = DeliveryAgentID;
+    dispatch.Status = "Dispatched";
+    await dispatch.save();
+
+    return res.json({ message: "Final leg dispatch assigned successfully", dispatch });
+  } catch (err) {
+    console.error("❌ Error assigning final-leg dispatch:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

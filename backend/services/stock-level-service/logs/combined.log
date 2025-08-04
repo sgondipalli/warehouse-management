@@ -456,3 +456,135 @@
 {"level":"info","message":"🚀 Kafka consumer is now listening on 'inbound-events'","timestamp":"2025-06-16 17:54:48"}
 {"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-06-16 17:55:28"}
 {"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-06-16 17:55:28"}
+{"level":"info","message":"🚀 Kafka consumer is now listening on 'inbound-events'","timestamp":"2025-07-12 12:39:11"}
+{"level":"info","message":"✅ Kafka Consumer for outbound dispatches started","timestamp":"2025-07-12 12:39:11"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 12:51:55"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 12:51:55"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 12:55:06"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 12:55:06"}
+{"LocationID":"1","Quantity":"10","StorageBinID":"1","TradeItemID":"1","level":"info","message":"CreateStockLevel request body:","timestamp":"2025-07-12 12:55:18"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 12:55:18"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 12:55:27"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 12:55:27"}
+{"level":"info","message":"📩 Received Kafka Event: INBOUND_CREATED","timestamp":"2025-07-12 12:56:36"}
+{"level":"info","message":"🔁 Updated StockLevelID 1","timestamp":"2025-07-12 12:56:36"}
+{"level":"info","message":"📦 BinID 1 adjusted by 10, new stock: 20","timestamp":"2025-07-12 12:56:36"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 12:56:43"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 12:56:43"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 13:30:34"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-07-12 13:30:34"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 13:32:02"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 13:32:02"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 13:39:13"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 13:39:13"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 13:48:06"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-07-12 13:48:06"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 13:51:34"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-07-12 13:51:34"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 13:51:37"}
+{"level":"info","message":"🔄 Processing dispatch of 1 units of TradeItem 1 from warehouse 1","timestamp":"2025-07-12 13:51:37"}
+{"level":"error","message":"❌ Error processing outbound message column StockLevels.createdAt does not exist","name":"SequelizeDatabaseError","original":{"code":"42703","file":"parse_relation.c","length":120,"line":"3727","name":"error","position":"246","routine":"errorMissingColumn","severity":"ERROR","sql":"SELECT \"StockLevelID\", \"TradeItemID\", \"LocationID\", \"StorageBinID\", \"Quantity\", \"LastUpdated\" FROM \"StockLevels\" AS \"StockLevels\" WHERE \"StockLevels\".\"TradeItemID\" = 1 AND \"StockLevels\".\"LocationID\" = 1 AND \"StockLevels\".\"Quantity\" > 0 ORDER BY \"StockLevels\".\"createdAt\" ASC;"},"parameters":{},"parent":{"code":"42703","file":"parse_relation.c","length":120,"line":"3727","name":"error","position":"246","routine":"errorMissingColumn","severity":"ERROR","sql":"SELECT \"StockLevelID\", \"TradeItemID\", \"LocationID\", \"StorageBinID\", \"Quantity\", \"LastUpdated\" FROM \"StockLevels\" AS \"StockLevels\" WHERE \"StockLevels\".\"TradeItemID\" = 1 AND \"StockLevels\".\"LocationID\" = 1 AND \"StockLevels\".\"Quantity\" > 0 ORDER BY \"StockLevels\".\"createdAt\" ASC;"},"sql":"SELECT \"StockLevelID\", \"TradeItemID\", \"LocationID\", \"StorageBinID\", \"Quantity\", \"LastUpdated\" FROM \"StockLevels\" AS \"StockLevels\" WHERE \"StockLevels\".\"TradeItemID\" = 1 AND \"StockLevels\".\"LocationID\" = 1 AND \"StockLevels\".\"Quantity\" > 0 ORDER BY \"StockLevels\".\"createdAt\" ASC;","stack":"Error\n    at Query.run (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)\n    at /Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/sequelize.js:315:28\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async PostgresQueryInterface.select (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)\n    at async StockLevels.findAll (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:1140:21)\n    at async reduceStockFIFO (/Users/sainathreddypalavala/warehouse-management/backend/services/stock-level-service/kafka/outboundConsumer.js:30:24)\n    at async Runner.eachMessage (/Users/sainathreddypalavala/warehouse-management/backend/services/stock-level-service/kafka/outboundConsumer.js:104:13)\n    at async Runner.processEachMessage (/Users/sainathreddypalavala/warehouse-management/backend/services/stock-level-service/node_modules/kafkajs/src/consumer/runner.js:231:9)\n    at async onBatch (/Users/sainathreddypalavala/warehouse-management/backend/services/stock-level-service/node_modules/kafkajs/src/consumer/runner.js:447:9)\n    at async Runner.handleBatch (/Users/sainathreddypalavala/warehouse-management/backend/services/stock-level-service/node_modules/kafkajs/src/consumer/runner.js:461:5)","timestamp":"2025-07-12 13:51:37"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 13:51:47"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 13:51:47"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 13:51:50"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 13:51:50"}
+{"level":"info","message":"🚀 Kafka consumer is now listening on 'inbound-events'","timestamp":"2025-07-12 13:53:59"}
+{"level":"info","message":"✅ Kafka Consumer for outbound dispatches started","timestamp":"2025-07-12 13:54:03"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 13:54:03"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-07-12 13:54:03"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 13:54:11"}
+{"level":"info","message":"🔄 Processing dispatch of 1 units of TradeItem 1 from warehouse 1","timestamp":"2025-07-12 13:54:11"}
+{"level":"error","message":"❌ Error processing outbound message column StockLevels.createdAt does not exist","name":"SequelizeDatabaseError","original":{"code":"42703","file":"parse_relation.c","length":120,"line":"3727","name":"error","position":"246","routine":"errorMissingColumn","severity":"ERROR","sql":"SELECT \"StockLevelID\", \"TradeItemID\", \"LocationID\", \"StorageBinID\", \"Quantity\", \"LastUpdated\" FROM \"StockLevels\" AS \"StockLevels\" WHERE \"StockLevels\".\"TradeItemID\" = 1 AND \"StockLevels\".\"LocationID\" = 1 AND \"StockLevels\".\"Quantity\" > 0 ORDER BY \"StockLevels\".\"createdAt\" ASC;"},"parameters":{},"parent":{"code":"42703","file":"parse_relation.c","length":120,"line":"3727","name":"error","position":"246","routine":"errorMissingColumn","severity":"ERROR","sql":"SELECT \"StockLevelID\", \"TradeItemID\", \"LocationID\", \"StorageBinID\", \"Quantity\", \"LastUpdated\" FROM \"StockLevels\" AS \"StockLevels\" WHERE \"StockLevels\".\"TradeItemID\" = 1 AND \"StockLevels\".\"LocationID\" = 1 AND \"StockLevels\".\"Quantity\" > 0 ORDER BY \"StockLevels\".\"createdAt\" ASC;"},"sql":"SELECT \"StockLevelID\", \"TradeItemID\", \"LocationID\", \"StorageBinID\", \"Quantity\", \"LastUpdated\" FROM \"StockLevels\" AS \"StockLevels\" WHERE \"StockLevels\".\"TradeItemID\" = 1 AND \"StockLevels\".\"LocationID\" = 1 AND \"StockLevels\".\"Quantity\" > 0 ORDER BY \"StockLevels\".\"createdAt\" ASC;","stack":"Error\n    at Query.run (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)\n    at /Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/sequelize.js:315:28\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async PostgresQueryInterface.select (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)\n    at async StockLevels.findAll (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:1140:21)\n    at async reduceStockFIFO (/Users/sainathreddypalavala/warehouse-management/backend/services/stock-level-service/kafka/outboundConsumer.js:30:24)\n    at async Runner.eachMessage (/Users/sainathreddypalavala/warehouse-management/backend/services/stock-level-service/kafka/outboundConsumer.js:104:13)\n    at async Runner.processEachMessage (/Users/sainathreddypalavala/warehouse-management/backend/services/stock-level-service/node_modules/kafkajs/src/consumer/runner.js:231:9)\n    at async onBatch (/Users/sainathreddypalavala/warehouse-management/backend/services/stock-level-service/node_modules/kafkajs/src/consumer/runner.js:447:9)\n    at async Runner.handleBatch (/Users/sainathreddypalavala/warehouse-management/backend/services/stock-level-service/node_modules/kafkajs/src/consumer/runner.js:461:5)","timestamp":"2025-07-12 13:54:11"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 13:55:30"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-07-12 13:55:30"}
+{"level":"info","message":"🚀 Kafka consumer is now listening on 'inbound-events'","timestamp":"2025-07-12 13:55:59"}
+{"level":"info","message":"✅ Kafka Consumer for outbound dispatches started","timestamp":"2025-07-12 13:56:00"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 13:56:00"}
+{"level":"info","message":"🔄 Processing dispatch of 1 units of TradeItem 1 from warehouse 1","timestamp":"2025-07-12 13:56:01"}
+{"level":"error","message":"❌ Error processing outbound message column StockLevels.createdAt does not exist","name":"SequelizeDatabaseError","original":{"code":"42703","file":"parse_relation.c","length":120,"line":"3727","name":"error","position":"246","routine":"errorMissingColumn","severity":"ERROR","sql":"SELECT \"StockLevelID\", \"TradeItemID\", \"LocationID\", \"StorageBinID\", \"Quantity\", \"LastUpdated\" FROM \"StockLevels\" AS \"StockLevels\" WHERE \"StockLevels\".\"TradeItemID\" = 1 AND \"StockLevels\".\"LocationID\" = 1 AND \"StockLevels\".\"Quantity\" > 0 ORDER BY \"StockLevels\".\"createdAt\" ASC;"},"parameters":{},"parent":{"code":"42703","file":"parse_relation.c","length":120,"line":"3727","name":"error","position":"246","routine":"errorMissingColumn","severity":"ERROR","sql":"SELECT \"StockLevelID\", \"TradeItemID\", \"LocationID\", \"StorageBinID\", \"Quantity\", \"LastUpdated\" FROM \"StockLevels\" AS \"StockLevels\" WHERE \"StockLevels\".\"TradeItemID\" = 1 AND \"StockLevels\".\"LocationID\" = 1 AND \"StockLevels\".\"Quantity\" > 0 ORDER BY \"StockLevels\".\"createdAt\" ASC;"},"sql":"SELECT \"StockLevelID\", \"TradeItemID\", \"LocationID\", \"StorageBinID\", \"Quantity\", \"LastUpdated\" FROM \"StockLevels\" AS \"StockLevels\" WHERE \"StockLevels\".\"TradeItemID\" = 1 AND \"StockLevels\".\"LocationID\" = 1 AND \"StockLevels\".\"Quantity\" > 0 ORDER BY \"StockLevels\".\"createdAt\" ASC;","stack":"Error\n    at Query.run (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)\n    at /Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/sequelize.js:315:28\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async PostgresQueryInterface.select (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)\n    at async StockLevels.findAll (/Users/sainathreddypalavala/warehouse-management/backend/node_modules/sequelize/lib/model.js:1140:21)\n    at async reduceStockFIFO (/Users/sainathreddypalavala/warehouse-management/backend/services/stock-level-service/kafka/outboundConsumer.js:30:24)\n    at async Runner.eachMessage (/Users/sainathreddypalavala/warehouse-management/backend/services/stock-level-service/kafka/outboundConsumer.js:104:13)\n    at async Runner.processEachMessage (/Users/sainathreddypalavala/warehouse-management/backend/services/stock-level-service/node_modules/kafkajs/src/consumer/runner.js:231:9)\n    at async onBatch (/Users/sainathreddypalavala/warehouse-management/backend/services/stock-level-service/node_modules/kafkajs/src/consumer/runner.js:447:9)\n    at async Runner.handleBatch (/Users/sainathreddypalavala/warehouse-management/backend/services/stock-level-service/node_modules/kafkajs/src/consumer/runner.js:461:5)","timestamp":"2025-07-12 13:56:01"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 14:17:19"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-07-12 14:17:19"}
+{"level":"info","message":"✅ Kafka Consumer for outbound dispatches started","timestamp":"2025-07-12 14:17:49"}
+{"level":"info","message":"🚀 Kafka consumer is now listening on 'inbound-events'","timestamp":"2025-07-12 14:17:50"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 14:18:23"}
+{"level":"info","message":"🔄 Processing dispatch of 1 units of TradeItem 1 from warehouse 1","timestamp":"2025-07-12 14:18:24"}
+{"level":"info","message":"📦 Bin 1 stock reduced by 1. New: 19","timestamp":"2025-07-12 14:18:24"}
+{"level":"info","message":"✅ Deducted 1 from StockLevelID 1 (Bin 1)","timestamp":"2025-07-12 14:18:24"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 14:18:34"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 14:18:34"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 14:30:30"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-07-12 14:30:30"}
+{"level":"info","message":"✅ Kafka Consumer for outbound dispatches started","timestamp":"2025-07-12 14:31:00"}
+{"level":"info","message":"🚀 Kafka consumer is now listening on 'inbound-events'","timestamp":"2025-07-12 14:31:01"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 14:31:03"}
+{"level":"info","message":"🔄 Processing dispatch of 10 units of TradeItem 1 from warehouse 1","timestamp":"2025-07-12 14:31:03"}
+{"level":"info","message":"📦 Bin 1 stock reduced by 10. New: 9","timestamp":"2025-07-12 14:31:03"}
+{"level":"info","message":"✅ Deducted 10 from StockLevelID 1 (Bin 1)","timestamp":"2025-07-12 14:31:03"}
+{"level":"info","message":"✅ Kafka Consumer for outbound dispatches started","timestamp":"2025-07-12 14:37:11"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 14:37:11"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-07-12 14:37:11"}
+{"level":"info","message":"🚀 Kafka consumer is now listening on 'inbound-events'","timestamp":"2025-07-12 14:37:14"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 14:37:42"}
+{"level":"info","message":"🔄 Processing dispatch of 1 units of TradeItem 1 from warehouse 1","timestamp":"2025-07-12 14:37:42"}
+{"level":"info","message":"📦 Bin 1 stock reduced by 1. New: 8","timestamp":"2025-07-12 14:37:42"}
+{"level":"info","message":"✅ Deducted 1 from StockLevelID 1 (Bin 1)","timestamp":"2025-07-12 14:37:42"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 14:44:07"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-07-12 14:44:07"}
+{"level":"info","message":"✅ Kafka Consumer for outbound dispatches started","timestamp":"2025-07-12 14:44:42"}
+{"level":"info","message":"🚀 Kafka consumer is now listening on 'inbound-events'","timestamp":"2025-07-12 14:44:42"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 14:44:48"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 14:44:48"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 14:46:56"}
+{"level":"info","message":"🔄 Processing dispatch of 2 units of TradeItem 1 from warehouse 1","timestamp":"2025-07-12 14:46:56"}
+{"level":"info","message":"📦 Bin 1 stock reduced by 2. New: 6","timestamp":"2025-07-12 14:46:56"}
+{"level":"info","message":"✅ Deducted 2 from StockLevelID 1 (Bin 1)","timestamp":"2025-07-12 14:46:56"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 14:47:18"}
+{"level":"info","message":"🔄 Processing dispatch of 2 units of TradeItem 1 from warehouse 1","timestamp":"2025-07-12 14:47:18"}
+{"level":"info","message":"📦 Bin 1 stock reduced by 2. New: 4","timestamp":"2025-07-12 14:47:18"}
+{"level":"info","message":"✅ Deducted 2 from StockLevelID 1 (Bin 1)","timestamp":"2025-07-12 14:47:18"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 14:48:20"}
+{"level":"info","message":"🔄 Processing dispatch of 2 units of TradeItem 1 from warehouse 1","timestamp":"2025-07-12 14:48:20"}
+{"level":"info","message":"📦 Bin 1 stock reduced by 2. New: 2","timestamp":"2025-07-12 14:48:20"}
+{"level":"info","message":"✅ Deducted 2 from StockLevelID 1 (Bin 1)","timestamp":"2025-07-12 14:48:20"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 14:50:08"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-07-12 14:50:08"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 14:50:39"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 14:50:39"}
+{"level":"info","message":"🚀 Kafka consumer is now listening on 'inbound-events'","timestamp":"2025-07-12 14:50:39"}
+{"level":"info","message":"✅ Kafka Consumer for outbound dispatches started","timestamp":"2025-07-12 14:50:43"}
+{"LocationID":"1","Quantity":"10","StorageBinID":"1","TradeItemID":"1","level":"info","message":"CreateStockLevel request body:","timestamp":"2025-07-12 14:50:57"}
+{"level":"info","message":"Fetching Stock Levels with filters:","timestamp":"2025-07-12 14:50:57"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 14:51:49"}
+{"level":"info","message":"🔄 Processing dispatch of 2 units of TradeItem 1 from warehouse 1","timestamp":"2025-07-12 14:51:49"}
+{"level":"info","message":"📦 Bin 1 stock reduced by 2. New: 10","timestamp":"2025-07-12 14:51:49"}
+{"level":"info","message":"✅ Deducted 2 from StockLevelID 1 (Bin 1)","timestamp":"2025-07-12 14:51:49"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-07-12 18:59:27"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-07-12 18:59:27"}
+{"level":"info","message":"🚀 Kafka consumer is now listening on 'inbound-events'","timestamp":"2025-08-01 09:16:20"}
+{"level":"info","message":"✅ Kafka Consumer for outbound dispatches started","timestamp":"2025-08-01 09:16:20"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-08-01 10:58:24"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-08-01 10:58:24"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-08-01 11:22:33"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-08-01 11:22:33"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-08-01 11:23:46"}
+{"level":"info","message":"🔄 Processing dispatch of 1 units of TradeItem 2 from warehouse 1","timestamp":"2025-08-01 11:23:46"}
+{"level":"info","message":"📦 Bin 8 stock reduced by 1. New: 9","timestamp":"2025-08-01 11:23:46"}
+{"level":"info","message":"✅ Deducted 1 from StockLevelID 10 (Bin 8)","timestamp":"2025-08-01 11:23:46"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-08-01 11:23:59"}
+{"level":"info","message":"🔄 Processing dispatch of 1 units of TradeItem 2 from warehouse 1","timestamp":"2025-08-01 11:23:59"}
+{"level":"info","message":"📦 Bin 11 stock reduced by 1. New: 9","timestamp":"2025-08-01 11:23:59"}
+{"level":"info","message":"✅ Deducted 1 from StockLevelID 11 (Bin 11)","timestamp":"2025-08-01 11:23:59"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-08-01 11:36:05"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-08-01 11:36:05"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-08-01 11:56:59"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-08-01 11:56:59"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-08-01 12:00:46"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-08-01 12:00:46"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-08-01 12:03:25"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-08-01 12:03:25"}
+{"level":"info","message":"🚀 Kafka consumer is now listening on 'inbound-events'","timestamp":"2025-08-01 12:17:02"}
+{"level":"info","message":"✅ Kafka Consumer for outbound dispatches started","timestamp":"2025-08-01 12:17:03"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-08-01 12:17:03"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-08-01 12:17:03"}
+{"level":"info","message":"📥 Received Outbound Event: OUTBOUND_DISPATCHED","timestamp":"2025-08-01 13:29:37"}
+{"level":"warn","message":"⚠️ OrderItem not found: undefined","timestamp":"2025-08-01 13:29:37"}

@@ -59,7 +59,7 @@ const ManageDispatches = () => {
     try {
       const config = { headers: { Authorization: `Bearer ${token}` } };
       await axios.put(
-        `http://localhost:5050/api/vehicles/assign/${assignModal.DispatchID}`,
+        `http://localhost:5050/api/outbounds/assign/${assignModal.DispatchID}`,
         form,
         config
       );
@@ -162,14 +162,14 @@ const ManageDispatches = () => {
             >
               <option value="">Select Agent</option>
               {agents.map((a) => (
-                <option key={a.userId || a.id} value={a.userId || a.id}>
+                <option key={a.id} value={a.id}>
                   {a.firstName} {a.lastName}
                 </option>
               ))}
             </select>
 
             <div className={styles.modalActions}>
-              <button onClick={handleAssignSubmit}>✅ Assign</button>
+              <button onClick={handleAssignSubmit}> Assign</button>
               <button onClick={() => setAssignModal(null)}>Cancel</button>
             </div>
           </div>

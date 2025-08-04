@@ -170,3 +170,17 @@ exports.getOrderById = async (req, res) => {
     res.status(500).json({ message: "Failed to retrieve order", error: err.message });
   }
 };
+
+exports.cancelOrder = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const order = await Order.findByPk(id);
+    if (!order) return res.status(404).json({ message: "Order not found" });
+
+    await order.update({ Status: "CANCELLED" }); // Soft delete logic
+    res.status(200).json({ message: "Order cancelled" });
+  } catch (err) {
+    console.error("Cancel Order Error", err);
+    res.status(500).json({ message: "Failed to cancel order", error: err.message });
+  }
+};

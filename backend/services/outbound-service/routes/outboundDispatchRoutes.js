@@ -53,7 +53,9 @@ router.get(
   controller.getDispatchSummary
 );
 
+router.put("/assign/:dispatchId", authenticateJWT, controller.assignFinalLegDispatch);
 
+router.post("/dispatch/:id/mark-delivered", authenticateJWT, controller.markDispatchAsDelivered);
 
 
 module.exports = router;
